@@ -14633,6 +14633,205 @@ cr.plugins_.Arr = function(runtime)
 }());
 ;
 ;
+cr.plugins_.Function = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.Function.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	var funcStack = [];
+	var funcStackPtr = -1;
+	var isInPreview = false;	// set in onCreate
+	function FuncStackEntry()
+	{
+		this.name = "";
+		this.retVal = 0;
+		this.params = [];
+	};
+	function pushFuncStack()
+	{
+		funcStackPtr++;
+		if (funcStackPtr === funcStack.length)
+			funcStack.push(new FuncStackEntry());
+		return funcStack[funcStackPtr];
+	};
+	function getCurrentFuncStack()
+	{
+		if (funcStackPtr < 0)
+			return null;
+		return funcStack[funcStackPtr];
+	};
+	function getOneAboveFuncStack()
+	{
+		if (!funcStack.length)
+			return null;
+		var i = funcStackPtr + 1;
+		if (i >= funcStack.length)
+			i = funcStack.length - 1;
+		return funcStack[i];
+	};
+	function popFuncStack()
+	{
+;
+		funcStackPtr--;
+	};
+	instanceProto.onCreate = function()
+	{
+		isInPreview = (typeof cr_is_preview !== "undefined");
+		var self = this;
+		window["c2_callFunction"] = function (name_, params_)
+		{
+			var i, len, v;
+			var fs = pushFuncStack();
+			fs.name = name_.toLowerCase();
+			fs.retVal = 0;
+			if (params_)
+			{
+				fs.params.length = params_.length;
+				for (i = 0, len = params_.length; i < len; ++i)
+				{
+					v = params_[i];
+					if (typeof v === "number" || typeof v === "string")
+						fs.params[i] = v;
+					else if (typeof v === "boolean")
+						fs.params[i] = (v ? 1 : 0);
+					else
+						fs.params[i] = 0;
+				}
+			}
+			else
+			{
+				fs.params.length = 0;
+			}
+			self.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, self, fs.name);
+			popFuncStack();
+			return fs.retVal;
+		};
+	};
+	function Cnds() {};
+	Cnds.prototype.OnFunction = function (name_)
+	{
+		var fs = getCurrentFuncStack();
+		if (!fs)
+			return false;
+		return cr.equals_nocase(name_, fs.name);
+	};
+	Cnds.prototype.CompareParam = function (index_, cmp_, value_)
+	{
+		var fs = getCurrentFuncStack();
+		if (!fs)
+			return false;
+		index_ = cr.floor(index_);
+		if (index_ < 0 || index_ >= fs.params.length)
+			return false;
+		return cr.do_cmp(fs.params[index_], cmp_, value_);
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.CallFunction = function (name_, params_)
+	{
+		var fs = pushFuncStack();
+		fs.name = name_.toLowerCase();
+		fs.retVal = 0;
+		cr.shallowAssignArray(fs.params, params_);
+		var ran = this.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, this, fs.name);
+		if (isInPreview && !ran)
+		{
+;
+		}
+		popFuncStack();
+	};
+	Acts.prototype.SetReturnValue = function (value_)
+	{
+		var fs = getCurrentFuncStack();
+		if (fs)
+			fs.retVal = value_;
+		else
+;
+	};
+	Acts.prototype.CallExpression = function (unused)
+	{
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.ReturnValue = function (ret)
+	{
+		var fs = getOneAboveFuncStack();
+		if (fs)
+			ret.set_any(fs.retVal);
+		else
+			ret.set_int(0);
+	};
+	Exps.prototype.ParamCount = function (ret)
+	{
+		var fs = getCurrentFuncStack();
+		if (fs)
+			ret.set_int(fs.params.length);
+		else
+		{
+;
+			ret.set_int(0);
+		}
+	};
+	Exps.prototype.Param = function (ret, index_)
+	{
+		index_ = cr.floor(index_);
+		var fs = getCurrentFuncStack();
+		if (fs)
+		{
+			if (index_ >= 0 && index_ < fs.params.length)
+			{
+				ret.set_any(fs.params[index_]);
+			}
+			else
+			{
+;
+				ret.set_int(0);
+			}
+		}
+		else
+		{
+;
+			ret.set_int(0);
+		}
+	};
+	Exps.prototype.Call = function (ret, name_)
+	{
+		var fs = pushFuncStack();
+		fs.name = name_.toLowerCase();
+		fs.retVal = 0;
+		fs.params.length = 0;
+		var i, len;
+		for (i = 2, len = arguments.length; i < len; i++)
+			fs.params.push(arguments[i]);
+		var ran = this.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, this, fs.name);
+		if (isInPreview && !ran)
+		{
+;
+		}
+		popFuncStack();
+		ret.set_any(fs.retVal);
+	};
+	pluginProto.exps = new Exps();
+}());
+;
+;
 cr.plugins_.Keyboard = function(runtime)
 {
 	this.runtime = runtime;
@@ -17605,6 +17804,148 @@ cr.plugins_.Tilemap = function(runtime)
 	};
 	pluginProto.exps = new Exps();
 }());
+/*
+IMPORTANT STUFF
+This plugin lets you use some of Playtomic's features, such as counting the number of people who have played your game, or died on level X. You will need a Playtomic  account to use it in your project. Not all Playtomic features are supported (see below for details).
+!!!This is not an official Playtomic plugin!!!
+!!!This is not an official Scirra or Construct 2 plugin!!!
+It's just something quick I made out of necessity. It probably has bugs. We are not
+guaranteeing that it will work, or that we will fix it.
+The Playtomic documentation recommends that you obfuscate the project's SWFID, GUID & APIKEY but this plugin makes no attempt to do so! USE AT YOUR OWN RISK. Personally, I think if somebody cares enough to try to find them, they probably will do so even if it's obfuscated.
+DEMO
+A live demo that shows the plugin in action can be seen at:
+http://www.funstormgames.com/blog/playtomic-for-construct-2-plugin
+DOWNLOAD & INSTALLATION
+Download from: http://www.funstormgames.com/blog/playtomic-for-construct-2-plugin
+Copy the 'playtomic' folder to '<you Construct 2 install directory>\exporters\html5\plugins'.
+Then you can use the plugin from within Construct 2.
+TUTORIAL
+1) Add a Playtomic object to your Construct 2 project
+2) Create a Playtomic account and project at http://www.Playtomic.com
+3) From your project's settings on the Playtomic website, copy the SWFID, GUID & APIKEY
+4) Enter the SWFID, GUID & APIKEY in the Construct 2 Playtomic object properties
+5) When you start the project, the plugin will now try to connect to the Playtomic servers and increase the number of 'Views' by 1.
+6) Note: always check to make sure that Playtomic is ready before using the other features. It takes a short moment for the plugin to load, so it will not be ready immediately after layout start.
+SUPPORTED PLAYTOMIC FEATURES
+- Load Api from remote location
+- Log View
+- Log Play
+- Log Counter Metric
+- Data Lookup Views
+- Data Lookup Plays
+- Data Loopup PlayTime
+- Leaderboards
+UNSUPPORTED PLAYTOMIC FEATURES
+- Load Api from local location if remote is unavailable
+- Additional request options
+- Error reporting
+- ForceSend, Freeze/Unfreeze
+- CustomMetric
+- Level Average/Ranged Metric
+- Heatmaps
+- Facebook Leaderboards
+- Link tracking
+- Level sharing
+- GameVars
+- Geolocation
+- Data Lookup Custom/Level Metrics
+- Parse database
+LICENSE
+This plugin has no license. Do whatever you want with it... use commerically, modify,
+redistribute, etcetcetc. You don't have to, but it would be nice if you included
+somewhere that you got it from:
+http://www.funstormgames.com/
+DEMO PROJECT ART THANKS TO
+Backyard Ninja (Goblin) http://www.dumbmanex.com/
+flaivoloka (Main Menu Background) http://www.sxc.hu/profile/flaivoloka
+QUESTIONS, COMMENTS, FEEDBACK, BUGS
+Please let me know if you find a bug and I will do my best to fix it. I don't have enough time to add all the Playtomic features, so if you need a specific feature and know a little JavaScript, feel free to modify the plugin and add it yourself :)
+*/
+/*
+IMPORTANT STUFF
+This Construct 2 mini-plugin for Chrome fanatics (like me!) let's you log things to the JavaScript console.
+!!!This is not an official Google Chrome plugin!!!
+!!!This is not an official Scirra or Construct 2 plugin!!!
+It's just something quick I made out of necessity. It probably has bugs. We are not
+guaranteeing that it will work, or that we will fix it.
+DEMO
+A live demo that shows the plugin in action can be seen at:
+http://www.funstormgames.com/blog/construct-2-log-to-chrome-console-plugin
+DOWNLOAD & INSTALLATION
+Download from: http://www.funstormgames.com/blog/construct-2-log-to-chrome-console-plugin
+Copy the 'playtomic' folder to '<you Construct 2 install directory>\exporters\html5\plugins'.
+Then you can use the plugin from within Construct 2.
+TUTORIAL
+1) Add a Chrome Console object to your Construct 2 project
+2) Press Ctrl+Shift+J to bring up the JavaScript console or select Wrench->Tools->JavaScript Console
+3) To log numbers or text add action -> Chrome Console -> Log Text
+4) To log objects add action -> Chrome Console -> Log Object
+LICENSE
+This plugin has no license. Do whatever you want with it... use commerically, modify,
+redistribute, etcetcetc. You don't have to, but it would be nice if you included
+somewhere that you got it from:
+http://www.funstormgames.com/
+QUESTIONS, COMMENTS, FEEDBACK, BUGS
+Please let me know if you find a bug and I will do my best to fix it.
+*/
+;
+;
+cr.plugins_.chromeconsole = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.chromeconsole.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	instanceProto.onCreate = function()
+	{
+	};
+	instanceProto.draw = function(ctx)
+	{
+	};
+	instanceProto.drawGL = function (glw)
+	{
+	};
+	pluginProto.cnds = {};
+	var cnds = pluginProto.cnds;
+	pluginProto.acts = {};
+var acts = pluginProto.acts;
+acts.log = function (data, dataObject) {
+		console.log(data);
+}
+acts.log_array = function (data, dataObject) {
+    if (data.instances != undefined) {
+        var currentRow = "";
+        for (var y = 0; y < data.instances[0].cy; y++) {
+            currentRow = "";
+            for (var x = 0; x < data.instances[0].cx; x++) {
+                currentRow = currentRow + JSON.stringify(data.instances[0].arr[x][y]);
+            }
+            console.log(currentRow);
+        }
+		console.log('\n');
+    } else {
+        console.log(data);
+    }
+}
+	pluginProto.exps = {};
+	var exps = pluginProto.exps;
+}());
 ;
 ;
 cr.behaviors.Platform = function(runtime)
@@ -18729,7 +19070,9 @@ cr.behaviors.solid = function(runtime)
 }());
 cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr,
+	cr.plugins_.Function,
 	cr.plugins_.Keyboard,
+	cr.plugins_.chromeconsole,
 	cr.plugins_.Sprite,
 	cr.plugins_.TiledBg,
 	cr.plugins_.Tilemap,
@@ -18737,15 +19080,7 @@ cr.getObjectRefTable = function () { return [
 	cr.behaviors.Platform,
 	cr.behaviors.scrollto,
 	cr.system_object.prototype.cnds.OnLayoutStart,
-	cr.plugins_.Arr.prototype.acts.SetSize,
-	cr.plugins_.Arr.prototype.cnds.ArrForEach,
-	cr.plugins_.Arr.prototype.acts.SetXY,
-	cr.plugins_.Arr.prototype.exps.CurX,
-	cr.plugins_.Arr.prototype.exps.CurY,
-	cr.system_object.prototype.exps.floor,
-	cr.system_object.prototype.exps.random,
-	cr.plugins_.Arr.prototype.cnds.CompareCurrent,
-	cr.plugins_.Tilemap.prototype.acts.SetTile,
+	cr.plugins_.Function.prototype.acts.CallFunction,
 	cr.plugins_.Sprite.prototype.cnds.OnCollision,
 	cr.system_object.prototype.acts.GoToLayoutByName,
 	cr.system_object.prototype.acts.ScrollToObject,
@@ -18756,5 +19091,25 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Sprite.prototype.acts.SetMirrored,
 	cr.plugins_.Sprite.prototype.cnds.CompareY,
 	cr.system_object.prototype.exps.layoutheight,
-	cr.system_object.prototype.acts.RestartLayout
+	cr.system_object.prototype.acts.RestartLayout,
+	cr.system_object.prototype.acts.SetVar,
+	cr.plugins_.Function.prototype.cnds.OnFunction,
+	cr.plugins_.Arr.prototype.acts.SetSize,
+	cr.plugins_.Arr.prototype.cnds.ArrForEach,
+	cr.system_object.prototype.cnds.Compare,
+	cr.system_object.prototype.exps.random,
+	cr.plugins_.Arr.prototype.acts.SetXY,
+	cr.plugins_.Arr.prototype.exps.CurX,
+	cr.plugins_.Arr.prototype.exps.CurY,
+	cr.system_object.prototype.cnds.For,
+	cr.plugins_.Arr.prototype.cnds.CompareCurrent,
+	cr.plugins_.Tilemap.prototype.acts.SetTile,
+	cr.plugins_.Function.prototype.exps.Call,
+	cr.system_object.prototype.cnds.CompareVar,
+	cr.system_object.prototype.cnds.Else,
+	cr.system_object.prototype.exps["int"],
+	cr.plugins_.Function.prototype.exps.Param,
+	cr.system_object.prototype.exps.loopindex,
+	cr.plugins_.Arr.prototype.cnds.CompareXY,
+	cr.plugins_.Function.prototype.acts.SetReturnValue
 ];};
