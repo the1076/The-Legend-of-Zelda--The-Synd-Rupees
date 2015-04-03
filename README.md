@@ -14,7 +14,8 @@ http://cynicstudios.com/subdomains/games/construct/loztsr
 I make no promises that you won't get stuck or that the game will actually...work. But, it's a dev build. I'll update this readme with a more production-ready version as soon as there is one available.
 
 ### Artwork
-*[there is currently no artwork to show]*
+##### Initial Link Design
+![Image of Link](https://pbs.twimg.com/media/CBpA4h0VEAALer9.jpg:large)
 
 ### Team
 The team behind **The Legend of Zelda: The Synd Rupees** is currently a very small one (as in **just** one). It is currently being developed by [@1076](https://twitter.com/1076), but has had some valuable input from very close friends. 
