@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Merchant Room</name>
+    <events>
+        <include>Player Events</include>
+        <event-block sid="8450119511087308">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="3187671351301" type="Player">
+                    <param id="0" name="Object">Trigger</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-25" name="Go to layout (by name)" sid="480462433783571" type="System">
+                    <param id="0" name="Layout">&quot;Dungeon Level&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="8356509461960022">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="8556254622534705" type="Keyboard">
+                    <param id="0" name="Key">192 (`)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-25" name="Go to layout (by name)" sid="1891850563860584" type="System">
+                    <param id="0" name="Layout">&quot;Procedural Generation Test&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

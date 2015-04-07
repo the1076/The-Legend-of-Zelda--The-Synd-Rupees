@@ -1,0 +1,802 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Procedural Generation Functions</name>
+    <events>
+        <variable constant="0" name="MapTileCountX" sid="7818368885881665" static="0" type="number">175</variable>
+        <variable constant="0" name="MapTileCountY" sid="1050000233023147" static="0" type="number">125</variable>
+        <variable constant="0" name="DeathLimit" sid="4281032945476488" static="0" type="number">4</variable>
+        <variable constant="0" name="BirthLimit" sid="4488476567889237" static="0" type="number">4</variable>
+        <variable constant="0" name="RefinementPasses" sid="4902032075991179" static="0" type="number">2</variable>
+        <variable constant="0" name="ChanceToStartAlive" sid="3108153382696939" static="0" type="number">0.35</variable>
+        <variable constant="0" name="LevelMapIsPopulated" sid="8138186603862944" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerStartingPoint" sid="3248359124553973" static="0" type="number">0</variable>
+        <event-block sid="1473496286296455">
+            <conditions>
+                <condition id="0" name="On function" sid="5423109873801195" type="Function">
+                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="1973480427190291" type="System">
+                    <param id="0" name="Variable">LevelMapIsPopulated</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="0" name="Call function" sid="7884239069236762" type="Function">
+                    <param id="0" name="Name">&quot;SeedMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="5087550650815378">
+                    <conditions>
+                        <condition id="-10" name="For" sid="9539167194638456" type="System">
+                            <param id="0" name="Name">&quot;i&quot;</param>
+                            <param id="1" name="Start index">1</param>
+                            <param id="2" name="End index">RefinementPasses</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="6054304397863273" type="Function">
+                            <param id="0" name="Name">&quot;RefineMap&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="4981834311061347">
+                    <conditions />
+                    <actions>
+                        <action id="0" name="Call function" sid="243641561885098" type="Function">
+                            <param id="0" name="Name">&quot;SetEndpoints&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Call function" sid="1552598332471081" type="Function">
+                            <param id="0" name="Name">&quot;DefinePath&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Call function" sid="6036598627929006" type="Function">
+                            <param id="0" name="Name">&quot;RenderMap&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="6167624735839516">
+            <conditions>
+                <condition id="0" name="On function" sid="169143344459367" type="Function">
+                    <param id="0" name="Name">&quot;SeedMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="1" name="Set size" sid="1631500802953318" type="Array_RandomLevelMask">
+                    <param id="0" name="Width">MapTileCountX</param>
+                    <param id="1" name="Height">MapTileCountY</param>
+                    <param id="2" name="Depth">1</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="6070871038114499">
+                    <conditions>
+                        <condition id="3" name="For each element" sid="3443925549116507" type="Array_RandomLevelMask">
+                            <param id="0" name="Axes">1</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <variable constant="0" name="randomFloat" sid="7953425415871498" static="0" type="number">0</variable>
+                        <event-block sid="6424906296086006">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="8156108732981512" type="System">
+                                    <param id="0" name="Variable">randomFloat</param>
+                                    <param id="1" name="Value">random(0,1)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="9755738967740227">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="4858106626595278" type="System">
+                                            <param id="0" name="First value">randomFloat</param>
+                                            <param id="1" name="Comparison">2</param>
+                                            <param id="2" name="Second value">ChanceToStartAlive</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="3" name="Set at XY" sid="2305162404007448" type="Array_RandomLevelMask">
+                                            <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                            <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                            <param id="2" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="3869149435246123">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="7900711007540446" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="3" name="Set at XY" sid="4234887165119637" type="Array_RandomLevelMask">
+                                            <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                            <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="1109781858962669">
+            <conditions>
+                <condition id="0" name="On function" sid="9610135377116354" type="Function">
+                    <param id="0" name="Name">&quot;RefineMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="1" name="Set size" sid="8768606705246453" type="Array_TemporaryLevelMask">
+                    <param id="0" name="Width">MapTileCountX</param>
+                    <param id="1" name="Height">MapTileCountY</param>
+                    <param id="2" name="Depth">1</param>
+                </action>
+                <action id="0" name="Clear" sid="2750013752921969" type="Array_TemporaryLevelMask" />
+            </actions>
+            <sub-events>
+                <variable constant="0" name="solidNeighbors" sid="7949044988032186" static="0" type="number">0</variable>
+                <event-block sid="468750243485868">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="5849191618588125" type="System">
+                            <param id="0" name="Variable">LevelMapIsPopulated</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="2631557426109033">
+                            <conditions>
+                                <condition id="3" name="For each element" sid="3108948835582173" type="Array_RandomLevelMask">
+                                    <param id="0" name="Axes">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="6837323125787081" type="System">
+                                    <param id="0" name="Variable">solidNeighbors</param>
+                                    <param id="1" name="Value">Function.Call(&quot;CountSolidNeighbors&quot;, Array_RandomLevelMask.CurX, Array_RandomLevelMask.CurY)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="9800216834189404">
+                                    <conditions>
+                                        <condition id="4" name="Compare current value" sid="2034197234118499" type="Array_RandomLevelMask">
+                                            <param id="0" name="Comparison">0</param>
+                                            <param id="1" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="6208366780730905">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="7177161984392504" type="System">
+                                                    <param id="0" name="Variable">solidNeighbors</param>
+                                                    <param id="1" name="Comparison">2</param>
+                                                    <param id="2" name="Value">DeathLimit</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="6757036025078036" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="506726492354004">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="6619721888934722" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="5387656844104435" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="9240729658992043">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="8567735950107064" type="System" />
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="8899796203029622">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="2783965820465412" type="System">
+                                                    <param id="0" name="Variable">solidNeighbors</param>
+                                                    <param id="1" name="Comparison">4</param>
+                                                    <param id="2" name="Value">BirthLimit</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="7139331247166409" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="8229363497018987">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="4932677997617427" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="4700455224260431" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="5955530111110908">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="2223127277298006" type="System">
+                                    <param id="0" name="Variable">LevelMapIsPopulated</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="1260386065702491">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="5517338535262036" type="System" />
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="308162304655212">
+                            <conditions>
+                                <condition id="3" name="For each element" sid="3738619151301945" type="Array_LevelMask">
+                                    <param id="0" name="Axes">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="9085723968165135" type="System">
+                                    <param id="0" name="Variable">solidNeighbors</param>
+                                    <param id="1" name="Value">Function.Call(&quot;CountSolidNeighbors&quot;, Array_LevelMask.CurX, Array_LevelMask.CurY)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="1784102281457019">
+                                    <conditions>
+                                        <condition id="4" name="Compare current value" sid="6693968318567501" type="Array_LevelMask">
+                                            <param id="0" name="Comparison">0</param>
+                                            <param id="1" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="7345275273494099">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="7806601666478913" type="System">
+                                                    <param id="0" name="Variable">solidNeighbors</param>
+                                                    <param id="1" name="Comparison">2</param>
+                                                    <param id="2" name="Value">DeathLimit</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="2988810577197166" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="9733452726102203">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="3047621660440645" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="2121577079970684" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="9548020035672453">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="3042495265673486" type="System" />
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="5085176258891138">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="5446374367613676" type="System">
+                                                    <param id="0" name="Variable">solidNeighbors</param>
+                                                    <param id="1" name="Comparison">4</param>
+                                                    <param id="2" name="Value">BirthLimit</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="855385053764192" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                    <param id="2" name="Value">1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="6111014535192177">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="4832657138074778" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="3" name="Set at XY" sid="9773576509991746" type="Array_TemporaryLevelMask">
+                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="4431772529688446">
+                    <conditions />
+                    <actions>
+                        <action id="1" name="Set size" sid="3145778439853556" type="Array_LevelMask">
+                            <param id="0" name="Width">MapTileCountX</param>
+                            <param id="1" name="Height">MapTileCountY</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="0" name="Clear" sid="4094553165241943" type="Array_LevelMask" />
+                    </actions>
+                </event-block>
+                <event-block sid="3047040656416727">
+                    <conditions>
+                        <condition id="3" name="For each element" sid="2597779841836656" type="Array_TemporaryLevelMask">
+                            <param id="0" name="Axes">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="3" name="Set at XY" sid="5575977042004281" type="Array_LevelMask">
+                            <param id="0" name="X">Array_TemporaryLevelMask.CurX</param>
+                            <param id="1" name="Y">Array_TemporaryLevelMask.CurY</param>
+                            <param id="2" name="Value">Array_TemporaryLevelMask.CurValue</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="8494983719575951">
+            <conditions>
+                <condition id="0" name="On function" sid="8250249708571167" type="Function">
+                    <param id="0" name="Name">&quot;CountSolidNeighbors&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="Count" sid="678024712621138" static="0" type="number">0</variable>
+                <event-block sid="2986334922716824">
+                    <conditions />
+                    <actions>
+                        <action id="1" name="Set size" sid="4568753779012123" type="Array_NeighborCountHelperX">
+                            <param id="0" name="Width">3</param>
+                            <param id="1" name="Height">1</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="4056403136201211" type="Array_NeighborCountHelperX">
+                            <param id="0" name="X">0</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">-1</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="3139912712624563" type="Array_NeighborCountHelperX">
+                            <param id="0" name="X">1</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">0</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="7181079325201583" type="Array_NeighborCountHelperX">
+                            <param id="0" name="X">2</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">1</param>
+                        </action>
+                        <action id="1" name="Set size" sid="9423195663555626" type="Array_NeighborCountHelperY">
+                            <param id="0" name="Width">3</param>
+                            <param id="1" name="Height">1</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="1680147802655261" type="Array_NeighborCountHelperY">
+                            <param id="0" name="X">0</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">-1</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="1799173566675188" type="Array_NeighborCountHelperY">
+                            <param id="0" name="X">1</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">0</param>
+                        </action>
+                        <action id="3" name="Set at XY" sid="3916600733295668" type="Array_NeighborCountHelperY">
+                            <param id="0" name="X">2</param>
+                            <param id="1" name="Y">0</param>
+                            <param id="2" name="Value">1</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <variable constant="0" name="neighborX" sid="7206310750627532" static="0" type="number">0</variable>
+                        <variable constant="0" name="neighborY" sid="3257568316230895" static="0" type="number">0</variable>
+                        <event-block sid="4799425266198263">
+                            <conditions>
+                                <condition id="3" name="For each element" sid="249930196545324" type="Array_NeighborCountHelperX">
+                                    <param id="0" name="Axes">2</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="4675526552091153">
+                                    <conditions>
+                                        <condition id="3" name="For each element" sid="7825378958396769" type="Array_NeighborCountHelperY">
+                                            <param id="0" name="Axes">2</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="6970530782608938">
+                                            <conditions />
+                                            <actions>
+                                                <action id="-9" name="Set value" sid="2487737626272794" type="System">
+                                                    <param id="0" name="Variable">neighborX</param>
+                                                    <param id="1" name="Value">int(Function.Param(0)) + Array_NeighborCountHelperX.CurValue</param>
+                                                </action>
+                                                <action id="-9" name="Set value" sid="6270667609137242" type="System">
+                                                    <param id="0" name="Variable">neighborY</param>
+                                                    <param id="1" name="Value">int(Function.Param(1)) + Array_NeighborCountHelperY.CurValue</param>
+                                                </action>
+                                                <action disabled="1" id="0" name="Log Text" sid="3934643279764541" type="ChromeConsole">
+                                                    <param id="0" name="Data">&quot;I: &quot; &amp; Array_NeighborCountHelperX.CurValue &amp; &quot;, J: &quot; &amp; Array_NeighborCountHelperY.CurValue</param>
+                                                </action>
+                                            </actions>
+                                            <sub-events>
+                                                <event-block sid="9786564860307507">
+                                                    <conditions>
+                                                        <condition id="-8" name="Compare two values" sid="771884055641433" type="System">
+                                                            <param id="0" name="First value">loopindex(&quot;i&quot;)</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Second value">0</param>
+                                                        </condition>
+                                                        <condition id="-8" name="Compare two values" sid="3019101973425462" type="System">
+                                                            <param id="0" name="First value">loopindex(&quot;j&quot;)</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Second value">0</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions />
+                                                </event-block>
+                                                <event-block sid="1448266169101226">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="7676212815397921" type="System" />
+                                                    </conditions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block any="1" sid="5046613746007936">
+                                                            <conditions>
+                                                                <condition id="-14" name="Compare variable" sid="2445914108152072" type="System">
+                                                                    <param id="0" name="Variable">neighborX</param>
+                                                                    <param id="1" name="Comparison">2</param>
+                                                                    <param id="2" name="Value">0</param>
+                                                                </condition>
+                                                                <condition id="-14" name="Compare variable" sid="7481846215747073" type="System">
+                                                                    <param id="0" name="Variable">neighborY</param>
+                                                                    <param id="1" name="Comparison">2</param>
+                                                                    <param id="2" name="Value">0</param>
+                                                                </condition>
+                                                                <condition id="-14" name="Compare variable" sid="9131751332534818" type="System">
+                                                                    <param id="0" name="Variable">neighborX</param>
+                                                                    <param id="1" name="Comparison">5</param>
+                                                                    <param id="2" name="Value">MapTileCountX</param>
+                                                                </condition>
+                                                                <condition id="-14" name="Compare variable" sid="9343028149746077" type="System">
+                                                                    <param id="0" name="Variable">neighborY</param>
+                                                                    <param id="1" name="Comparison">5</param>
+                                                                    <param id="2" name="Value">MapTileCountY</param>
+                                                                </condition>
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="-9" name="Set value" sid="958572193960371" type="System">
+                                                                    <param id="0" name="Variable">Count</param>
+                                                                    <param id="1" name="Value">Count + 1</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="8098216304078572">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="9043373979775835" type="System" />
+                                                            </conditions>
+                                                            <actions />
+                                                            <sub-events>
+                                                                <event-block sid="9066540310026244">
+                                                                    <conditions>
+                                                                        <condition id="-14" name="Compare variable" sid="5457040290772649" type="System">
+                                                                            <param id="0" name="Variable">LevelMapIsPopulated</param>
+                                                                            <param id="1" name="Comparison">0</param>
+                                                                            <param id="2" name="Value">0</param>
+                                                                        </condition>
+                                                                    </conditions>
+                                                                    <actions />
+                                                                    <sub-events>
+                                                                        <event-block sid="1565196477605181">
+                                                                            <conditions>
+                                                                                <condition id="1" name="Compare at XY" sid="7068421809191023" type="Array_RandomLevelMask">
+                                                                                    <param id="0" name="X">neighborX</param>
+                                                                                    <param id="1" name="Y">neighborY</param>
+                                                                                    <param id="2" name="Comparison">0</param>
+                                                                                    <param id="3" name="Value">1</param>
+                                                                                </condition>
+                                                                            </conditions>
+                                                                            <actions>
+                                                                                <action id="-9" name="Set value" sid="9574769959772459" type="System">
+                                                                                    <param id="0" name="Variable">Count</param>
+                                                                                    <param id="1" name="Value">Count + 1</param>
+                                                                                </action>
+                                                                            </actions>
+                                                                        </event-block>
+                                                                    </sub-events>
+                                                                </event-block>
+                                                                <event-block sid="3798109286907621">
+                                                                    <conditions>
+                                                                        <condition id="-22" name="Else" sid="7796416183777246" type="System" />
+                                                                    </conditions>
+                                                                    <actions />
+                                                                    <sub-events>
+                                                                        <event-block sid="6055116667623145">
+                                                                            <conditions>
+                                                                                <condition id="1" name="Compare at XY" sid="3060000347783175" type="Array_LevelMask">
+                                                                                    <param id="0" name="X">neighborX</param>
+                                                                                    <param id="1" name="Y">neighborY</param>
+                                                                                    <param id="2" name="Comparison">0</param>
+                                                                                    <param id="3" name="Value">1</param>
+                                                                                </condition>
+                                                                            </conditions>
+                                                                            <actions>
+                                                                                <action id="-9" name="Set value" sid="9282911595949007" type="System">
+                                                                                    <param id="0" name="Variable">Count</param>
+                                                                                    <param id="1" name="Value">Count + 1</param>
+                                                                                </action>
+                                                                            </actions>
+                                                                        </event-block>
+                                                                    </sub-events>
+                                                                </event-block>
+                                                            </sub-events>
+                                                        </event-block>
+                                                    </sub-events>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="7739825365712519">
+                            <conditions>
+                                <condition disabled="1" id="-10" name="For" sid="4235872182324104" type="System">
+                                    <param id="0" name="Name">&quot;i&quot;</param>
+                                    <param id="1" name="Start index">-1</param>
+                                    <param id="2" name="End index">1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="3932611213879572">
+                                    <conditions>
+                                        <condition disabled="1" id="-10" name="For" sid="860398090576315" type="System">
+                                            <param id="0" name="Name">&quot;j&quot;</param>
+                                            <param id="1" name="Start index">-1</param>
+                                            <param id="2" name="End index">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="3229110168963932">
+                            <conditions />
+                            <actions>
+                                <action id="1" name="Set return value" sid="9488823577514441" type="Function">
+                                    <param id="0" name="Value">Count</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="630227202884306">
+            <conditions>
+                <condition id="0" name="On function" sid="4871219563714923" type="Function">
+                    <param id="0" name="Name">&quot;SetEndpoints&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="consecutiveCount" sid="7219110076871172" static="0" type="number">0</variable>
+                <variable constant="0" name="EnterEndpoint1" sid="7915738667709804" static="0" type="number">0</variable>
+                <variable constant="0" name="EnterEndpoint2" sid="9336629020108459" static="0" type="number">0</variable>
+                <variable constant="0" name="EnterEndpoint3" sid="7539823215067778" static="0" type="number">0</variable>
+                <event-block sid="7797646283607441">
+                    <conditions>
+                        <condition id="-10" name="For" sid="6658079539112483" type="System">
+                            <param id="0" name="Name">&quot;EnterEndpointLoop&quot;</param>
+                            <param id="1" name="Start index">0</param>
+                            <param id="2" name="End index">MapTileCountY</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Log Text" sid="351788738877429" type="ChromeConsole">
+                            <param id="0" name="Data">&quot;Level Mask Value at &quot; &amp; 0 &amp; &quot;, &quot; &amp; loopindex(&quot;EnterEndpointLoop&quot;) &amp; &quot;: &quot; &amp; Array_LevelMask.At( 0, loopindex(&quot;EnterEndpointLoop&quot;))</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="4712041805728416">
+                            <conditions>
+                                <condition id="1" name="Compare at XY" sid="178735072447536" type="Array_LevelMask">
+                                    <param id="0" name="X">0</param>
+                                    <param id="1" name="Y">loopindex(&quot;EnterEndpointLoop&quot;)</param>
+                                    <param id="2" name="Comparison">0</param>
+                                    <param id="3" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="1341041141781797" type="System">
+                                    <param id="0" name="Variable">consecutiveCount</param>
+                                    <param id="1" name="Value">int(consecutiveCount) + 1</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="386812873725485">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="5260933771009518" type="System">
+                                            <param id="0" name="Variable">consecutiveCount</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="9832707932867719" type="System">
+                                            <param id="0" name="Variable">EnterEndpoint1</param>
+                                            <param id="1" name="Value">loopindex(&quot;EnterEndpointLoop&quot;)</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="7185156757750549">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="3714463574335032" type="System">
+                                            <param id="0" name="Variable">consecutiveCount</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">2</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="9665847938773679" type="System">
+                                            <param id="0" name="Variable">EnterEndpoint2</param>
+                                            <param id="1" name="Value">loopindex(&quot;EnterEndpointLoop&quot;)</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="9215945579242569">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="7232472829596474" type="System">
+                                            <param id="0" name="Variable">consecutiveCount</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">3</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="2740954912558958" type="System">
+                                            <param id="0" name="Variable">EnterEndpoint3</param>
+                                            <param id="1" name="Value">loopindex(&quot;EnterEndpointLoop&quot;)</param>
+                                        </action>
+                                        <action id="-24" name="Stop loop" sid="5288816120067446" type="System" />
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="1997078386975218">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="3812067538090553" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="3329623711087558" type="System">
+                                    <param id="0" name="Variable">consecutiveCount</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="7521158507809528">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="7379351286286804" type="System">
+                            <param id="0" name="Variable">consecutiveCount</param>
+                            <param id="1" name="Comparison">2</param>
+                            <param id="2" name="Value">3</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Log Text" sid="2607142815924623" type="ChromeConsole">
+                            <param id="0" name="Data">&quot;Could not find 3 consecutive points&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="7680158666822777">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="8281456581373616" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Log Text" sid="2176320320418856" type="ChromeConsole">
+                            <param id="0" name="Data">&quot;Enter Y Values: &quot; &amp; EnterEndpoint1 &amp; &quot;, &quot; &amp; EnterEndpoint2 &amp; &quot;, &quot; &amp; EnterEndpoint3</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="6772991268737698" type="System">
+                            <param id="0" name="Variable">PlayerStartingPoint</param>
+                            <param id="1" name="Value">EnterEndpoint3 * 32 - (64/2)</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="193168596925488">
+            <conditions>
+                <condition id="0" name="On function" sid="5368355133516314" type="Function">
+                    <param id="0" name="Name">&quot;DefinePath&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+        </event-block>
+        <event-block sid="8954527376011768">
+            <conditions>
+                <condition id="0" name="On function" sid="458532928624678" type="Function">
+                    <param id="0" name="Name">&quot;RenderMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="65873215271786">
+                    <conditions>
+                        <condition id="3" name="For each element" sid="9004811925412567" type="Array_LevelMask">
+                            <param id="0" name="Axes">1</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="8231021838507769">
+                            <conditions>
+                                <condition id="4" name="Compare current value" sid="4780629427481802" type="Array_LevelMask">
+                                    <param id="0" name="Comparison">0</param>
+                                    <param id="1" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="1" name="Set tile" sid="3346145593213603" type="Tilemap_Bitmask">
+                                    <param id="0" name="Tile X">Array_LevelMask.CurX</param>
+                                    <param id="1" name="Tile Y">Array_LevelMask.CurY</param>
+                                    <param id="2" name="Tile">0</param>
+                                    <param id="3" name="State">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>

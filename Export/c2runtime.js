@@ -3110,8 +3110,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		this.isFirefox = /firefox/i.test(navigator.userAgent);
 		this.isSafari = /safari/i.test(navigator.userAgent) && !this.isChrome && !this.isIE;		// Chrome and IE Mobile masquerade as Safari
 		this.isWindows = /windows/i.test(navigator.userAgent);
-		this.isNWjs = (typeof window["c2nodewebkit"] !== "undefined" || typeof window["c2nwjs"] !== "undefined" || /nodewebkit/i.test(navigator.userAgent) || /nwjs/i.test(navigator.userAgent));
-		this.isNodeWebkit = this.isNWjs;		// old name for backwards compat
+		this.isNodeWebkit = (typeof window["c2nodewebkit"] !== "undefined" || /nodewebkit/i.test(navigator.userAgent));
 		this.isArcade = (typeof window["is_scirra_arcade"] !== "undefined");
 		this.isWindows8App = !!(typeof window["c2isWindows8"] !== "undefined" && window["c2isWindows8"]);
 		this.isWindows8Capable = !!(typeof window["c2isWindows8Capable"] !== "undefined" && window["c2isWindows8Capable"]);
@@ -3126,9 +3125,9 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		{
 			this.isMobile = /(blackberry|bb10|playbook|palm|symbian|nokia|windows\s+ce|phone|mobile|tablet|kindle|silk)/i.test(navigator.userAgent);
 		}
-		if (typeof cr_is_preview !== "undefined" && !this.isNWjs && (window.location.search === "?nw" || /nodewebkit/i.test(navigator.userAgent) || /nwjs/i.test(navigator.userAgent)))
+		if (typeof cr_is_preview !== "undefined" && !this.isNodeWebkit && (window.location.search === "?nw" || /nodewebkit/i.test(navigator.userAgent)))
 		{
-			this.isNWjs = true;
+			this.isNodeWebkit = true;
 		}
 		this.isDebug = (typeof cr_is_preview !== "undefined" && window.location.search.indexOf("debug") > -1);
 		this.canvas = canvas;
@@ -3144,7 +3143,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		this.canvas.onselectstart = function (e) { if (e.preventDefault) e.preventDefault(); return false; };
 		if (this.isDirectCanvas)
 			window["c2runtime"] = this;
-		if (this.isNWjs)
+		if (this.isNodeWebkit)
 		{
 			window["ondragover"] = function(e) { e.preventDefault(); return false; };
 			window["ondrop"] = function(e) { e.preventDefault(); return false; };
@@ -3202,10 +3201,12 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
         this.dt1 = 0;
 		this.logictime = 0;			// used to calculate CPUUtilisation
 		this.cpuutilisation = 0;
+		this.zeroDtCount = 0;
         this.timescale = 1.0;
         this.kahanTime = new cr.KahanAdder();
 		this.wallTime = new cr.KahanAdder();
 		this.last_tick_time = 0;
+		this.measuring_dt = true;
 		this.fps = 0;
 		this.last_fps_time = 0;
 		this.tickcount = 0;
@@ -3234,6 +3235,9 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		this.isNodeFullscreen = false;
 		this.stackLocalCount = 0;	// number of stack-based local vars for recursion
 		this.audioInstance = null;
+		this.halfFramerateMode = false;
+		this.lastRafTime = 0;		// time of last requestAnimationFrame call
+		this.ranLastRaf = false;	// false if last requestAnimationFrame was skipped for half framerate mode
 		this.had_a_click = false;
 		this.isInUserInputEvent = false;
 		this.objects_to_pretick = new cr.ObjectSet();
@@ -3351,7 +3355,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		this.devicePixelRatio = (this.isRetina ? (window["devicePixelRatio"] || window["webkitDevicePixelRatio"] || window["mozDevicePixelRatio"] || window["msDevicePixelRatio"] || 1) : 1);
 		this.ClearDeathRow();
 		var attribs;
-		var alpha_canvas = !!(this.forceCanvasAlpha || (this.alphaBackground && !(this.isNWjs || this.isWinJS || this.isWindowsPhone8 || this.isCrosswalk || this.isCordova || this.isAmazonWebApp)));
+		var alpha_canvas = !!(this.forceCanvasAlpha || (this.alphaBackground && !(this.isNodeWebkit || this.isWinJS || this.isWindowsPhone8 || this.isCrosswalk || this.isCordova || this.isAmazonWebApp)));
 		if (this.fullscreen_mode > 0)
 			this["setSize"](window_innerWidth(), window_innerHeight(), true);
 		try {
@@ -3482,7 +3486,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			this.overlay_canvas = null;
 			this.overlay_ctx = null;
 		}
-		this.tickFunc = function (timestamp) { self.tick(false, timestamp); };
+		this.tickFunc = function () { self.tick(false); };
 		if (window != window.top && !this.isDomFree && !this.isWinJS && !this.isWindowsPhone8)
 		{
 			document.addEventListener("mousedown", function () {
@@ -3619,13 +3623,13 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 					h = newh;
 				}
 			}
-			if (isfullscreen && !this.isNWjs)
+			if (isfullscreen && !this.isNodeWebkit)
 			{
 				offx = 0;
 				offy = 0;
 			}
 		}
-		else if (this.isNWjs && this.isNodeFullscreen && this.fullscreen_mode_set === 0)
+		else if (this.isNodeWebkit && this.isNodeFullscreen && this.fullscreen_mode_set === 0)
 		{
 			offx = Math.floor((w - this.original_width) / 2);
 			offy = Math.floor((h - this.original_height) / 2);
@@ -4388,24 +4392,26 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	  window["webkitRequestAnimationFrame"] ||
 	  window["msRequestAnimationFrame"]     ||
 	  window["oRequestAnimationFrame"];
-	Runtime.prototype.tick = function (background_wake, timestamp, debug_step)
+	Runtime.prototype.tick = function (background_wake)
 	{
 		if (!this.running_layout)
 			return;
-		var nowtime = cr.performance_now();
-		var logic_start = nowtime;
-		if (!debug_step && this.isSuspended && !background_wake)
-			return;
-		if (!background_wake)
+		var logic_start = cr.performance_now();
+		if (this.halfFramerateMode && this.ranLastRaf)
 		{
-			if (raf)
-				this.raf_id = raf(this.tickFunc);
-			else
+			if (logic_start - this.lastRafTime < 29)
 			{
-				this.timeout_id = setTimeout(this.tickFunc, this.isMobile ? 1 : 16);
+				this.ranLastRaf = false;
+				this.lastRafTime = logic_start;
+				if (raf)
+					this.raf_id = raf(this.tickFunc, this.canvas);
+				else	// no idea if this works without raf/hi res timers but let's hope for the best
+					this.timeout_id = setTimeout(this.tickFunc, this.isMobile ? 1 : 16);
+				return;		// skipped this frame
 			}
 		}
-		var raf_time = timestamp || nowtime;
+		this.ranLastRaf = true;
+		this.lastRafTime = logic_start;
 		var fsmode = this.fullscreen_mode;
 		var isfullscreen = (document["mozFullScreen"] || document["webkitIsFullScreen"] || document["fullScreen"] || !!document["msFullscreenElement"]) && !this.isCordova;
 		if ((isfullscreen || this.isNodeFullscreen) && this.fullscreen_scaling > 0)
@@ -4428,7 +4434,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 					this.fullscreenOldMarginCss = jQuery(this.canvas).css("margin") || "0";
 					this.firstInFullscreen = true;
 				}
-				if (!this.isChrome && !this.isNWjs)
+				if (!this.isChrome && !this.isNodeWebkit)
 				{
 					jQuery(this.canvas).css({
 						"margin-left": "" + Math.floor((screen.width - (this.width / this.devicePixelRatio)) / 2) + "px",
@@ -4440,7 +4446,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			{
 				if (this.firstInFullscreen)
 				{
-					if (!this.isChrome && !this.isNWjs)
+					if (!this.isChrome && !this.isNodeWebkit)
 					{
 						jQuery(this.canvas).css("margin", this.fullscreenOldMarginCss);
 					}
@@ -4469,7 +4475,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 				this.trigger(cr.system_object.prototype.cnds.OnLoadFinished, null);
 			}
 		}
-		this.logic(raf_time);
+		this.logic();
 		if ((this.redraw || this.isCocoonJs) && !this.is_WebGL_context_lost && !this.suspendDrawing && !background_wake)
 		{
 			this.redraw = false;
@@ -4494,10 +4500,19 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			this.framecount++;
 		}
 		this.logictime += cr.performance_now() - logic_start;
+		if (this.isSuspended || background_wake)
+			return;
+		if (raf)
+			this.raf_id = raf(this.tickFunc, this.canvas);
+		else
+		{
+			this.timeout_id = setTimeout(this.tickFunc, this.isMobile ? 1 : 16);
+		}
 	};
-	Runtime.prototype.logic = function (cur_time)
+	Runtime.prototype.logic = function ()
 	{
 		var i, leni, j, lenj, k, lenk, type, inst, binst;
+		var cur_time = cr.performance_now();
 		if (cur_time - this.last_fps_time >= 1000)  // every 1 second
 		{
 			this.last_fps_time += 1000;
@@ -4508,18 +4523,29 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			this.cpuutilisation = this.logictime;
 			this.logictime = 0;
 		}
-		if (this.last_tick_time !== 0)
+		if (this.measuring_dt)
 		{
-			var ms_diff = cur_time - this.last_tick_time;
-			if (ms_diff < 0)
-				ms_diff = 0;
-			this.dt1 = ms_diff / 1000.0; // dt measured in seconds
-			if (this.dt1 > 0.5)
-				this.dt1 = 0;
-			else if (this.dt1 > 0.1)
-				this.dt1 = 0.1;
+			if (this.last_tick_time !== 0)
+			{
+				var ms_diff = cur_time - this.last_tick_time;
+				if (ms_diff === 0 && !this.isDebug)
+				{
+					this.zeroDtCount++;
+					if (this.zeroDtCout >= 10)
+						this.measuring_dt = false;
+					this.dt1 = 1.0 / 60.0;            // 60fps assumed (0.01666...)
+				}
+				else
+				{
+					this.dt1 = ms_diff / 1000.0; // dt measured in seconds
+					if (this.dt1 > 0.5)
+						this.dt1 = 0;
+					else if (this.dt1 > 0.1)
+						this.dt1 = 0.1;
+				}
+			}
+			this.last_tick_time = cur_time;
 		}
-		this.last_tick_time = cur_time;
         this.dt = this.dt1 * this.timescale;
         this.kahanTime.add(this.dt);
 		this.wallTime.add(this.dt1);
@@ -4947,7 +4973,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			inst = new type.plugin.Instance(type);
 			inst.recycled = false;
 		}
-		if (is_startup_instance && !skip_siblings && !this.objectsByUid.hasOwnProperty(initial_inst[2].toString()))
+		if (is_startup_instance && !skip_siblings)
 			inst.uid = initial_inst[2];
 		else
 			inst.uid = this.next_uid++;
@@ -6601,7 +6627,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			{
 				g = this.getGroupBySid(parseInt(p, 10));
 				if (g && this.groups_by_name[g.group_name])
-					this.groups_by_name[g.group_name].setGroupActive(ogroups[p]);
+					this.groups_by_name[g.group_name].group_active = ogroups[p];
 			}
 		}
 		var ocnds = o["events"]["cnds"];
@@ -7777,7 +7803,7 @@ window["cr_setSuspended"] = function(s)
 	};
 	Layout.prototype.loadFromJSON = function (o)
 	{
-		var i, j, len, fx, p, layer;
+		var i, len, fx, p, layer;
 		this.scrollX = o["sx"];
 		this.scrollY = o["sy"];
 		this.scale = o["s"];
@@ -7855,9 +7881,7 @@ window["cr_setSuspended"] = function(s)
 		this.render_offscreen = false;
 		var im = m[14];
 		var i, len;
-		this.startup_initial_instances = [];		// for restoring initial_instances after load
 		this.initial_instances = [];
-		this.created_globals = [];		// global object UIDs already created - for save/load to avoid recreating
 		for (i = 0, len = im.length; i < len; i++)
 		{
 			var inst = im[i];
@@ -7872,7 +7896,6 @@ window["cr_setSuspended"] = function(s)
 			if (this.layout.initial_types.indexOf(type) === -1)
 				this.layout.initial_types.push(type);
 		}
-		cr.shallowAssignArray(this.startup_initial_instances, this.initial_instances);
 		this.effect_types = [];
 		this.active_effect_types = [];
 		this.effect_params = [];
@@ -7929,10 +7952,7 @@ window["cr_setSuspended"] = function(s)
 ;
 				created_instances.push(inst);
 				if (inst.type.global)
-				{
 					keep = false;
-					this.created_globals.push(inst.uid);
-				}
 			}
 			if (keep)
 			{
@@ -8640,7 +8660,6 @@ window["cr_setSuspended"] = function(s)
 			"o": this.opacity,
 			"zr": this.zoomRate,
 			"fx": [],
-			"cg": this.created_globals,		// added r197; list of global UIDs already created
 			"instances": []
 		};
 		for (i = 0, len = this.effect_types.length; i < len; i++)
@@ -8652,7 +8671,7 @@ window["cr_setSuspended"] = function(s)
 	};
 	Layer.prototype.loadFromJSON = function (o)
 	{
-		var i, j, len, p, inst, fx;
+		var i, len, p, inst, fx;
 		this.scale = o["s"];
 		this.angle = o["a"];
 		this.viewLeft = o["vl"];
@@ -8666,20 +8685,6 @@ window["cr_setSuspended"] = function(s)
 		this.parallaxY = o["py"];
 		this.opacity = o["o"];
 		this.zoomRate = o["zr"];
-		this.created_globals = o["cg"] || [];		// added r197
-		cr.shallowAssignArray(this.initial_instances, this.startup_initial_instances);
-		var temp_set = new cr.ObjectSet();
-		for (i = 0, len = this.created_globals.length; i < len; ++i)
-			temp_set.add(this.created_globals[i]);
-		for (i = 0, j = 0, len = this.initial_instances.length; i < len; ++i)
-		{
-			if (!temp_set.contains(this.initial_instances[i][2]))		// UID in element 2
-			{
-				this.initial_instances[j] = this.initial_instances[i];
-				++j;
-			}
-		}
-		this.initial_instances.length = j;
 		var ofx = o["fx"];
 		for (i = 0, len = ofx.length; i < len; i++)
 		{
@@ -9095,7 +9100,7 @@ window["cr_setSuspended"] = function(s)
 			this.is_else_block = (this.conditions[0].type == null && this.conditions[0].func == cr.system_object.prototype.cnds.Else);
 		}
 	};
-	window["_c2hh_"] = "";
+	window["_c2hh_"] = "08D43C3361C7BABE34292091F3C762C20A2FF34C";
 	EventBlock.prototype.postInit = function (hasElse/*, prevBlock_*/)
 	{
 		var i, len;
@@ -9735,26 +9740,22 @@ window["cr_setSuspended"] = function(s)
 	};
 	Action.prototype.run_system = function ()
 	{
-		var runtime = this.runtime;
 		var i, len;
-		var parameters = this.parameters;
-		var results = this.results;
-		for (i = 0, len = parameters.length; i < len; ++i)
-			results[i] = parameters[i].get();
-		return this.func.apply(runtime.system, results);
+		for (i = 0, len = this.parameters.length; i < len; i++)
+			this.results[i] = this.parameters[i].get();
+		return this.func.apply(this.runtime.system, this.results);
 	};
 	Action.prototype.run_object = function ()
 	{
-		var type = this.type;
+		var instances = this.type.getCurrentSol().getObjects();
+		var is_family = this.type.is_family;
+		var family_index = this.type.family_index;
 		var beh_index = this.beh_index;
-		var family_index = type.family_index;
+		var is_beh = (beh_index > -1);
 		var params_vary = this.anyParamVariesPerInstance;
 		var parameters = this.parameters;
 		var results = this.results;
 		var func = this.func;
-		var instances = type.getCurrentSol().getObjects();
-		var is_family = type.is_family;
-		var is_beh = (beh_index > -1);
 		var i, j, leni, lenj, p, inst, offset;
 		if (params_vary)
 		{
@@ -9799,17 +9800,6 @@ window["cr_setSuspended"] = function(s)
 	cr.action = Action;
 	var tempValues = [];
 	var tempValuesPtr = -1;
-	function pushTempValue()
-	{
-		tempValuesPtr++;
-		if (tempValues.length === tempValuesPtr)
-			tempValues.push(new cr.expvalue());
-		return tempValues[tempValuesPtr];
-	};
-	function popTempValue()
-	{
-		tempValuesPtr--;
-	};
 	function Parameter(owner, m)
 	{
 		this.owner = owner;
@@ -9944,20 +9934,31 @@ window["cr_setSuspended"] = function(s)
 	{
 		this.variesPerInstance = true;
 	};
+	Parameter.prototype.pushTempValue = function ()
+	{
+		tempValuesPtr++;
+		if (tempValues.length === tempValuesPtr)
+			tempValues.push(new cr.expvalue());
+		return tempValues[tempValuesPtr];
+	};
+	Parameter.prototype.popTempValue = function ()
+	{
+		tempValuesPtr--;
+	};
 	Parameter.prototype.get_exp = function (solindex)
 	{
 		this.solindex = solindex || 0;   // default SOL index to use
-		var temp = pushTempValue();
+		var temp = this.pushTempValue();
 		this.expression.get(temp);
-		popTempValue();
+		this.popTempValue();
 		return temp.data;      			// return actual JS value, not expvalue
 	};
 	Parameter.prototype.get_exp_str = function (solindex)
 	{
 		this.solindex = solindex || 0;   // default SOL index to use
-		var temp = pushTempValue();
+		var temp = this.pushTempValue();
 		this.expression.get(temp);
-		popTempValue();
+		this.popTempValue();
 		if (cr.is_string(temp.data))
 			return temp.data;
 		else
@@ -9974,9 +9975,9 @@ window["cr_setSuspended"] = function(s)
 	Parameter.prototype.get_layer = function (solindex)
 	{
 		this.solindex = solindex || 0;   // default SOL index to use
-		var temp = pushTempValue();
+		var temp = this.pushTempValue();
 		this.expression.get(temp);
-		popTempValue();
+		this.popTempValue();
 		if (temp.is_number())
 			return this.runtime.getLayerByNumber(temp.data);
 		else
@@ -10212,9 +10213,9 @@ window["cr_setSuspended"] = function(s)
 					this.eval_greaterequal,
 					this.eval_conditional,
 					this.eval_system_exp,
-					this.eval_object_exp,
+					this.eval_object_behavior_exp,
 					this.eval_instvar_exp,
-					this.eval_behavior_exp,
+					this.eval_object_behavior_exp,
 					this.eval_eventvar_exp][this.type];
 		var paramsModel = null;
 		this.value = null;
@@ -10361,47 +10362,22 @@ window["cr_setSuspended"] = function(s)
 				this.parameters[i].postInit();
 		}
 	};
-	var tempValues = [];
-	var tempValuesPtr = -1;
-	function pushTempValue()
-	{
-		++tempValuesPtr;
-		if (tempValues.length === tempValuesPtr)
-			tempValues.push(new cr.expvalue());
-		return tempValues[tempValuesPtr];
-	};
-	function popTempValue()
-	{
-		--tempValuesPtr;
-	};
-	function eval_params(parameters, results, temp)
-	{
-		var i, len;
-		for (i = 0, len = parameters.length; i < len; ++i)
-		{
-			parameters[i].get(temp);
-			results[i + 1] = temp.data;   // passing actual javascript value as argument instead of expvalue
-		}
-	}
 	ExpNode.prototype.eval_system_exp = function (ret)
 	{
-		var parameters = this.parameters;
-		var results = this.results;
-		results[0] = ret;
-		var temp = pushTempValue();
-		eval_params(parameters, results, temp);
-		popTempValue();
-		this.func.apply(this.runtime.system, results);
+		this.results[0] = ret;
+		var temp = this.owner.pushTempValue();
+		var i, len;
+		for (i = 0, len = this.parameters.length; i < len; i++)
+		{
+			this.parameters[i].get(temp);
+			this.results[i + 1] = temp.data;   // passing actual javascript value as argument instead of expvalue
+		}
+		this.owner.popTempValue();
+		this.func.apply(this.runtime.system, this.results);
 	};
-	ExpNode.prototype.eval_object_exp = function (ret)
+	ExpNode.prototype.eval_object_behavior_exp = function (ret)
 	{
-		var object_type = this.object_type;
-		var results = this.results;
-		var parameters = this.parameters;
-		var instance_expr = this.instance_expr;
-		var func = this.func;
-		var index = this.owner.solindex;			// default to parameter's intended SOL index
-		var sol = object_type.getCurrentSol();
+		var sol = this.object_type.getCurrentSol();
 		var instances = sol.getObjects();
 		if (!instances.length)
 		{
@@ -10416,83 +10392,44 @@ window["cr_setSuspended"] = function(s)
 				return;
 			}
 		}
-		results[0] = ret;
-		ret.object_class = object_type;		// so expression can access family type if need be
-		var temp = pushTempValue();
-		eval_params(parameters, results, temp);
-		if (instance_expr) {
-			instance_expr.get(temp);
+		this.results[0] = ret;
+		ret.object_class = this.object_type;		// so expression can access family type if need be
+		var temp = this.owner.pushTempValue();
+		var i, len;
+		for (i = 0, len = this.parameters.length; i < len; i++) {
+			this.parameters[i].get(temp);
+			this.results[i + 1] = temp.data;   // passing actual javascript value as argument instead of expvalue
+		}
+		var index = this.owner.solindex;
+		if (this.instance_expr) {
+			this.instance_expr.get(temp);
 			if (temp.is_number()) {
 				index = temp.data;
-				instances = object_type.instances;    // pick from all instances, not SOL
+				instances = this.object_type.instances;    // pick from all instances, not SOL
 			}
 		}
-		popTempValue();
-		var len = instances.length;
-		if (index >= len || index <= -len)
-			index %= len;      // wraparound
+		this.owner.popTempValue();
+		index %= instances.length;      // wraparound
 		if (index < 0)
-			index += len;
-		var returned_val = func.apply(instances[index], results);
-;
-	};
-	ExpNode.prototype.eval_behavior_exp = function (ret)
-	{
-		var object_type = this.object_type;
-		var results = this.results;
-		var parameters = this.parameters;
-		var instance_expr = this.instance_expr;
-		var beh_index = this.beh_index;
-		var func = this.func;
-		var index = this.owner.solindex;			// default to parameter's intended SOL index
-		var sol = object_type.getCurrentSol();
-		var instances = sol.getObjects();
-		if (!instances.length)
-		{
-			if (sol.else_instances.length)
-				instances = sol.else_instances;
-			else
-			{
-				if (this.return_string)
-					ret.set_string("");
-				else
-					ret.set_int(0);
-				return;
-			}
-		}
-		results[0] = ret;
-		ret.object_class = object_type;		// so expression can access family type if need be
-		var temp = pushTempValue();
-		eval_params(parameters, results, temp);
-		if (instance_expr) {
-			instance_expr.get(temp);
-			if (temp.is_number()) {
-				index = temp.data;
-				instances = object_type.instances;    // pick from all instances, not SOL
-			}
-		}
-		popTempValue();
-		var len = instances.length;
-		if (index >= len || index <= -len)
-			index %= len;      // wraparound
-		if (index < 0)
-			index += len;
+			index += instances.length;
+		var returned_val;
 		var inst = instances[index];
-		var offset = 0;
-		if (object_type.is_family)
+		if (this.beh_index > -1)
 		{
-			offset = inst.type.family_beh_map[object_type.family_index];
+			var offset = 0;
+			if (this.object_type.is_family)
+			{
+				offset = inst.type.family_beh_map[this.object_type.family_index];
+			}
+			returned_val = this.func.apply(inst.behavior_insts[this.beh_index + offset], this.results);
 		}
-		var returned_val = func.apply(inst.behavior_insts[beh_index + offset], results);
+		else
+			returned_val = this.func.apply(inst, this.results);
 ;
 	};
 	ExpNode.prototype.eval_instvar_exp = function (ret)
 	{
-		var instance_expr = this.instance_expr;
-		var object_type = this.object_type;
-		var varindex = this.varindex;
-		var index = this.owner.solindex;		// default to parameter's intended SOL index
-		var sol = object_type.getCurrentSol();
+		var sol = this.object_type.getCurrentSol();
 		var instances = sol.getObjects();
 		if (!instances.length)
 		{
@@ -10507,39 +10444,38 @@ window["cr_setSuspended"] = function(s)
 				return;
 			}
 		}
-		if (instance_expr)
+		var index = this.owner.solindex;
+		if (this.instance_expr)
 		{
-			var temp = pushTempValue();
-			instance_expr.get(temp);
+			var temp = this.owner.pushTempValue();
+			this.instance_expr.get(temp);
 			if (temp.is_number())
 			{
 				index = temp.data;
-				var type_instances = object_type.instances;
+				var type_instances = this.object_type.instances;
 				index %= type_instances.length;     // wraparound
 				if (index < 0)                      // offset
 					index += type_instances.length;
-				var to_ret = type_instances[index].instance_vars[varindex];
+				var to_ret = type_instances[index].instance_vars[this.varindex];
 				if (cr.is_string(to_ret))
 					ret.set_string(to_ret);
 				else
 					ret.set_float(to_ret);
-				popTempValue();
+				this.owner.popTempValue();
 				return;         // done
 			}
-			popTempValue();
+			this.owner.popTempValue();
 		}
-		var len = instances.length;
-		if (index >= len || index <= -len)
-			index %= len;		// wraparound
+		index %= instances.length;      // wraparound
 		if (index < 0)
-			index += len;
+			index += instances.length;
 		var inst = instances[index];
 		var offset = 0;
-		if (object_type.is_family)
+		if (this.object_type.is_family)
 		{
-			offset = inst.type.family_var_map[object_type.family_index];
+			offset = inst.type.family_var_map[this.object_type.family_index];
 		}
-		var to_ret = inst.instance_vars[varindex + offset];
+		var to_ret = inst.instance_vars[this.varindex + offset];
 		if (cr.is_string(to_ret))
 			ret.set_string(to_ret);
 		else
@@ -10569,7 +10505,7 @@ window["cr_setSuspended"] = function(s)
 	ExpNode.prototype.eval_add = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10577,12 +10513,12 @@ window["cr_setSuspended"] = function(s)
 			if (temp.is_float())
 				ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_subtract = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10590,12 +10526,12 @@ window["cr_setSuspended"] = function(s)
 			if (temp.is_float())
 				ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_multiply = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10603,24 +10539,24 @@ window["cr_setSuspended"] = function(s)
 			if (temp.is_float())
 				ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_divide = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
 			ret.data /= temp.data;          // both operands numbers: divide
 			ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_mod = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10628,12 +10564,12 @@ window["cr_setSuspended"] = function(s)
 			if (temp.is_float())
 				ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_power = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10641,12 +10577,12 @@ window["cr_setSuspended"] = function(s)
 			if (temp.is_float())
 				ret.make_float();
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_and = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number())
 		{
@@ -10671,12 +10607,12 @@ window["cr_setSuspended"] = function(s)
 				ret.data += (Math.round(temp.data * 1e10) / 1e10).toString();
 			}
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_or = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		if (ret.is_number() && temp.is_number())
 		{
@@ -10685,7 +10621,7 @@ window["cr_setSuspended"] = function(s)
 			else
 				ret.set_int(0);
 		}
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_conditional = function (ret)
 	{
@@ -10698,50 +10634,50 @@ window["cr_setSuspended"] = function(s)
 	ExpNode.prototype.eval_equal = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data === temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_notequal = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data !== temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_less = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data < temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_lessequal = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data <= temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_greater = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data > temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_greaterequal = function (ret)
 	{
 		this.first.get(ret);                // left operand
-		var temp = pushTempValue();
+		var temp = this.owner.pushTempValue();
 		this.second.get(temp);			// right operand
 		ret.set_int(ret.data >= temp.data ? 1 : 0);
-		popTempValue();
+		this.owner.popTempValue();
 	};
 	ExpNode.prototype.eval_eventvar_exp = function (ret)
 	{
@@ -12244,11 +12180,6 @@ cr.system_object.prototype.loadFromJSON = function (o)
 		if (!obj)
 			return;
 		this.runtime.running_layout.recreateInitialObjects(obj, x1, y1, x2, y2);
-	};
-	SysActs.prototype.SetPixelRounding = function (m)
-	{
-		this.runtime.pixel_rounding = (m !== 0);
-		this.runtime.redraw = true;
 	};
 	sysProto.acts = new SysActs();
     function SysExps() {};
@@ -19898,6 +19829,543 @@ acts.log_array = function (data, dataObject) {
 }());
 ;
 ;
+cr.plugins_.gamepad = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.gamepad.prototype;
+	var isSupported = false;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+		isSupported = !!(navigator["getGamepads"] || navigator["webkitGetGamepads"] || navigator["mozGetGamepads"] || navigator["gamepads"] || navigator["webkitGamepads"] || navigator["MozGamepads"] || window["cr_getGamepads"]);
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	var gamepadRuntime = null;
+	var gamepadInstance = null;
+	var controllers = new Array(16);
+	var osToken = "";
+	var browserToken = "";
+	var axisOffset = 16;
+	var curCtrlMap = null;
+	var ctrlmap = {};
+	ctrlmap["windows"] = {};
+	ctrlmap["windows"]["firefox"] = {};
+	function doControllerMapping(index, isAxis, buttonmap, axismap)
+	{
+		if (isAxis)
+		{
+			if (index >= axismap.length)
+				return -1;			// unknown axis
+			if (cr.is_number(axismap[index]))
+				return axismap[index] + axisOffset;
+			else
+			{
+				return axismap[index];	// returning array
+			}
+		}
+		else
+		{
+			if (index >= buttonmap.length)
+				return -1;			// unknown button
+			return buttonmap[index];
+		}
+	};
+	var win_ff_xbox360_buttons = [0, 1, 2, 3, 4, 5, 8, 9, 10, 11];
+	var win_ff_xbox360_axes    = [0, 1, [7, 6], 2, 3, [14, 15], [12, 13]];
+	ctrlmap["windows"]["firefox"]["xbox360"] = function (index, isAxis)
+	{
+		return doControllerMapping(index, isAxis, win_ff_xbox360_buttons, win_ff_xbox360_axes);
+	};
+	var win_ff_lda_buttons = [2, 0, 1, 3, 4, 6, 5, 7, 8, 9];
+	var win_ff_lda_axes    = [0, 1, 2, 3, [14, 15], [12, 13]];
+	ctrlmap["windows"]["firefox"]["logitechdualaction"] = function (index, isAxis)
+	{
+		return doControllerMapping(index, isAxis, win_ff_lda_buttons, win_ff_lda_axes);
+	};
+	function defaultMap(index, isAxis)
+	{
+		if (isAxis)
+		{
+			if (index >= 4)
+				return -1;		// unknown axis
+			return index + axisOffset;
+		}
+		else
+		{
+			if (index >= 16)
+				return -1;		// unknown button
+			return index;
+		}
+	};
+	function getMapper(id_)
+	{
+		if (!curCtrlMap)
+			return defaultMap;
+		var controllertoken = "";
+		var id = id_.toLowerCase();
+		if (id.indexOf("xbox 360") > -1)
+			controllertoken = "xbox360";
+		else if (id.indexOf("logitech dual action") > -1)
+			controllertoken = "logitechdualaction";
+		var curmap = curCtrlMap[controllertoken];
+		return curmap || defaultMap;
+	};
+	function onConnected(e)
+	{
+		controllers[e["gamepad"]["index"]] = e["gamepad"];
+		gamepadRuntime.trigger(cr.plugins_.gamepad.prototype.cnds.OnGamepadConnected, gamepadInstance);
+	};
+	function onDisconnected(e)
+	{
+		gamepadRuntime.trigger(cr.plugins_.gamepad.prototype.cnds.OnGamepadDisconnected, gamepadInstance);
+		controllers[e["gamepad"]["index"]] = null;
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+		gamepadRuntime = this.runtime;
+		gamepadInstance = this;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	instanceProto.onCreate = function()
+	{
+		this.deadzone = this.properties[0];
+		this.lastButton = 0;
+		var userAgent = navigator.userAgent;
+		osToken = "windows";
+		if (/mac/i.test(userAgent))
+			osToken = "mac";
+		curCtrlMap = ctrlmap[osToken];
+		browserToken = "chrome";
+		if (/firefox/i.test(userAgent))
+			browserToken = "firefox";
+		if (curCtrlMap)
+			curCtrlMap = curCtrlMap[browserToken];
+		window.addEventListener("webkitgamepadconnected", onConnected, false);
+		window.addEventListener("webkitgamepaddisconnected", onDisconnected, false);
+		window.addEventListener("MozGamepadConnected", onConnected, false);
+		window.addEventListener("MozGamepadDisconnected", onDisconnected, false);
+		window.addEventListener("gamepadconnected", onConnected, false);
+		window.addEventListener("gamepaddisconnected", onDisconnected, false);
+		this.runtime.tickMe(this);
+		this.activeControllers = [];
+	};
+	instanceProto.tick = function ()
+	{
+		this.activeControllers.length = 0;
+		var gamepads = null;
+		var synthetic = false;
+		if (navigator["getGamepads"])
+			gamepads = navigator["getGamepads"]();
+		else if (navigator["webkitGetGamepads"])
+			gamepads = navigator["webkitGetGamepads"]();
+		else if (navigator["mozGetGamepads"])
+			gamepads = navigator["mozGetGamepads"]();
+		else if (navigator["msGetGamepads"])
+			gamepads = navigator["msGetGamepads"]();
+		else if (this.runtime.isWindows8Capable && window["cr_getGamepads"])
+		{
+			gamepads = window["cr_getGamepads"]();
+			synthetic = true;
+		}
+		else
+			gamepads = navigator["gamepads"] || navigator["webkitGamepads"] || navigator["MozGamepads"] || controllers;
+		if (!gamepads)
+			return;
+		var i, len, j, lenj, mapfunc, index, value;
+		for (i = 0, len = gamepads.length; i < len; i++)
+		{
+			var pad = gamepads[i];
+			if (!pad)
+				continue;
+			if (!pad.c2state)
+			{
+				pad.c2state = new Array(20);
+				pad.c2oldstate = new Array(20);
+				for (j = 0; j < 20; j++)
+					pad.c2oldstate[j] = 0;
+			}
+			else
+			{
+				for (j = 0; j < 20; j++)
+					pad.c2oldstate[j] = pad.c2state[j];
+			}
+			mapfunc = (synthetic ? defaultMap : getMapper(pad.id));
+			for (j = 0, lenj = pad["buttons"].length; j < lenj; j++)
+			{
+				if (typeof pad["buttons"][j]["value"] !== "undefined")
+					value = pad["buttons"][j]["value"];
+				else
+					value = pad["buttons"][j];
+				index = mapfunc(j, false, value);
+				if (index >= 0 && index < 20)
+				{
+					pad.c2state[index] = value * 100;
+					if (pad.c2state[index] >= 50 && pad.c2oldstate[index] < 50)
+						this.lastButton = index;
+				}
+			}
+			for (j = 0, lenj = pad["axes"].length; j < lenj; j++)
+			{
+				value = pad["axes"][j];
+				index = mapfunc(j, true, value);
+				if (cr.is_number(index))
+				{
+					if (index >= 0 && index < 20)
+						pad.c2state[index] = value * 100;
+				}
+				else
+				{
+					pad.c2state[index[0]] = 0;
+					pad.c2state[index[1]] = 0;
+					if (value <= 0)
+						pad.c2state[index[0]] = Math.abs(value * 100);
+					else
+						pad.c2state[index[1]] = Math.abs(value * 100);
+				}
+			}
+			this.activeControllers.push(pad);
+		}
+	};
+	instanceProto.saveToJSON = function ()
+	{
+		return { "lastButton": this.lastButton };
+	};
+	instanceProto.loadFromJSON = function (o)
+	{
+		this.lastButton = o["lastButton"];
+	};
+	function Cnds() {};
+	Cnds.prototype.SupportsGamepad = function ()
+	{
+		return isSupported;
+	};
+	Cnds.prototype.OnGamepadConnected = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.OnGamepadDisconnected = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.IsButtonDown = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var ret = pad.c2state[button] >= 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	Cnds.prototype.OnButtonDown = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var ret = pad.c2state[button] >= 50 && pad.c2oldstate[button] < 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	Cnds.prototype.OnButtonUp = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var ret = pad.c2state[button] < 50 && pad.c2oldstate[button] >= 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	Cnds.prototype.HasGamepads = function ()
+	{
+		return this.activeControllers.length > 0;
+	};
+	Cnds.prototype.CompareAxis = function (gamepad, axis, comparison, value)
+	{
+		gamepad = Math.floor(gamepad);
+		axis = Math.floor(axis);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var axisvalue = pad.c2state[axis + axisOffset];
+		var othervalue = 0;
+		if (axis % 2 === 0)										// is X axis
+			othervalue = pad.c2state[axis + axisOffset + 1];	// get next axis (Y)
+		else
+			othervalue = pad.c2state[axis + axisOffset - 1];	// get previous axis (X)
+		if (Math.sqrt(axisvalue * axisvalue + othervalue * othervalue) <= this.deadzone)
+			axisvalue = 0;
+		return cr.do_cmp(axisvalue, comparison, value);
+	};
+	Cnds.prototype.OnAnyButtonDown = function (gamepad)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var i, len;
+		for (i = 0, len = pad.c2state.length; i < len; i++)
+		{
+			if (pad.c2state[i] >= 50 && pad.c2oldstate[i] < 50)
+			{
+				this.lastButton = i;
+				return true;
+			}
+		}
+		return false;
+	};
+	Cnds.prototype.OnAnyButtonUp = function (gamepad)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		var i, len;
+		for (i = 0, len = pad.c2state.length; i < len; i++)
+		{
+			if (pad.c2state[i] < 50 && pad.c2oldstate[i] >= 50)
+			{
+				this.lastButton = i;
+				return true;
+			}
+		}
+		return false;
+	};
+	Cnds.prototype.IsButtonIndexDown = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		button = Math.floor(button);
+		if (button < 0 || button >= pad.c2state.length)
+			return false;
+		var ret = pad.c2state[button] >= 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	Cnds.prototype.OnButtonIndexDown = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		button = Math.floor(button);
+		if (button < 0 || button >= pad.c2state.length)
+			return false;
+		var ret = pad.c2state[button] >= 50 && pad.c2oldstate[button] < 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	Cnds.prototype.OnButtonIndexUp = function (gamepad, button)
+	{
+		gamepad = Math.floor(gamepad);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+			return false;
+		var pad = this.activeControllers[gamepad];
+		if (!pad.c2state)
+			return false;
+		button = Math.floor(button);
+		if (button < 0 || button >= pad.c2state.length)
+			return false;
+		var ret = pad.c2state[button] < 50 && pad.c2oldstate[button] >= 50;
+		if (ret)
+			this.lastButton = button;
+		return ret;
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.GamepadCount = function (ret)
+	{
+		ret.set_int(this.activeControllers.length);
+	};
+	Exps.prototype.GamepadID = function (ret, index)
+	{
+		if (index < 0 || index >= this.activeControllers.length)
+		{
+			ret.set_string("");
+			return;
+		}
+		ret.set_string(this.activeControllers[index].id);
+	};
+	Exps.prototype.GamepadAxes = function (ret, index)
+	{
+		if (index < 0 || index >= this.activeControllers.length)
+		{
+			ret.set_string("");
+			return;
+		}
+		var axes = this.activeControllers[index]["axes"];
+		var str = "";
+		var i, len;
+		for (i = 0, len = axes.length; i < len; i++)
+		{
+			str += "Axis " + i + ": " + Math.round(axes[i] * 100) + "\n";
+		}
+		ret.set_string(str);
+	};
+	Exps.prototype.GamepadButtons = function (ret, index)
+	{
+		if (index < 0 || index >= this.activeControllers.length)
+		{
+			ret.set_string("");
+			return;
+		}
+		var buttons = this.activeControllers[index]["buttons"];
+		var str = "";
+		var i, len, value;
+		for (i = 0, len = buttons.length; i < len; i++)
+		{
+			if (typeof buttons[i]["value"] !== "undefined")
+				value = buttons[i]["value"];
+			else
+				value = buttons[i];
+			str += "Button " + i + ": " + Math.round(value * 100) + "\n";
+		}
+		ret.set_string(str);
+	};
+	Exps.prototype.RawButton = function (ret, gamepad, index)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		var state = this.activeControllers[gamepad]["buttons"];
+		if (!state || index < 0 || index >= state.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		if (typeof state[index]["value"] !== "undefined")
+			ret.set_float(state[index]["value"]);
+		else
+			ret.set_float(state[index]);
+	};
+	Exps.prototype.RawAxis = function (ret, gamepad, index)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		var state = this.activeControllers[gamepad]["axes"];
+		if (!state || index < 0 || index >= state.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		ret.set_float(state[index]);
+	};
+	Exps.prototype.RawButtonCount = function (ret, gamepad)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_int(0);
+			return;
+		}
+		ret.set_int(this.activeControllers[gamepad]["buttons"].length);
+	};
+	Exps.prototype.RawAxisCount = function (ret, gamepad)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_int(0);
+			return;
+		}
+		ret.set_int(this.activeControllers[gamepad]["axes"].length);
+	};
+	Exps.prototype.Button = function (ret, gamepad, index)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		var state = this.activeControllers[gamepad].c2state;
+		if (!state || index < 0 || index >= axisOffset)
+		{
+			ret.set_float(0);
+			return;
+		}
+		ret.set_float(state[index]);
+	};
+	Exps.prototype.Axis = function (ret, gamepad, index)
+	{
+		gamepad = Math.floor(gamepad);
+		index = Math.floor(index);
+		if (gamepad < 0 || gamepad >= this.activeControllers.length)
+		{
+			ret.set_float(0);
+			return;
+		}
+		var state = this.activeControllers[gamepad].c2state;
+		if (!state || index < 0 || index >= 4)
+		{
+			ret.set_float(0);
+			return;
+		}
+		var value = state[index + axisOffset];
+		var othervalue = 0;
+		if (index % 2 === 0)								// is X axis
+			othervalue = state[index + axisOffset + 1];		// get next axis (Y)
+		else
+			othervalue = state[index + axisOffset - 1];		// get previous axis (X)
+		if (Math.sqrt(value * value + othervalue * othervalue) <= this.deadzone)
+			value = 0;
+		ret.set_float(value);
+	};
+	Exps.prototype.LastButton = function (ret)
+	{
+		ret.set_int(this.lastButton);
+	};
+	pluginProto.exps = new Exps();
+}());
+;
+;
 cr.behaviors.Platform = function(runtime)
 {
 	this.runtime = runtime;
@@ -21020,9 +21488,10 @@ cr.behaviors.solid = function(runtime)
 }());
 cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr,
+	cr.plugins_.Function,
 	cr.plugins_.Browser,
 	cr.plugins_.Button,
-	cr.plugins_.Function,
+	cr.plugins_.gamepad,
 	cr.plugins_.Keyboard,
 	cr.plugins_.chromeconsole,
 	cr.plugins_.Sprite,
@@ -21035,24 +21504,37 @@ cr.getObjectRefTable = function () { return [
 	cr.behaviors.scrollto,
 	cr.system_object.prototype.cnds.OnLayoutStart,
 	cr.plugins_.Function.prototype.acts.CallFunction,
+	cr.plugins_.Sprite.prototype.acts.SetPos,
 	cr.plugins_.Sprite.prototype.cnds.OnCollision,
 	cr.system_object.prototype.acts.GoToLayoutByName,
 	cr.plugins_.Keyboard.prototype.cnds.OnKey,
 	cr.system_object.prototype.acts.ScrollToObject,
-	cr.behaviors.Platform.prototype.acts.FallThrough,
+	cr.plugins_.gamepad.prototype.cnds.OnButtonDown,
 	cr.plugins_.Keyboard.prototype.cnds.IsKeyDown,
-	cr.behaviors.Platform.prototype.acts.SimulateControl,
-	cr.plugins_.Sprite.prototype.acts.SetMirrored,
+	cr.plugins_.gamepad.prototype.cnds.CompareAxis,
+	cr.behaviors.Platform.prototype.acts.FallThrough,
+	cr.plugins_.gamepad.prototype.cnds.IsButtonDown,
+	cr.plugins_.Keyboard.prototype.cnds.OnKeyReleased,
+	cr.plugins_.gamepad.prototype.cnds.OnButtonUp,
 	cr.plugins_.Sprite.prototype.cnds.CompareY,
 	cr.system_object.prototype.exps.layoutheight,
 	cr.system_object.prototype.acts.RestartLayout,
+	cr.behaviors.Platform.prototype.cnds.IsByWall,
+	cr.behaviors.Platform.prototype.cnds.IsOnFloor,
 	cr.system_object.prototype.acts.SetVar,
+	cr.plugins_.Function.prototype.cnds.OnFunction,
+	cr.behaviors.Platform.prototype.acts.SimulateControl,
+	cr.plugins_.Sprite.prototype.acts.SetMirrored,
+	cr.system_object.prototype.cnds.CompareVar,
+	cr.behaviors.Platform.prototype.acts.SetVectorY,
+	cr.behaviors.Platform.prototype.exps.JumpStrength,
+	cr.behaviors.Platform.prototype.acts.SetVectorX,
 	cr.plugins_.Button.prototype.cnds.OnClicked,
 	cr.system_object.prototype.exps["int"],
 	cr.plugins_.TextBox.prototype.exps.Text,
 	cr.system_object.prototype.exps["float"],
 	cr.plugins_.Tilemap.prototype.acts.EraseTileRange,
-	cr.plugins_.Function.prototype.cnds.OnFunction,
+	cr.system_object.prototype.cnds.For,
 	cr.plugins_.Arr.prototype.acts.SetSize,
 	cr.plugins_.Arr.prototype.cnds.ArrForEach,
 	cr.system_object.prototype.exps.random,
@@ -21061,9 +21543,7 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr.prototype.exps.CurX,
 	cr.plugins_.Arr.prototype.exps.CurY,
 	cr.system_object.prototype.cnds.Else,
-	cr.system_object.prototype.cnds.For,
 	cr.plugins_.Arr.prototype.acts.Clear,
-	cr.system_object.prototype.cnds.CompareVar,
 	cr.plugins_.Function.prototype.exps.Call,
 	cr.plugins_.Arr.prototype.cnds.CompareCurrent,
 	cr.plugins_.Arr.prototype.exps.CurValue,
@@ -21071,5 +21551,8 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.exps.loopindex,
 	cr.plugins_.Arr.prototype.cnds.CompareXY,
 	cr.plugins_.Function.prototype.acts.SetReturnValue,
+	cr.plugins_.chromeconsole.prototype.acts.log,
+	cr.plugins_.Arr.prototype.exps.At,
+	cr.system_object.prototype.acts.StopLoop,
 	cr.plugins_.Tilemap.prototype.acts.SetTile
 ];};

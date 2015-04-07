@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Procedural Generation Test</name>
+    <events>
+        <include>Player Events</include>
+        <include>Procedural Generation Functions</include>
+        <event-block sid="5112075795995336">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="9264355268058242" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="179925882537326" type="System">
+                    <param id="0" name="Variable">MapTileCountX</param>
+                    <param id="1" name="Value">25</param>
+                </action>
+                <action id="-9" name="Set value" sid="2641858403862546" type="System">
+                    <param id="0" name="Variable">MapTileCountY</param>
+                    <param id="1" name="Value">19</param>
+                </action>
+                <action id="0" name="Call function" sid="1786093721277533" type="Function">
+                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="6393684822760784">
+            <conditions>
+                <condition id="0" name="On clicked" sid="5425190297550281" type="GenerateButton" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="5428243641835301" type="System">
+                    <param id="0" name="Variable">BirthLimit</param>
+                    <param id="1" name="Value">int(TextBox_BirthLimit.Text)</param>
+                </action>
+                <action id="-9" name="Set value" sid="1295146696821447" type="System">
+                    <param id="0" name="Variable">DeathLimit</param>
+                    <param id="1" name="Value">int(TextBox_DeathLimit.Text)</param>
+                </action>
+                <action id="-9" name="Set value" sid="9197520953465113" type="System">
+                    <param id="0" name="Variable">RefinementPasses</param>
+                    <param id="1" name="Value">int(TextBox_NumberOfSteps.Text)</param>
+                </action>
+                <action id="-9" name="Set value" sid="6299328833498483" type="System">
+                    <param id="0" name="Variable">ChanceToStartAlive</param>
+                    <param id="1" name="Value">float(TextBox_InitialChance.Text)</param>
+                </action>
+                <action id="2" name="Erase tile range" sid="5876567330046785" type="Tilemap_Bitmask">
+                    <param id="0" name="Tile X">0</param>
+                    <param id="1" name="Tile Y">0</param>
+                    <param id="2" name="Width">MapTileCountX</param>
+                    <param id="3" name="Height">MapTileCountY</param>
+                </action>
+                <action id="0" name="Call function" sid="7042047436377791" type="Function">
+                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="1977738489141783">
+            <conditions>
+                <condition id="0" name="On clicked" sid="9395388135339319" type="RefineButton" />
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="9255566293424924" type="Function">
+                    <param id="0" name="Name">&quot;RefineMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+                <action id="0" name="Call function" sid="791648429352665" type="Function">
+                    <param id="0" name="Name">&quot;RenderMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

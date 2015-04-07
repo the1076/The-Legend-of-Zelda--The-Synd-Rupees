@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Player Events</name>
+    <events>
+        <variable constant="0" name="MoveRightActionIsTrue" sid="9368015973581356" static="0" type="number">0</variable>
+        <variable constant="0" name="MoveLeftActionIsTrue" sid="6550061782465625" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerOnWallRight" sid="9652577872985578" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerOnWallLeft" sid="2335119434829132" static="0" type="number">0</variable>
+        <variable constant="0" name="WallJumpRecoil" sid="7495704956284722" static="0" type="number">500</variable>
+        <variable constant="0" name="GamepadAxisDeadZone" sid="2152315051797038" static="0" type="number">1</variable>
+        <event-block sid="2376503254716959">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="8201255911378331" type="System" />
+            </conditions>
+            <actions>
+                <action id="-8" name="Scroll to object" sid="8034267101730061" type="System">
+                    <param id="0" name="Object">Player</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Allow alternate controls to arrow keys.</comment>
+        <event-block any="1" sid="3619358569854467">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="5417348248493299" type="Keyboard">
+                    <param id="0" name="Key">38 (Up arrow)</param>
+                </condition>
+                <condition id="0" name="On key pressed" sid="8113766621903006" type="Keyboard">
+                    <param id="0" name="Key">87 (W)</param>
+                </condition>
+                <condition id="0" name="On key pressed" sid="2861155750816062" type="Keyboard">
+                    <param id="0" name="Key">32 (Space)</param>
+                </condition>
+                <condition id="6" name="On button pressed" sid="2845335202103415" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">0</param>
+                </condition>
+                <condition id="6" name="On button pressed" sid="6243665055892744" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">12</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="2161726199899432" type="Function">
+                    <param id="0" name="Name">&quot;Jump&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="9779131706208371">
+            <conditions>
+                <condition id="2" name="Key is down" sid="5569023531865443" type="Keyboard">
+                    <param id="0" name="Key">83 (S)</param>
+                </condition>
+                <condition id="0" name="On key pressed" sid="8222765054560856" type="Keyboard">
+                    <param id="0" name="Key">40 (Down arrow)</param>
+                </condition>
+                <condition id="6" name="On button pressed" sid="2290543538590374" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">13</param>
+                </condition>
+                <condition id="5" name="Compare axis" sid="1022772002775316" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Axis">1</param>
+                    <param id="2" name="Comparison">4</param>
+                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Platform" id="12" name="Fall through" sid="6738652569182033" type="Player" />
+            </actions>
+        </event-block>
+        <event-block any="1" sid="6442404344304775">
+            <conditions>
+                <condition id="2" name="Key is down" sid="1729310376732552" type="Keyboard">
+                    <param id="0" name="Key">65 (A)</param>
+                </condition>
+                <condition id="5" name="Compare axis" sid="2423123186303189" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Axis">0</param>
+                    <param id="2" name="Comparison">2</param>
+                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                </condition>
+                <condition id="3" name="Is button down" sid="4589459433608372" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">14</param>
+                </condition>
+                <condition id="2" name="Key is down" sid="1825510280376965" type="Keyboard">
+                    <param id="0" name="Key">37 (Left arrow)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="2556735084461276" type="Function">
+                    <param id="0" name="Name">&quot;Move Left&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="3169550927499687">
+            <conditions>
+                <condition id="2" name="Key is down" sid="8714282612350055" type="Keyboard">
+                    <param id="0" name="Key">68 (D)</param>
+                </condition>
+                <condition id="5" name="Compare axis" sid="3217930781027713" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Axis">0</param>
+                    <param id="2" name="Comparison">4</param>
+                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                </condition>
+                <condition id="3" name="Is button down" sid="1679025172476253" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">15</param>
+                </condition>
+                <condition id="2" name="Key is down" sid="1975538164602279" type="Keyboard">
+                    <param id="0" name="Key">39 (Right arrow)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="9902888533538171" type="Function">
+                    <param id="0" name="Name">&quot;Move Right&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="1354675865560191">
+            <conditions>
+                <condition id="3" name="On key released" sid="6814152187031038" type="Keyboard">
+                    <param id="0" name="Key">65 (A)</param>
+                </condition>
+                <condition id="3" name="On key released" sid="2305384368965386" type="Keyboard">
+                    <param id="0" name="Key">37 (Left arrow)</param>
+                </condition>
+                <condition id="5" name="Compare axis" sid="8888248510829317" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Axis">0</param>
+                    <param id="2" name="Comparison">4</param>
+                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                </condition>
+                <condition id="7" name="On button released" sid="1666726995904502" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">14</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="1394444853960089" type="Function">
+                    <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="3481884723335076">
+            <conditions>
+                <condition id="3" name="On key released" sid="1595941915746794" type="Keyboard">
+                    <param id="0" name="Key">68 (D)</param>
+                </condition>
+                <condition id="3" name="On key released" sid="6443014380752479" type="Keyboard">
+                    <param id="0" name="Key">39 (Right arrow)</param>
+                </condition>
+                <condition id="7" name="On button released" sid="2899085775297599" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">15</param>
+                </condition>
+                <condition id="5" name="Compare axis" sid="600648999549313" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Axis">0</param>
+                    <param id="2" name="Comparison">2</param>
+                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="8773053041495381" type="Function">
+                    <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>If the player falls off the bottom of the layout, restart the level.</comment>
+        <event-block sid="9825711393096202">
+            <conditions>
+                <condition id="-2" name="Compare Y" sid="6631447701477554" type="Player">
+                    <param id="0" name="Comparison">4</param>
+                    <param id="1" name="Y co-ordinate">LayoutHeight</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-26" name="Restart layout" sid="3922049931527123" type="System" />
+            </actions>
+        </event-block>
+        <comment>Allow player to hang on walls</comment>
+        <event-block sid="3281646647921325">
+            <conditions>
+                <condition behavior="Platform" id="10" name="Is by wall" sid="3210091380225144" type="Player">
+                    <param id="0" name="Side">1</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="2002669035712448">
+                    <conditions>
+                        <condition behavior="Platform" id="2" inverted="1" name="Is on floor" sid="5335298766858278" type="Player" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="4886155136574653" type="System">
+                            <param id="0" name="Variable">PlayerOnWallRight</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="3132032195241841">
+            <conditions>
+                <condition behavior="Platform" id="10" name="Is by wall" sid="2553505453266675" type="Player">
+                    <param id="0" name="Side">0</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="8009569318428223">
+                    <conditions>
+                        <condition behavior="Platform" id="2" inverted="1" name="Is on floor" sid="1928991692968512" type="Player" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="2309187221038763" type="System">
+                            <param id="0" name="Variable">PlayerOnWallLeft</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="9347345175171677">
+            <conditions>
+                <condition behavior="Platform" id="2" name="Is on floor" sid="7787019403328032" type="Player" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="8511600224893647" type="System">
+                    <param id="0" name="Variable">PlayerOnWallLeft</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="7382240884980368" type="System">
+                    <param id="0" name="Variable">PlayerOnWallRight</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="3871262106796341">
+            <conditions>
+                <condition behavior="Platform" id="10" inverted="1" name="Is by wall" sid="7178229080569076" type="Player">
+                    <param id="0" name="Side">0</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="4851208779530225" type="System">
+                    <param id="0" name="Variable">PlayerOnWallLeft</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="7377272998731392">
+            <conditions>
+                <condition behavior="Platform" id="10" inverted="1" name="Is by wall" sid="7281322222370033" type="Player">
+                    <param id="0" name="Side">1</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="1090744185823742" type="System">
+                    <param id="0" name="Variable">PlayerOnWallRight</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Set Variables and Animations. Perform platformer actions</comment>
+        <event-block sid="5218488173976429">
+            <conditions>
+                <condition id="0" name="On function" sid="1097956805420431" type="Function">
+                    <param id="0" name="Name">&quot;Move Right&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Platform" id="7" name="Simulate control" sid="9939701469654516" type="Player">
+                    <param id="0" name="Control">1</param>
+                </action>
+                <action id="7" name="Set mirrored" sid="5874843941235547" type="Player">
+                    <param id="0" name="State">1</param>
+                </action>
+                <action id="-9" name="Set value" sid="8050773948232612" type="System">
+                    <param id="0" name="Variable">MoveRightActionIsTrue</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="102504172225817">
+            <conditions>
+                <condition id="0" name="On function" sid="4928123702783627" type="Function">
+                    <param id="0" name="Name">&quot;Move Left&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Platform" id="7" name="Simulate control" sid="1799892076974269" type="Player">
+                    <param id="0" name="Control">0</param>
+                </action>
+                <action id="7" name="Set mirrored" sid="4376210067518268" type="Player">
+                    <param id="0" name="State">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="771136845017243" type="System">
+                    <param id="0" name="Variable">MoveLeftActionIsTrue</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="853846766252446">
+            <conditions>
+                <condition id="0" name="On function" sid="1129374721261933" type="Function">
+                    <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="6679075750453988" type="System">
+                    <param id="0" name="Variable">MoveLeftActionIsTrue</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="5116979195717969">
+            <conditions>
+                <condition id="0" name="On function" sid="7316037986579961" type="Function">
+                    <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="6732289955737113" type="System">
+                    <param id="0" name="Variable">MoveRightActionIsTrue</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="4026221545478127">
+            <conditions>
+                <condition id="0" name="On function" sid="7853218910213044" type="Function">
+                    <param id="0" name="Name">&quot;Jump&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Platform" id="7" name="Simulate control" sid="2317724709531283" type="Player">
+                    <param id="0" name="Control">2</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="6403089543825584">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="287930366889084" type="System">
+                            <param id="0" name="Variable">PlayerOnWallLeft</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="Platform" id="9" name="Set vector Y" sid="6006968405433532" type="Player">
+                            <param id="0" name="Vector Y">Player.Platform.JumpStrength * -1</param>
+                        </action>
+                        <action behavior="Platform" id="8" name="Set vector X" sid="3379849209840051" type="Player">
+                            <param id="0" name="Vector X">WallJumpRecoil</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8969174167906232">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="3652334439601263" type="System">
+                            <param id="0" name="Variable">PlayerOnWallRight</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="Platform" id="9" name="Set vector Y" sid="9270408729228971" type="Player">
+                            <param id="0" name="Vector Y">Player.Platform.JumpStrength * -1</param>
+                        </action>
+                        <action behavior="Platform" id="8" name="Set vector X" sid="9875333483792133" type="Player">
+                            <param id="0" name="Vector X">WallJumpRecoil * -1</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Dungeon Level</name>
+    <events>
+        <include>Player Events</include>
+        <include>Procedural Generation Functions</include>
+        <event-block sid="4288201190722989">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="8165357099970827" type="System" />
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="4119759954196162" type="Function">
+                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+                <action id="-3" name="Set position" sid="2905671429554293" type="Player">
+                    <param id="0" name="X">16</param>
+                    <param id="1" name="Y">PlayerStartingPoint</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
