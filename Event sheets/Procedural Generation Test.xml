@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Procedural Generation Test</name>
     <events>
+        <include>Game Manager</include>
         <include>Player Events</include>
         <include>Procedural Generation Functions</include>
         <event-block sid="5112075795995336">
@@ -18,7 +19,19 @@
                     <param id="0" name="Variable">MapTileCountY</param>
                     <param id="1" name="Value">19</param>
                 </action>
-                <action id="0" name="Call function" sid="1786093721277533" type="Function">
+                <action id="0" name="Set text" sid="9070060467345457" type="TextBox_BirthLimit">
+                    <param id="0" name="Text">str(BirthLimit)</param>
+                </action>
+                <action id="0" name="Set text" sid="1318321849501969" type="TextBox_DeathLimit">
+                    <param id="0" name="Text">str(DeathLimit)</param>
+                </action>
+                <action id="0" name="Set text" sid="2457440786605154" type="TextBox_InitialChance">
+                    <param id="0" name="Text">str(ChanceToStartAlive)</param>
+                </action>
+                <action id="0" name="Set text" sid="6498326566463165" type="TextBox_NumberOfSteps">
+                    <param id="0" name="Text">str(RefinementPasses)</param>
+                </action>
+                <action disabled="1" id="0" name="Call function" sid="1786093721277533" type="Function">
                     <param id="0" name="Name">&quot;GenerateMap&quot;</param>
                     <param id="1" name="Parameter {n}"></param>
                 </action>

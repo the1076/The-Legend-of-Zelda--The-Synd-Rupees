@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Dungeon Level</name>
     <events>
+        <include>Game Manager</include>
         <include>Player Events</include>
         <include>Procedural Generation Functions</include>
         <event-block sid="4288201190722989">

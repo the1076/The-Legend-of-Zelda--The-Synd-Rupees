@@ -24,6 +24,7 @@
         <plugin author="Scirra" id="gamepad" version="1">Gamepad</plugin>
     </used-plugins>
     <used-behaviors>
+        <behavior author="Scirra" id="Pathfinding" version="1">Pathfinding</behavior>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
         <behavior author="Scirra" id="scrollto" version="1">Scroll To</behavior>
         <behavior author="Scirra" id="solid" version="1">Solid</behavior>
@@ -147,6 +148,36 @@
         <object-type name="Gamepad" sid="5967013969477322">
             <plugin id="gamepad" />
         </object-type>
+        <object-type global="1" name="Array_TemporaryEndpoints" sid="4071082705542022">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type name="Pathfinder" sid="2861033572421288">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="Pathfinding" sid="2803284547131617">
+                    <behavior id="Pathfinding" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="9732341818637433" speed="5">
+                    <frame duration="1" hotspotX="0.53125" hotspotY="0.515625">
+                        <collision-poly>
+                            <point x="0.0625" y="0.03125" />
+                            <point x="0.9375" y="0.03125" />
+                            <point x="0.9375" y="1" />
+                            <point x="0.0625" y="1" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type global="1" name="Text_DevelopmentVersion" sid="5887543724515725">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="TiledBackground_DevelopmentVersionBackground" sid="3628688667840641">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
     </object-folder>
     <families />
     <layout-folder>
@@ -160,6 +191,7 @@
         <event-sheet>Player Events.xml</event-sheet>
         <event-sheet>Procedural Generation Test.xml</event-sheet>
         <event-sheet>Procedural Generation Functions.xml</event-sheet>
+        <event-sheet>Game Manager.xml</event-sheet>
     </event-folder>
     <global-instances>
         <global-instance type="Keyboard" uid="3" />

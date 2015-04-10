@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Merchant Room</name>
     <events>
+        <include>Game Manager</include>
         <include>Player Events</include>
         <event-block sid="8450119511087308">
             <conditions>
