@@ -3,7 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Game Manager</name>
     <events>
-        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">14</variable>
+        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">15</variable>
         <event-block sid="9409173688350814">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="85493013777963" type="System" />

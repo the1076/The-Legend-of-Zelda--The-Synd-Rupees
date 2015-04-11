@@ -76,15 +76,18 @@
             <actions>
                 <action id="-9" name="Set value" sid="2823236962480525" type="System">
                     <param id="0" name="Variable">EntranceTile</param>
-                    <param id="1" name="Value">floor(random(2, MapTileCountY - 1))</param>
+                    <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
                 </action>
                 <action id="-9" name="Set value" sid="1682017376146677" type="System">
                     <param id="0" name="Variable">ExitTile</param>
-                    <param id="1" name="Value">floor(random(2, MapTileCountY - 1))</param>
+                    <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
                 </action>
                 <action id="-9" name="Set value" sid="7848185955023059" type="System">
                     <param id="0" name="Variable">PlayerStartingPoint</param>
                     <param id="1" name="Value">EntranceTile * 32</param>
+                </action>
+                <action disabled="1" id="0" name="Log Text" sid="8945991242562914" type="ChromeConsole">
+                    <param id="0" name="Data">&quot;Entrance Tile: &quot; &amp; EntranceTile &amp; &quot;, Exit Tile: &quot; &amp; ExitTile</param>
                 </action>
             </actions>
         </event-block>
@@ -177,13 +180,42 @@
                                             <conditions>
                                                 <condition id="-22" name="Else" sid="7900711007540446" type="System" />
                                             </conditions>
-                                            <actions>
-                                                <action id="3" name="Set at XY" sid="4234887165119637" type="Array_RandomLevelMask">
-                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
-                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
-                                                    <param id="2" name="Value">0</param>
-                                                </action>
-                                            </actions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block any="1" sid="7302865251009526">
+                                                    <conditions>
+                                                        <condition id="-8" name="Compare two values" sid="9283230089545021" type="System">
+                                                            <param id="0" name="First value">Array_RandomLevelMask.CurX</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Second value">0</param>
+                                                        </condition>
+                                                        <condition id="-8" name="Compare two values" sid="9809645588570689" type="System">
+                                                            <param id="0" name="First value">Array_RandomLevelMask.Curx</param>
+                                                            <param id="1" name="Comparison">0</param>
+                                                            <param id="2" name="Second value">MapTileCountX - 1</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="3" name="Set at XY" sid="3685023596129413" type="Array_RandomLevelMask">
+                                                            <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                            <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                            <param id="2" name="Value">1</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="1300885477584898">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="5335794587961809" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="3" name="Set at XY" sid="4234887165119637" type="Array_RandomLevelMask">
+                                                            <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                            <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                            <param id="2" name="Value">0</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
                                         </event-block>
                                     </sub-events>
                                 </event-block>
@@ -281,13 +313,42 @@
                                                             <param id="2" name="Value">DeathLimit</param>
                                                         </condition>
                                                     </conditions>
-                                                    <actions>
-                                                        <action id="3" name="Set at XY" sid="6757036025078036" type="Array_TemporaryLevelMask">
-                                                            <param id="0" name="X">Array_RandomLevelMask.CurX</param>
-                                                            <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
-                                                            <param id="2" name="Value">0</param>
-                                                        </action>
-                                                    </actions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block any="1" sid="7479303879182361">
+                                                            <conditions>
+                                                                <condition id="-8" name="Compare two values" sid="3922532544819253" type="System">
+                                                                    <param id="0" name="First value">Array_RandomLevelMask.CurX</param>
+                                                                    <param id="1" name="Comparison">0</param>
+                                                                    <param id="2" name="Second value">0</param>
+                                                                </condition>
+                                                                <condition id="-8" name="Compare two values" sid="108633364511451" type="System">
+                                                                    <param id="0" name="First value">Array_RandomLevelMask.CurX</param>
+                                                                    <param id="1" name="Comparison">0</param>
+                                                                    <param id="2" name="Second value">MapTileCountX - 1</param>
+                                                                </condition>
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="3" name="Set at XY" sid="1918279615761932" type="Array_TemporaryLevelMask">
+                                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                                    <param id="2" name="Value">1</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="2643578377576562">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="5903142832564086" type="System" />
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="3" name="Set at XY" sid="6757036025078036" type="Array_TemporaryLevelMask">
+                                                                    <param id="0" name="X">Array_RandomLevelMask.CurX</param>
+                                                                    <param id="1" name="Y">Array_RandomLevelMask.CurY</param>
+                                                                    <param id="2" name="Value">0</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                    </sub-events>
                                                 </event-block>
                                                 <event-block sid="506726492354004">
                                                     <conditions>
@@ -422,13 +483,42 @@
                                                             <param id="2" name="Value">DeathLimit</param>
                                                         </condition>
                                                     </conditions>
-                                                    <actions>
-                                                        <action id="3" name="Set at XY" sid="2988810577197166" type="Array_TemporaryLevelMask">
-                                                            <param id="0" name="X">Array_LevelMask.CurX</param>
-                                                            <param id="1" name="Y">Array_LevelMask.CurY</param>
-                                                            <param id="2" name="Value">0</param>
-                                                        </action>
-                                                    </actions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block any="1" sid="1597304620104961">
+                                                            <conditions>
+                                                                <condition id="-8" name="Compare two values" sid="7052685935324915" type="System">
+                                                                    <param id="0" name="First value">Array_LevelMask.CurX</param>
+                                                                    <param id="1" name="Comparison">0</param>
+                                                                    <param id="2" name="Second value">0</param>
+                                                                </condition>
+                                                                <condition id="-8" name="Compare two values" sid="3320147072324024" type="System">
+                                                                    <param id="0" name="First value">Array_LevelMask.CurX</param>
+                                                                    <param id="1" name="Comparison">0</param>
+                                                                    <param id="2" name="Second value">MapTileCountX - 1</param>
+                                                                </condition>
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="3" name="Set at XY" sid="3735163990721763" type="Array_TemporaryLevelMask">
+                                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                                    <param id="2" name="Value">1</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="5206724313626218">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="3748689256032428" type="System" />
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="3" name="Set at XY" sid="2988810577197166" type="Array_TemporaryLevelMask">
+                                                                    <param id="0" name="X">Array_LevelMask.CurX</param>
+                                                                    <param id="1" name="Y">Array_LevelMask.CurY</param>
+                                                                    <param id="2" name="Value">0</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                    </sub-events>
                                                 </event-block>
                                                 <event-block sid="9733452726102203">
                                                     <conditions>

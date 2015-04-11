@@ -31,10 +31,6 @@
                 <action id="0" name="Set text" sid="6498326566463165" type="TextBox_NumberOfSteps">
                     <param id="0" name="Text">str(RefinementPasses)</param>
                 </action>
-                <action disabled="1" id="0" name="Call function" sid="1786093721277533" type="Function">
-                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
             </actions>
         </event-block>
         <event-block sid="6393684822760784">
@@ -84,6 +80,18 @@
                     <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
+        </event-block>
+        <event-block sid="8875353955656988">
+            <conditions>
+                <condition behavior="Pathfinding" id="0" name="On path found" sid="675697021567181" type="Pathfinder" />
+            </conditions>
+            <actions />
+        </event-block>
+        <event-block sid="3194538264090882">
+            <conditions>
+                <condition behavior="Pathfinding" id="1" name="On failed to find path" sid="5083782974655606" type="Pathfinder" />
+            </conditions>
+            <actions />
         </event-block>
     </events>
 </c2eventsheet>
