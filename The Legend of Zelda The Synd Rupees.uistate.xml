@@ -11,8 +11,8 @@ you probably do not want to add any .uistate.xml files to the repository.-->
     </configurations>
     <open-tabs>
         <layout order="4">Dungeon Level</layout>
-        <layout order="2">Merchant Room</layout>
-        <event-sheet active="1" order="5">Dungeon Level</event-sheet>
+        <layout active="1" order="2">Merchant Room</layout>
+        <event-sheet order="5">Dungeon Level</event-sheet>
         <event-sheet order="6">Procedural Generation Functions</event-sheet>
         <event-sheet order="3">Merchant Room</event-sheet>
         <event-sheet order="0">Game Manager</event-sheet>

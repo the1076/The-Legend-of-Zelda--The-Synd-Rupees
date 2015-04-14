@@ -27,6 +27,7 @@
     </used-plugins>
     <used-behaviors>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
+        <behavior author="Scirra" id="bound" version="1">Bound to layout</behavior>
         <behavior author="Scirra" id="scrollto" version="1">Scroll To</behavior>
         <behavior author="Scirra" id="solid" version="1">Solid</behavior>
     </used-behaviors>
@@ -83,6 +84,9 @@
                 </behavior-type>
                 <behavior-type name="ScrollTo" sid="9449664069896799">
                     <behavior id="scrollto" />
+                </behavior-type>
+                <behavior-type name="BoundToLayout" sid="8258268987032242">
+                    <behavior id="bound" />
                 </behavior-type>
             </behaviors>
             <animation-folder>

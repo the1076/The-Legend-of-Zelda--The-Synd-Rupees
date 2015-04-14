@@ -11,7 +11,12 @@
             <conditions>
                 <condition id="-2" name="On start of layout" sid="8165357099970827" type="System" />
             </conditions>
-            <actions />
+            <actions>
+                <action id="-9" name="Set value" sid="6007710924473819" type="System">
+                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
             <sub-events>
                 <event-block sid="9120860947057763">
                     <conditions>
