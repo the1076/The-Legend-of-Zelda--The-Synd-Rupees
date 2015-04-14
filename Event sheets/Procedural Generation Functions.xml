@@ -55,12 +55,12 @@
                 <event-block sid="4981834311061347">
                     <conditions />
                     <actions>
-                        <action id="0" name="Call function" sid="1552598332471081" type="Function">
-                            <param id="0" name="Name">&quot;DefinePath&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
                         <action id="0" name="Call function" sid="6036598627929006" type="Function">
                             <param id="0" name="Name">&quot;RenderMap&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Call function" sid="2586944562101101" type="Function">
+                            <param id="0" name="Name">&quot;SaveMap&quot;</param>
                             <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
@@ -74,22 +74,89 @@
                 </condition>
             </conditions>
             <actions>
-                <action id="-9" name="Set value" sid="2823236962480525" type="System">
-                    <param id="0" name="Variable">EntranceTile</param>
-                    <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
-                </action>
-                <action id="-9" name="Set value" sid="1682017376146677" type="System">
-                    <param id="0" name="Variable">ExitTile</param>
-                    <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
-                </action>
-                <action id="-9" name="Set value" sid="7848185955023059" type="System">
-                    <param id="0" name="Variable">PlayerStartingPoint</param>
-                    <param id="1" name="Value">EntranceTile * 32</param>
-                </action>
                 <action disabled="1" id="0" name="Log Text" sid="8945991242562914" type="ChromeConsole">
                     <param id="0" name="Data">&quot;Entrance Tile: &quot; &amp; EntranceTile &amp; &quot;, Exit Tile: &quot; &amp; ExitTile</param>
                 </action>
             </actions>
+            <sub-events>
+                <event-block sid="3343543977281681">
+                    <conditions>
+                        <condition id="3" name="Local key exists" sid="1609979961222666" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;EntranceTile&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="8366369627832388" type="System">
+                            <param id="0" name="Variable">EntranceTile</param>
+                            <param id="1" name="Value">WebStorage.LocalValue(&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;EntranceTile&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="9540673902748938">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="3784342356269575" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="2823236962480525" type="System">
+                            <param id="0" name="Variable">EntranceTile</param>
+                            <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="203515716079089">
+                    <conditions>
+                        <condition id="3" name="Local key exists" sid="5712761327383283" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;ExitTile&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="1067039622453054" type="System">
+                            <param id="0" name="Variable">ExitTile</param>
+                            <param id="1" name="Value">WebStorage.LocalValue(&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;ExitTile&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="3466333387527085">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="5842009270932924" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="1682017376146677" type="System">
+                            <param id="0" name="Variable">ExitTile</param>
+                            <param id="1" name="Value">floor(random(3, MapTileCountY - 1))</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="4806958925983012">
+                    <conditions />
+                    <actions>
+                        <action id="-9" name="Set value" sid="7848185955023059" type="System">
+                            <param id="0" name="Variable">PlayerStartingPoint</param>
+                            <param id="1" name="Value">EntranceTile * 32</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="160572469530352" type="System">
+                            <param id="0" name="Object to create">TiledBackground_ExitTrigger</param>
+                            <param id="1" name="Layer">&quot;Triggers&quot;</param>
+                            <param id="2" name="X">(MapTileCountX - 1) *32</param>
+                            <param id="3" name="Y">(ExitTile - 2) * 32</param>
+                        </action>
+                        <action id="-7" name="Set size" sid="9810774230705928" type="TiledBackground_ExitTrigger">
+                            <param id="0" name="Width">32</param>
+                            <param id="1" name="Height">96</param>
+                        </action>
+                        <action id="-3" name="Create object" sid="4183699463755446" type="System">
+                            <param id="0" name="Object to create">TiledBackground_EntranceTrigger</param>
+                            <param id="1" name="Layer">&quot;Triggers&quot;</param>
+                            <param id="2" name="X">0</param>
+                            <param id="3" name="Y">(EntranceTile - 2) * 32</param>
+                        </action>
+                        <action id="-7" name="Set size" sid="349939385357195" type="TiledBackground_EntranceTrigger">
+                            <param id="0" name="Width">32</param>
+                            <param id="1" name="Height">96</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
         <event-block sid="6167624735839516">
             <conditions>
@@ -838,14 +905,6 @@
                 </event-block>
             </sub-events>
         </event-block>
-        <event-block sid="193168596925488">
-            <conditions>
-                <condition id="0" name="On function" sid="5368355133516314" type="Function">
-                    <param id="0" name="Name">&quot;DefinePath&quot;</param>
-                </condition>
-            </conditions>
-            <actions />
-        </event-block>
         <event-block sid="8954527376011768">
             <conditions>
                 <condition id="0" name="On function" sid="458532928624678" type="Function">
@@ -1038,6 +1097,51 @@
                     </actions>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="4223438766481499">
+            <conditions>
+                <condition id="0" name="On function" sid="9674491109306726" type="Function">
+                    <param id="0" name="Name">&quot;SaveMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Set local value" sid="6707755752264099" type="WebStorage">
+                    <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;Map&quot;</param>
+                    <param id="1" name="Value">Array_LevelMask.AsJSON</param>
+                </action>
+                <action id="0" name="Set local value" sid="9694771876904301" type="WebStorage">
+                    <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;EntranceTile&quot;</param>
+                    <param id="1" name="Value">EntranceTile</param>
+                </action>
+                <action id="0" name="Set local value" sid="7834993030702767" type="WebStorage">
+                    <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;ExitTile&quot;</param>
+                    <param id="1" name="Value">ExitTile</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="6906131909437903">
+            <conditions>
+                <condition id="0" name="On function" sid="5420356971934489" type="Function">
+                    <param id="0" name="Name">&quot;LoadMap&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="11" name="Load" sid="5685932254450216" type="Array_LevelMask">
+                    <param id="0" name="JSON">WebStorage.LocalValue(&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;Map&quot;)</param>
+                </action>
+                <action id="0" name="Call function" sid="4630595002138489" type="Function">
+                    <param id="0" name="Name">&quot;SetEndpoints&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+                <action id="0" name="Call function" sid="2880074061713131" type="Function">
+                    <param id="0" name="Name">&quot;RenderMap&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+                <action id="-9" name="Set value" sid="584467691686993" type="System">
+                    <param id="0" name="Variable">LevelMapIsPopulated</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
         </event-block>
     </events>
 </c2eventsheet>

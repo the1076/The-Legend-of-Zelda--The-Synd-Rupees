@@ -6,20 +6,156 @@
         <include>Game Manager</include>
         <include>Player Events</include>
         <include>Procedural Generation Functions</include>
+        <variable constant="0" name="OutOfEntranceTrigger" sid="9276927281522969" static="0" type="number">0</variable>
         <event-block sid="4288201190722989">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="8165357099970827" type="System" />
             </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="9120860947057763">
+                    <conditions>
+                        <condition id="3" name="Local key exists" sid="4363189145917794" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level&quot; &amp; CurrentLevelNumber &amp; &quot;Map&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="1983697368422366" type="Function">
+                            <param id="0" name="Name">&quot;LoadMap&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="3361106613158728">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="1938214392679265" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="4119759954196162" type="Function">
+                            <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="6522916381798447">
+                    <conditions />
+                    <actions>
+                        <action id="-3" name="Set position" sid="2905671429554293" type="Player">
+                            <param id="0" name="X">16</param>
+                            <param id="1" name="Y">PlayerStartingPoint</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="215637016702273">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="7692515548716446" type="Player">
+                    <param id="0" name="Object">TiledBackground_ExitTrigger</param>
+                </condition>
+            </conditions>
             <actions>
-                <action id="0" name="Call function" sid="4119759954196162" type="Function">
-                    <param id="0" name="Name">&quot;GenerateMap&quot;</param>
+                <action id="0" name="Call function" sid="2688260820918569" type="Function">
+                    <param id="0" name="Name">&quot;LoadNextLevel&quot;</param>
                     <param id="1" name="Parameter {n}"></param>
                 </action>
-                <action id="-3" name="Set position" sid="2905671429554293" type="Player">
-                    <param id="0" name="X">16</param>
-                    <param id="1" name="Y">PlayerStartingPoint</param>
+            </actions>
+        </event-block>
+        <event-block sid="695948462732256">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="2660931159779228" type="Player">
+                    <param id="0" name="Object">TiledBackground_EntranceTrigger</param>
+                </condition>
+                <condition id="-14" name="Compare variable" sid="7884284325504528" type="System">
+                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">1</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="1746246833950458" type="System">
+                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="0" name="Call function" sid="7400368554398128" type="Function">
+                    <param id="0" name="Name">&quot;LoadPreviousLevel&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
+        </event-block>
+        <event-block sid="9323396044923525">
+            <conditions>
+                <condition id="1" name="Is overlapping another object" sid="9296580672803777" type="Player">
+                    <param id="0" name="Object">TiledBackground_EntranceTrigger</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="3307558390819876" type="System">
+                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="5984517287538294">
+            <conditions>
+                <condition id="-22" name="Else" sid="6214652064180297" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="7005768071721215" type="System">
+                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="3819212450728914">
+            <conditions>
+                <condition id="1" name="Is overlapping another object" sid="6666006307909169" type="Sprite_Pickaxe">
+                    <param id="0" name="Object">Tilemap_Bitmask</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="216483033150181">
+                    <conditions>
+                        <condition id="2" name="Is playing" sid="2971762295807225" type="Sprite_Pickaxe">
+                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="6880366989220192">
+                            <conditions>
+                                <condition id="7" name="Is mirrored" sid="1846047102846406" type="Player" />
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Erase tile" sid="1517681256903833" type="Tilemap_Bitmask">
+                                    <param id="0" name="Tile X">Tilemap_Bitmask.PositionToTileX(Sprite_Pickaxe.ImagePointX(&quot;Head&quot;)) - 1</param>
+                                    <param id="1" name="Tile Y">Tilemap_Bitmask.PositionToTileY(Sprite_Pickaxe.ImagePointY(&quot;Head&quot;))</param>
+                                </action>
+                                <action id="0" name="Erase tile" sid="1645958887396647" type="Tilemap_Bitmask">
+                                    <param id="0" name="Tile X">Tilemap_Bitmask.PositionToTileX(Sprite_Pickaxe.ImagePointX(&quot;Head&quot;)) - 1</param>
+                                    <param id="1" name="Tile Y">Tilemap_Bitmask.PositionToTileY(Sprite_Pickaxe.ImagePointY(&quot;Head&quot;)) + 1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="4665235451256992">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="1072740252259011" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Erase tile" sid="9632509226759498" type="Tilemap_Bitmask">
+                                    <param id="0" name="Tile X">Tilemap_Bitmask.PositionToTileX(Sprite_Pickaxe.ImagePointX(&quot;Head&quot;)) + 1</param>
+                                    <param id="1" name="Tile Y">Tilemap_Bitmask.PositionToTileY(Sprite_Pickaxe.ImagePointY(&quot;Head&quot;))</param>
+                                </action>
+                                <action id="0" name="Erase tile" sid="412144907613837" type="Tilemap_Bitmask">
+                                    <param id="0" name="Tile X">Tilemap_Bitmask.PositionToTileX(Sprite_Pickaxe.ImagePointX(&quot;Head&quot;)) + 1</param>
+                                    <param id="1" name="Tile Y">Tilemap_Bitmask.PositionToTileY(Sprite_Pickaxe.ImagePointY(&quot;Head&quot;)) + 1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
         </event-block>
     </events>
 </c2eventsheet>

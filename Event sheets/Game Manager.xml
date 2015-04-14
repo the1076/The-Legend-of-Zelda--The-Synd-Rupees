@@ -4,6 +4,7 @@
     <name>Game Manager</name>
     <events>
         <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">15</variable>
+        <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
         <event-block sid="9409173688350814">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="85493013777963" type="System" />
@@ -13,6 +14,262 @@
                     <param id="0" name="Text">&quot;Build Number: &quot; &amp; BuildNumber</param>
                 </action>
             </actions>
+        </event-block>
+        <comment>If the player falls off the bottom of the layout, restart the level.</comment>
+        <event-block sid="7126246603639402">
+            <conditions>
+                <condition id="-2" name="Compare Y" sid="1446177131376944" type="Player">
+                    <param id="0" name="Comparison">4</param>
+                    <param id="1" name="Y co-ordinate">LayoutHeight</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="2646998422667814" type="Function">
+                    <param id="0" name="Name">&quot;PlayerDeath&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="9148983136239007">
+            <conditions>
+                <condition id="0" name="On function" sid="4389748537815532" type="Function">
+                    <param id="0" name="Name">&quot;LoadNextLevel&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="9194140640346516">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="8206766040650593" type="System">
+                            <param id="0" name="Variable">CurrentLevelNumber</param>
+                            <param id="1" name="Comparison">2</param>
+                            <param id="2" name="Value">9</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="7639988520590962" type="System">
+                            <param id="0" name="Variable">CurrentLevelNumber</param>
+                            <param id="1" name="Value">CurrentLevelNumber + 1</param>
+                        </action>
+                        <action id="-25" name="Go to layout (by name)" sid="6068256213204965" type="System">
+                            <param id="0" name="Layout">&quot;Dungeon Level&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="6825292027858326">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="339567418278324" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="6552307164902967" type="Function">
+                            <param id="0" name="Name">&quot;ClearLevelMaps&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="-25" name="Go to layout (by name)" sid="1915763587920228" type="System">
+                            <param id="0" name="Layout">&quot;Merchant Room&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="4440136523578803">
+            <conditions>
+                <condition id="0" name="On function" sid="6939879414987629" type="Function">
+                    <param id="0" name="Name">&quot;LoadPreviousLevel&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="8856194570339708">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="4282987892207165" type="System">
+                            <param id="0" name="Variable">CurrentLevelNumber</param>
+                            <param id="1" name="Comparison">4</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="48514811069193" type="System">
+                            <param id="0" name="Variable">CurrentLevelNumber</param>
+                            <param id="1" name="Value">CurrentLevelNumber - 1</param>
+                        </action>
+                        <action id="-25" name="Go to layout (by name)" sid="1769885140604852" type="System">
+                            <param id="0" name="Layout">&quot;Dungeon Level&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="6803582113707209">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="8324866964701219" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-25" name="Go to layout (by name)" sid="1101289195458205" type="System">
+                            <param id="0" name="Layout">&quot;Merchant Room&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="2113272474650657">
+            <conditions>
+                <condition id="0" name="On function" sid="9484743049203406" type="Function">
+                    <param id="0" name="Name">&quot;ClearLevelMaps&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="6750269464545171">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="9711203515016916" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level0Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="7641312290224267" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level0EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="1504820026208949" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level0ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8111248478527811">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="1724937928614898" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level1Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="5578013311310443" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level1EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="1892855498320792" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level1ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="9029157392525203">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="8874084586645146" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level2Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="6774298376044537" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level2EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="4719535458951107" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level2ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8787072360363176">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="7818669092885734" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level3Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="6749962365900455" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level3EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="4716018483092988" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level3ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2050434200456177">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="7544204326032376" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level4Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="2172351852570361" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level4EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="610729430282462" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level4ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="5663263501816934">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="2866852103031007" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level5Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="9148444249073924" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level5EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="9133829535729642" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level5ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="8946658117249389">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="1365428812099057" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level6Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="7029855212620322" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level6EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="8981432181525206" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level6ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="4124236991016948">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="5722573030230623" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level7Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="1653489510283398" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level7EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="3682783207497535" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level7ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="4746355439512127">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="5523709973937117" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level8Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="8867665048782185" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level8EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="7720380219313111" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level8ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2395140427847624">
+                    <conditions />
+                    <actions>
+                        <action id="2" name="Remove local value" sid="3125672709647323" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level9Map&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="1288970752782213" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level9EntranceTile&quot;</param>
+                        </action>
+                        <action id="2" name="Remove local value" sid="9833588596953868" type="WebStorage">
+                            <param id="0" name="Key">&quot;Level9ExitTile&quot;</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="8703631333459623">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="127281510287199" type="System">
+                                    <param id="0" name="Variable">CurrentLevelNumber</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
         </event-block>
     </events>
 </c2eventsheet>

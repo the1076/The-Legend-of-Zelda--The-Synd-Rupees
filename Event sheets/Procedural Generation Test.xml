@@ -81,17 +81,5 @@
                 </action>
             </actions>
         </event-block>
-        <event-block sid="8875353955656988">
-            <conditions>
-                <condition behavior="Pathfinding" id="0" name="On path found" sid="675697021567181" type="Pathfinder" />
-            </conditions>
-            <actions />
-        </event-block>
-        <event-block sid="3194538264090882">
-            <conditions>
-                <condition behavior="Pathfinding" id="1" name="On failed to find path" sid="5083782974655606" type="Pathfinder" />
-            </conditions>
-            <actions />
-        </event-block>
     </events>
 </c2eventsheet>

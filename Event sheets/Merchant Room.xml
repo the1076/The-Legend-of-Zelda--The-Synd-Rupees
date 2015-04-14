@@ -8,7 +8,7 @@
         <event-block sid="8450119511087308">
             <conditions>
                 <condition id="0" name="On collision with another object" sid="3187671351301" type="Player">
-                    <param id="0" name="Object">Trigger</param>
+                    <param id="0" name="Object">TiledBackground_ExitTrigger</param>
                 </condition>
             </conditions>
             <actions>

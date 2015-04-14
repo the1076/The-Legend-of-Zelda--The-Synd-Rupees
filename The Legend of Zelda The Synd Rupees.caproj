@@ -15,16 +15,17 @@
         <plugin author="Scirra" id="Button" version="1">Button</plugin>
         <plugin author="Scirra" id="Function" version="1">Function</plugin>
         <plugin author="Scirra" id="Keyboard" version="1">Keyboard</plugin>
+        <plugin author="Scirra" id="Mouse" version="1">Mouse</plugin>
         <plugin author="Scirra" id="Sprite" version="1">Sprite</plugin>
         <plugin author="Scirra" id="Text" version="1">Text</plugin>
         <plugin author="Scirra" id="TextBox" version="1">Text box</plugin>
         <plugin author="Scirra" id="TiledBg" version="1">Tiled Background</plugin>
         <plugin author="Scirra" id="Tilemap" version="1">Tilemap</plugin>
+        <plugin author="Zack0Wack0/Scirra" id="WebStorage" version="1">WebStorage</plugin>
         <plugin author="Funstorm Ltd" id="chromeconsole" version="0.100000001">Chrome Console</plugin>
         <plugin author="Scirra" id="gamepad" version="1">Gamepad</plugin>
     </used-plugins>
     <used-behaviors>
-        <behavior author="Scirra" id="Pathfinding" version="1">Pathfinding</behavior>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
         <behavior author="Scirra" id="scrollto" version="1">Scroll To</behavior>
         <behavior author="Scirra" id="solid" version="1">Solid</behavior>
@@ -87,6 +88,8 @@
             <animation-folder>
                 <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="8912767412044545" speed="5">
                     <frame duration="1" hotspotX="0.53125" hotspotY="0.515625">
+                        <image-point name="LeftHand" x="0.875" y="0.5" />
+                        <image-point name="RightHand" x="0.21875" y="0.609375" />
                         <collision-poly>
                             <point x="0.0625" y="0.03125" />
                             <point x="0.9375" y="0.03125" />
@@ -102,7 +105,7 @@
             <texture />
             <tiles />
         </object-type>
-        <object-type name="Trigger" sid="2203965051880839">
+        <object-type name="TiledBackground_ExitTrigger" sid="2203965051880839">
             <plugin id="TiledBg" />
             <texture />
         </object-type>
@@ -151,30 +154,78 @@
         <object-type global="1" name="Array_TemporaryEndpoints" sid="4071082705542022">
             <plugin id="Arr" />
         </object-type>
-        <object-type name="Pathfinder" sid="2861033572421288">
+        <object-type global="1" name="Text_DevelopmentVersion" sid="5887543724515725">
+            <plugin id="Text" />
+        </object-type>
+        <object-type name="TiledBackground_DevelopmentVersionBackground" sid="3628688667840641">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type name="WebStorage" sid="6848062234253157">
+            <plugin id="WebStorage" />
+        </object-type>
+        <object-type name="Sprite_Pickaxe" sid="3763914707495457">
             <plugin id="Sprite" />
-            <behaviors>
-                <behavior-type name="Pathfinding" sid="2803284547131617">
-                    <behavior id="Pathfinding" />
-                </behavior-type>
-            </behaviors>
             <animation-folder>
-                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="9732341818637433" speed="5">
-                    <frame duration="1" hotspotX="0.53125" hotspotY="0.515625">
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="0" repeatto="0" sid="5475794987613872" speed="5">
+                    <frame duration="1" hotspotX="0.470588" hotspotY="0.192825">
+                        <image-point name="Head" x="0.807843" y="0.556054" />
                         <collision-poly>
-                            <point x="0.0625" y="0.03125" />
-                            <point x="0.9375" y="0.03125" />
-                            <point x="0.9375" y="1" />
-                            <point x="0.0625" y="1" />
+                            <point x="0.764706" y="0.0134529" />
+                            <point x="0.945098" y="0.0403588" />
+                            <point x="0.905882" y="0.2287" />
+                            <point x="0.980392" y="0.300448" />
+                            <point x="0.796078" y="0.762332" />
+                            <point x="0.592157" y="1" />
+                            <point x="0.72549" y="0.695067" />
+                            <point x="0.717647" y="0.269058" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+                <animation framecount="3" loop="0" name="Attack" pingpong="0" repeatcount="1" repeatto="0" sid="7989105163958646" speed="5">
+                    <frame duration="1" hotspotX="0.470588" hotspotY="0.192825" original-source="E:\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\dev\Art\pickaxe_base.png">
+                        <collision-poly>
+                            <point x="0.764706" y="0.0134529" />
+                            <point x="0.945098" y="0.0403588" />
+                            <point x="0.905882" y="0.2287" />
+                            <point x="0.980392" y="0.300448" />
+                            <point x="0.796078" y="0.762332" />
+                            <point x="0.592157" y="1" />
+                            <point x="0.72549" y="0.695067" />
+                            <point x="0.717647" y="0.269058" />
+                        </collision-poly>
+                    </frame>
+                    <frame duration="1" hotspotX="0.192825" hotspotY="0.529412">
+                        <collision-poly>
+                            <point x="0.0134529" y="0.235294" />
+                            <point x="0.0403588" y="0.054902" />
+                            <point x="0.2287" y="0.0941176" />
+                            <point x="0.300448" y="0.0196078" />
+                            <point x="0.762332" y="0.203922" />
+                            <point x="1" y="0.407843" />
+                            <point x="0.695067" y="0.27451" />
+                            <point x="0.269058" y="0.282353" />
+                        </collision-poly>
+                    </frame>
+                    <frame duration="1" hotspotX="0.470588" hotspotY="0.192825">
+                        <collision-poly>
+                            <point x="0.764706" y="0.0134529" />
+                            <point x="0.945098" y="0.0403588" />
+                            <point x="0.905882" y="0.2287" />
+                            <point x="0.980392" y="0.300448" />
+                            <point x="0.796078" y="0.762332" />
+                            <point x="0.592157" y="1" />
+                            <point x="0.72549" y="0.695067" />
+                            <point x="0.717647" y="0.269058" />
                         </collision-poly>
                     </frame>
                 </animation>
             </animation-folder>
         </object-type>
-        <object-type global="1" name="Text_DevelopmentVersion" sid="5887543724515725">
-            <plugin id="Text" />
+        <object-type name="Mouse" sid="3083912777102783">
+            <plugin id="Mouse" />
         </object-type>
-        <object-type name="TiledBackground_DevelopmentVersionBackground" sid="3628688667840641">
+        <object-type name="TiledBackground_EntranceTrigger" sid="7700504804980313">
             <plugin id="TiledBg" />
             <texture />
         </object-type>
@@ -203,6 +254,8 @@
                 <analog-deadzone>25</analog-deadzone>
             </properties>
         </global-instance>
+        <global-instance type="WebStorage" uid="30" />
+        <global-instance type="Mouse" uid="37" />
     </global-instances>
     <sounds-folder />
     <music-folder />

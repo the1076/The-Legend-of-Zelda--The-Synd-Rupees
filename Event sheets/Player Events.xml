@@ -17,7 +17,70 @@
                 <action id="-8" name="Scroll to object" sid="8034267101730061" type="System">
                     <param id="0" name="Object">Player</param>
                 </action>
+                <action id="-7" name="Set size" sid="8317068425383006" type="Sprite_Pickaxe">
+                    <param id="0" name="Width">40</param>
+                    <param id="1" name="Height">35</param>
+                </action>
+                <action id="4" name="Set animation" sid="7915711926723316" type="Sprite_Pickaxe">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
             </actions>
+        </event-block>
+        <event-block sid="2269334366087451">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="9147582535713624" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="8679616913446976">
+                    <conditions />
+                    <actions />
+                </event-block>
+                <event-block sid="1185245709934167">
+                    <conditions>
+                        <condition id="2" name="Is playing" sid="4965135387920547" type="Sprite_Pickaxe">
+                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="7531369786795993">
+                            <conditions>
+                                <condition id="7" name="Is mirrored" sid="4041150191590809" type="Player" />
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="7414352320683484" type="Sprite_Pickaxe">
+                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) - 20</param>
+                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="883538511361323">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="6825020074035882" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="1876743901060609" type="Sprite_Pickaxe">
+                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) + 20</param>
+                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="2408201377914458">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="4272781697432557" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-3" name="Set position" sid="167517826655405" type="Sprite_Pickaxe">
+                            <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                            <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
         <comment>Allow alternate controls to arrow keys.</comment>
         <event-block any="1" sid="3619358569854467">
@@ -174,16 +237,22 @@
                 </action>
             </actions>
         </event-block>
-        <comment>If the player falls off the bottom of the layout, restart the level.</comment>
-        <event-block sid="9825711393096202">
+        <event-block any="1" sid="8725030371645102">
             <conditions>
-                <condition id="-2" name="Compare Y" sid="6631447701477554" type="Player">
-                    <param id="0" name="Comparison">4</param>
-                    <param id="1" name="Y co-ordinate">LayoutHeight</param>
+                <condition id="0" name="On click" sid="9296122849809267" type="Mouse">
+                    <param id="0" name="Mouse button">2</param>
+                    <param id="1" name="Click type">0</param>
+                </condition>
+                <condition id="6" name="On button pressed" sid="6265990207247554" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                    <param id="1" name="Button">1</param>
                 </condition>
             </conditions>
             <actions>
-                <action id="-26" name="Restart layout" sid="3922049931527123" type="System" />
+                <action id="4" name="Set animation" sid="1930305325364177" type="Sprite_Pickaxe">
+                    <param id="0" name="Animation">&quot;Attack&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
             </actions>
         </event-block>
         <comment>Allow player to hang on walls</comment>
@@ -288,6 +357,9 @@
                     <param id="0" name="Variable">MoveRightActionIsTrue</param>
                     <param id="1" name="Value">1</param>
                 </action>
+                <action id="7" name="Set mirrored" sid="149295243631283" type="Sprite_Pickaxe">
+                    <param id="0" name="State">1</param>
+                </action>
             </actions>
         </event-block>
         <event-block sid="102504172225817">
@@ -306,6 +378,9 @@
                 <action id="-9" name="Set value" sid="771136845017243" type="System">
                     <param id="0" name="Variable">MoveLeftActionIsTrue</param>
                     <param id="1" name="Value">1</param>
+                </action>
+                <action id="7" name="Set mirrored" sid="872559396768678" type="Sprite_Pickaxe">
+                    <param id="0" name="State">0</param>
                 </action>
             </actions>
         </event-block>
@@ -382,6 +457,29 @@
                     </actions>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="686829324673796">
+            <conditions>
+                <condition id="0" name="On function" sid="9495648046464153" type="Function">
+                    <param id="0" name="Name">&quot;PlayerDeath&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-26" name="Restart layout" sid="1199880833663911" type="System" />
+            </actions>
+        </event-block>
+        <event-block sid="1344521761632292">
+            <conditions>
+                <condition id="4" name="On finished" sid="7276250380287228" type="Sprite_Pickaxe">
+                    <param id="0" name="Animation">&quot;Attack&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set animation" sid="253721394476349" type="Sprite_Pickaxe">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
         </event-block>
     </events>
 </c2eventsheet>

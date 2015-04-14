@@ -15996,6 +15996,265 @@ cr.plugins_.Keyboard = function(runtime)
 }());
 ;
 ;
+cr.plugins_.Mouse = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.Mouse.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+		this.buttonMap = new Array(4);		// mouse down states
+		this.mouseXcanvas = 0;				// mouse position relative to canvas
+		this.mouseYcanvas = 0;
+		this.triggerButton = 0;
+		this.triggerType = 0;
+		this.triggerDir = 0;
+		this.handled = false;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	instanceProto.onCreate = function()
+	{
+		var self = this;
+		if (!this.runtime.isDomFree)
+		{
+			jQuery(document).mousemove(
+				function(info) {
+					self.onMouseMove(info);
+				}
+			);
+			jQuery(document).mousedown(
+				function(info) {
+					self.onMouseDown(info);
+				}
+			);
+			jQuery(document).mouseup(
+				function(info) {
+					self.onMouseUp(info);
+				}
+			);
+			jQuery(document).dblclick(
+				function(info) {
+					self.onDoubleClick(info);
+				}
+			);
+			var wheelevent = function(info) {
+								self.onWheel(info);
+							};
+			document.addEventListener("mousewheel", wheelevent, false);
+			document.addEventListener("DOMMouseScroll", wheelevent, false);
+		}
+	};
+	var dummyoffset = {left: 0, top: 0};
+	instanceProto.onMouseMove = function(info)
+	{
+		var offset = this.runtime.isDomFree ? dummyoffset : jQuery(this.runtime.canvas).offset();
+		this.mouseXcanvas = info.pageX - offset.left;
+		this.mouseYcanvas = info.pageY - offset.top;
+	};
+	instanceProto.mouseInGame = function ()
+	{
+		if (this.runtime.fullscreen_mode > 0)
+			return true;
+		return this.mouseXcanvas >= 0 && this.mouseYcanvas >= 0
+		    && this.mouseXcanvas < this.runtime.width && this.mouseYcanvas < this.runtime.height;
+	};
+	instanceProto.onMouseDown = function(info)
+	{
+		if (!this.mouseInGame())
+			return;
+		if (this.runtime.had_a_click && !this.runtime.isMobile)
+			info.preventDefault();
+		this.buttonMap[info.which] = true;
+		this.runtime.isInUserInputEvent = true;
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnAnyClick, this);
+		this.triggerButton = info.which - 1;	// 1-based
+		this.triggerType = 0;					// single click
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnClick, this);
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnObjectClicked, this);
+		this.runtime.isInUserInputEvent = false;
+	};
+	instanceProto.onMouseUp = function(info)
+	{
+		if (!this.buttonMap[info.which])
+			return;
+		if (this.runtime.had_a_click && !this.runtime.isMobile)
+			info.preventDefault();
+		this.runtime.had_a_click = true;
+		this.buttonMap[info.which] = false;
+		this.runtime.isInUserInputEvent = true;
+		this.triggerButton = info.which - 1;	// 1-based
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnRelease, this);
+		this.runtime.isInUserInputEvent = false;
+	};
+	instanceProto.onDoubleClick = function(info)
+	{
+		if (!this.mouseInGame())
+			return;
+		info.preventDefault();
+		this.runtime.isInUserInputEvent = true;
+		this.triggerButton = info.which - 1;	// 1-based
+		this.triggerType = 1;					// double click
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnClick, this);
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnObjectClicked, this);
+		this.runtime.isInUserInputEvent = false;
+	};
+	instanceProto.onWheel = function (info)
+	{
+		var delta = info.wheelDelta ? info.wheelDelta : info.detail ? -info.detail : 0;
+		this.triggerDir = (delta < 0 ? 0 : 1);
+		this.handled = false;
+		this.runtime.isInUserInputEvent = true;
+		this.runtime.trigger(cr.plugins_.Mouse.prototype.cnds.OnWheel, this);
+		this.runtime.isInUserInputEvent = false;
+		if (this.handled && cr.isCanvasInputEvent(info))
+			info.preventDefault();
+	};
+	function Cnds() {};
+	Cnds.prototype.OnClick = function (button, type)
+	{
+		return button === this.triggerButton && type === this.triggerType;
+	};
+	Cnds.prototype.OnAnyClick = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.IsButtonDown = function (button)
+	{
+		return this.buttonMap[button + 1];	// jQuery uses 1-based buttons for some reason
+	};
+	Cnds.prototype.OnRelease = function (button)
+	{
+		return button === this.triggerButton;
+	};
+	Cnds.prototype.IsOverObject = function (obj)
+	{
+		var cnd = this.runtime.getCurrentCondition();
+		var mx = this.mouseXcanvas;
+		var my = this.mouseYcanvas;
+		return cr.xor(this.runtime.testAndSelectCanvasPointOverlap(obj, mx, my, cnd.inverted), cnd.inverted);
+	};
+	Cnds.prototype.OnObjectClicked = function (button, type, obj)
+	{
+		if (button !== this.triggerButton || type !== this.triggerType)
+			return false;	// wrong click type
+		return this.runtime.testAndSelectCanvasPointOverlap(obj, this.mouseXcanvas, this.mouseYcanvas, false);
+	};
+	Cnds.prototype.OnWheel = function (dir)
+	{
+		this.handled = true;
+		return dir === this.triggerDir;
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.SetCursor = function (c)
+	{
+		var cursor_style = ["auto", "pointer", "text", "crosshair", "move", "help", "wait", "none"][c];
+		if (this.runtime.canvas && this.runtime.canvas.style)
+			this.runtime.canvas.style.cursor = cursor_style;
+	};
+	Acts.prototype.SetCursorSprite = function (obj)
+	{
+		if (this.runtime.isDomFree || this.runtime.isMobile || !obj)
+			return;
+		var inst = obj.getFirstPicked();
+		if (!inst || !inst.curFrame)
+			return;
+		var frame = inst.curFrame;
+		var datauri = frame.getDataUri();
+		var cursor_style = "url(" + datauri + ") " + Math.round(frame.hotspotX * frame.width) + " " + Math.round(frame.hotspotY * frame.height) + ", auto";
+		jQuery(this.runtime.canvas).css("cursor", cursor_style);
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.X = function (ret, layerparam)
+	{
+		var layer, oldScale, oldZoomRate, oldParallaxX, oldAngle;
+		if (cr.is_undefined(layerparam))
+		{
+			layer = this.runtime.getLayerByNumber(0);
+			oldScale = layer.scale;
+			oldZoomRate = layer.zoomRate;
+			oldParallaxX = layer.parallaxX;
+			oldAngle = layer.angle;
+			layer.scale = 1;
+			layer.zoomRate = 1.0;
+			layer.parallaxX = 1.0;
+			layer.angle = 0;
+			ret.set_float(layer.canvasToLayer(this.mouseXcanvas, this.mouseYcanvas, true));
+			layer.scale = oldScale;
+			layer.zoomRate = oldZoomRate;
+			layer.parallaxX = oldParallaxX;
+			layer.angle = oldAngle;
+		}
+		else
+		{
+			if (cr.is_number(layerparam))
+				layer = this.runtime.getLayerByNumber(layerparam);
+			else
+				layer = this.runtime.getLayerByName(layerparam);
+			if (layer)
+				ret.set_float(layer.canvasToLayer(this.mouseXcanvas, this.mouseYcanvas, true));
+			else
+				ret.set_float(0);
+		}
+	};
+	Exps.prototype.Y = function (ret, layerparam)
+	{
+		var layer, oldScale, oldZoomRate, oldParallaxY, oldAngle;
+		if (cr.is_undefined(layerparam))
+		{
+			layer = this.runtime.getLayerByNumber(0);
+			oldScale = layer.scale;
+			oldZoomRate = layer.zoomRate;
+			oldParallaxY = layer.parallaxY;
+			oldAngle = layer.angle;
+			layer.scale = 1;
+			layer.zoomRate = 1.0;
+			layer.parallaxY = 1.0;
+			layer.angle = 0;
+			ret.set_float(layer.canvasToLayer(this.mouseXcanvas, this.mouseYcanvas, false));
+			layer.scale = oldScale;
+			layer.zoomRate = oldZoomRate;
+			layer.parallaxY = oldParallaxY;
+			layer.angle = oldAngle;
+		}
+		else
+		{
+			if (cr.is_number(layerparam))
+				layer = this.runtime.getLayerByNumber(layerparam);
+			else
+				layer = this.runtime.getLayerByName(layerparam);
+			if (layer)
+				ret.set_float(layer.canvasToLayer(this.mouseXcanvas, this.mouseYcanvas, false));
+			else
+				ret.set_float(0);
+		}
+	};
+	Exps.prototype.AbsoluteX = function (ret)
+	{
+		ret.set_float(this.mouseXcanvas);
+	};
+	Exps.prototype.AbsoluteY = function (ret)
+	{
+		ret.set_float(this.mouseYcanvas);
+	};
+	pluginProto.exps = new Exps();
+}());
+;
+;
 cr.plugins_.Sprite = function(runtime)
 {
 	this.runtime = runtime;
@@ -19685,6 +19944,263 @@ cr.plugins_.Tilemap = function(runtime)
 	};
 	pluginProto.exps = new Exps();
 }());
+;
+;
+cr.plugins_.WebStorage = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function()
+{
+	var pluginProto = cr.plugins_.WebStorage.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	var prefix = "";
+	var is_arcade = (typeof window["is_scirra_arcade"] !== "undefined");
+	if (is_arcade)
+		prefix = "arcade" + window["scirra_arcade_id"];
+	instanceProto.onCreate = function()
+	{
+		if (typeof localStorage === "undefined")
+		{
+			cr.logexport("[Construct 2] Webstorage plugin: local storage is not supported on this platform.");
+		}
+		if (typeof sessionStorage === "undefined")
+		{
+			cr.logexport("[Construct 2] Webstorage plugin: session storage is not supported on this platform.");
+		}
+	};
+	function Cnds() {};
+	Cnds.prototype.LocalStorageEnabled = function()
+	{
+		return true;
+	};
+	Cnds.prototype.SessionStorageEnabled = function()
+	{
+		return true;
+	};
+	Cnds.prototype.LocalStorageExists = function(key)
+	{
+		if (typeof localStorage === "undefined")
+			return false;
+		return localStorage.getItem(prefix + key) != null;
+	};
+	Cnds.prototype.SessionStorageExists = function(key)
+	{
+		if (typeof sessionStorage === "undefined")
+			return false;
+		return sessionStorage.getItem(prefix + key) != null;
+	};
+	Cnds.prototype.OnQuotaExceeded = function ()
+	{
+		return true;
+	};
+	Cnds.prototype.CompareKeyText = function (key, text_to_compare, case_sensitive)
+	{
+		if (typeof localStorage === "undefined")
+			return false;
+		var value = localStorage.getItem(prefix + key) || "";
+		if (case_sensitive)
+			return value == text_to_compare;
+		else
+			return cr.equals_nocase(value, text_to_compare);
+	};
+	Cnds.prototype.CompareKeyNumber = function (key, cmp, x)
+	{
+		if (typeof localStorage === "undefined")
+			return false;
+		var value = localStorage.getItem(prefix + key) || "";
+		return cr.do_cmp(parseFloat(value), cmp, x);
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.StoreLocal = function(key, data)
+	{
+		if (typeof localStorage === "undefined")
+			return;
+		try {
+			localStorage.setItem(prefix + key, data);
+		}
+		catch (e)
+		{
+			this.runtime.trigger(cr.plugins_.WebStorage.prototype.cnds.OnQuotaExceeded, this);
+		}
+	};
+	Acts.prototype.StoreSession = function(key,data)
+	{
+		if (typeof sessionStorage === "undefined")
+			return;
+		try {
+			sessionStorage.setItem(prefix + key, data);
+		}
+		catch (e)
+		{
+			this.runtime.trigger(cr.plugins_.WebStorage.prototype.cnds.OnQuotaExceeded, this);
+		}
+	};
+	Acts.prototype.RemoveLocal = function(key)
+	{
+		if (typeof localStorage === "undefined")
+			return;
+		localStorage.removeItem(prefix + key);
+	};
+	Acts.prototype.RemoveSession = function(key)
+	{
+		if (typeof sessionStorage === "undefined")
+			return;
+		sessionStorage.removeItem(prefix + key);
+	};
+	Acts.prototype.ClearLocal = function()
+	{
+		if (typeof localStorage === "undefined")
+			return;
+		if (!is_arcade)
+			localStorage.clear();
+	};
+	Acts.prototype.ClearSession = function()
+	{
+		if (typeof sessionStorage === "undefined")
+			return;
+		if (!is_arcade)
+			sessionStorage.clear();
+	};
+	Acts.prototype.JSONLoad = function (json_, mode_)
+	{
+		if (typeof localStorage === "undefined")
+			return;
+		var d;
+		try {
+			d = JSON.parse(json_);
+		}
+		catch(e) { return; }
+		if (!d["c2dictionary"])			// presumably not a c2dictionary object
+			return;
+		var o = d["data"];
+		if (mode_ === 0 && !is_arcade)	// 'set' mode: must clear webstorage first
+			localStorage.clear();
+		var p;
+		for (p in o)
+		{
+			if (o.hasOwnProperty(p))
+			{
+				try {
+					localStorage.setItem(prefix + p, o[p]);
+				}
+				catch (e)
+				{
+					this.runtime.trigger(cr.plugins_.WebStorage.prototype.cnds.OnQuotaExceeded, this);
+					return;
+				}
+			}
+		}
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.LocalValue = function(ret,key)
+	{
+		if (typeof localStorage === "undefined")
+		{
+			ret.set_string("");
+			return;
+		}
+		ret.set_string(localStorage.getItem(prefix + key) || "");
+	};
+	Exps.prototype.SessionValue = function(ret,key)
+	{
+		if (typeof sessionStorage === "undefined")
+		{
+			ret.set_string("");
+			return;
+		}
+		ret.set_string(sessionStorage.getItem(prefix + key) || "");
+	};
+	Exps.prototype.LocalCount = function(ret)
+	{
+		if (typeof localStorage === "undefined")
+		{
+			ret.set_int(0);
+			return;
+		}
+		ret.set_int(is_arcade ? 0 : localStorage.length);
+	};
+	Exps.prototype.SessionCount = function(ret)
+	{
+		if (typeof sessionStorage === "undefined")
+		{
+			ret.set_int(0);
+			return;
+		}
+		ret.set_int(is_arcade ? 0 : sessionStorage.length);
+	};
+	Exps.prototype.LocalAt = function(ret,n)
+	{
+		if (is_arcade || typeof localStorage === "undefined")
+			ret.set_string("");
+		else
+			ret.set_string(localStorage.getItem(localStorage.key(n)) || "");
+	};
+	Exps.prototype.SessionAt = function(ret,n)
+	{
+		if (is_arcade || typeof sessionStorage === "undefined")
+			ret.set_string("");
+		else
+			ret.set_string(sessionStorage.getItem(sessionStorage.key(n)) || "");
+	};
+	Exps.prototype.LocalKeyAt = function(ret,n)
+	{
+		if (is_arcade || typeof localStorage === "undefined")
+			ret.set_string("");
+		else
+			ret.set_string(localStorage.key(n) || "");
+	};
+	Exps.prototype.SessionKeyAt = function(ret,n)
+	{
+		if (is_arcade || typeof sessionStorage === "undefined")
+			ret.set_string("");
+		else
+			ret.set_string(sessionStorage.key(n) || "");
+	};
+	Exps.prototype.AsJSON = function (ret)
+	{
+		if (typeof localStorage === "undefined")
+		{
+			ret.set_string("");
+			return;
+		}
+		var o = {}, i, len, k;
+		for (i = 0, len = localStorage.length; i < len; i++)
+		{
+			k = localStorage.key(i);
+			if (is_arcade)
+			{
+				if (k.substr(0, prefix.length) === prefix)
+				{
+					o[k.substr(prefix.length)] = localStorage.getItem(k);
+				}
+			}
+			else
+				o[k] = localStorage.getItem(k);
+		}
+		ret.set_string(JSON.stringify({
+			"c2dictionary": true,
+			"data": o
+		}));
+	};
+	pluginProto.exps = new Exps();
+}());
 /*
 IMPORTANT STUFF
 This plugin lets you use some of Playtomic's features, such as counting the number of people who have played your game, or died on level X. You will need a Playtomic  account to use it in your project. Not all Playtomic features are supported (see below for details).
@@ -20363,766 +20879,6 @@ cr.plugins_.gamepad = function(runtime)
 		ret.set_int(this.lastButton);
 	};
 	pluginProto.exps = new Exps();
-}());
-;
-;
-cr.behaviors.Pathfinding = function(runtime)
-{
-	this.runtime = runtime;
-};
-(function ()
-{
-	var behaviorProto = cr.behaviors.Pathfinding.prototype;
-	behaviorProto.Type = function(behavior, objtype)
-	{
-		this.behavior = behavior;
-		this.objtype = objtype;
-		this.runtime = behavior.runtime;
-	};
-	var behtypeProto = behaviorProto.Type.prototype;
-	behtypeProto.onCreate = function()
-	{
-		this.obstacleTypes = [];		// object types to treat as obstacles in custom mode
-		this.costTypes = [];			// object types with cost: { obj: type, cost: n }
-	};
-	var cellData = {};
-	behaviorProto.Instance = function(type, inst)
-	{
-		this.type = type;
-		this.behavior = type.behavior;
-		this.inst = inst;				// associated object instance to modify
-		this.runtime = type.runtime;
-	};
-	var behinstProto = behaviorProto.Instance.prototype;
-	behinstProto.onCreate = function()
-	{
-		this.cellSize = this.properties[0];
-		if (this.cellSize < 3)
-			this.cellSize = 3;
-		this.cellBorder = this.properties[1];
-		this.obstacles = this.properties[2];		// 0 = solids, 1 = custom
-		this.maxSpeed = this.properties[3];
-		this.acc = this.properties[4];
-		this.dec = this.properties[5];
-		this.av = cr.to_radians(this.properties[6]);
-		this.rotateEnabled = (this.properties[7] !== 0);
-		this.diagonalsEnabled = (this.properties[8] !== 0);
-		this.enabled = (this.properties[9] !== 0);
-		this.isMoving = false;
-		this.movingFromStopped = false;
-		this.firstTickMovingWhileMoving = false;
-		this.hasPath = false;
-		this.moveNode = 0;
-		this.a = this.inst.angle;
-		this.lastKnownAngle = this.inst.angle;
-		this.s = 0;
-		this.rabbitX = 0;
-		this.rabbitY = 0;
-		this.rabbitA = 0;
-		this.myHcells = Math.ceil(this.runtime.running_layout.width / this.cellSize);
-		this.myVcells = Math.ceil(this.runtime.running_layout.height / this.cellSize);
-		this.myPath = [];				// copy of path returned from pathfinder
-		this.delayFindPath = false;
-		this.delayPathX = 0;
-		this.delayPathY = 0;
-		this.is_destroyed = false;
-		this.isCalculating = false;
-		this.calcPathX = 0;
-		this.calcPathY = 0;
-		this.firstRun = true;
-		var self = this;
-		if (!this.recycled)
-		{
-			this.pathSuccessFn = function ()
-			{
-				if (self.is_destroyed)
-					return;
-				self.isCalculating = false;
-				self.copyResultPath();
-				self.hasPath = (self.myPath.length > 0);
-				self.moveNode = 0;
-				self.runtime.trigger(cr.behaviors.Pathfinding.prototype.cnds.OnPathFound, self.inst);
-				self.doDelayFindPath();		// run next pathfind if queued
-			};
-			this.pathFailFn = function ()
-			{
-				if (self.is_destroyed)
-					return;
-				self.isCalculating = false;
-				self.clearResultPath();
-				self.hasPath = false;
-				self.isMoving = false;
-				self.moveNode = 0;
-				self.runtime.trigger(cr.behaviors.Pathfinding.prototype.cnds.OnFailedToFindPath, self.inst);
-				self.doDelayFindPath();		// run next pathfind if queued
-			};
-		}
-	};
-	behinstProto.onDestroy = function ()
-	{
-		this.is_destroyed = true;		// start ignoring callbacks
-		this.delayFindPath = false;
-	};
-	behinstProto.saveToJSON = function ()
-	{
-		var o = {
-			"cs": this.cellSize,
-			"cb": this.cellBorder,
-			"ms": this.maxSpeed,
-			"acc": this.acc,
-			"dec": this.dec,
-			"av": this.av,
-			"re": this.rotateEnabled,
-			"de": this.diagonalsEnabled,
-			"im": this.isMoving,
-			"mfs": this.movingFromStopped,
-			"ftmwm": this.firstTickMovingWhileMoving,
-			"hp": this.hasPath,
-			"mn": this.moveNode,
-			"a": this.a,
-			"lka": this.lastKnownAngle,
-			"s": this.s,
-			"rx": this.rabbitX,
-			"ry": this.rabbitY,
-			"ra": this.rabbitA,
-			"myhc": this.myHcells,
-			"myvc": this.myVcells,
-			"path": this.myPath,
-			"en": this.enabled,
-			"fr": this.firstRun,
-			"obs": [],
-			"costs": []
-		};
-		if (this.isCalculating)
-		{
-			o["dfp"] = true;
-			o["dpx"] = this.calcPathX;
-			o["dpy"] = this.calcPathY;
-		}
-		else
-		{
-			o["dfp"] = this.delayFindPath;
-			o["dpx"] = this.delayPathX;
-			o["dpy"] = this.delayPathY;
-		}
-		var i, len;
-		for (i = 0, len = this.type.obstacleTypes.length; i < len; i++)
-		{
-			o["obs"].push(this.type.obstacleTypes[i].sid);
-		}
-		for (i = 0, len = this.type.costTypes.length; i < len; i++)
-		{
-			o["costs"].push({ "sid": this.type.costTypes[i].obj.sid, "cost": this.type.costTypes[i].cost });
-		}
-		return o;
-	};
-	behinstProto.loadFromJSON = function (o)
-	{
-		this.cellSize = o["cs"];
-		this.cellBorder = o["cb"];
-		this.maxSpeed = o["ms"];
-		this.acc = o["acc"];
-		this.dec = o["dec"];
-		this.av = o["av"];
-		this.rotateEnabled = o["re"];
-		this.diagonalsEnabled = o["de"];
-		this.isMoving = o["im"];
-		this.movingFromStopped = o["mfs"];
-		this.firstTickMovingWhileMoving = o["ftmwm"];
-		this.hasPath = o["hp"];
-		this.moveNode = o["mn"];
-		this.a = o["a"];
-		this.lastKnownAngle = o["lka"];
-		this.s = o["s"];
-		this.rabbitX = o["rx"];
-		this.rabbitY = o["ry"];
-		this.rabbitA = o["ra"];
-		this.myHcells = o["myhc"];
-		this.myVcells = o["myvc"];
-		this.myPath = o["path"];
-		this.enabled = o["en"];
-		this.firstRun = o["fr"];
-		this.delayFindPath = o["dfp"];
-		this.delayPathX = o["dpx"];
-		this.delayPathY = o["dpy"];
-		this.type.obstacleTypes.length = 0;
-		var obsarr = o["obs"];
-		var i, len, t;
-		for (i = 0, len = obsarr.length; i < len; i++)
-		{
-			t = this.runtime.getObjectTypeBySid(obsarr[i]);
-			if (t)
-				this.type.obstacleTypes.push(t);
-		}
-		this.type.costTypes.length = 0;
-		var costarr = o["costs"];
-		for (i = 0, len = costarr.length; i < len; i++)
-		{
-			t = this.runtime.getObjectTypeBySid(costarr[i]["sid"]);
-			if (t)
-				this.type.costTypes.push({ obj: t, cost: costarr[i]["cost"] });
-		}
-		this.getMyInfo().pathfinder["setDiagonals"](this.diagonalsEnabled);
-	};
-	behinstProto.afterLoad = function ()
-	{
-		this.getMyInfo().regenerate = true;
-	};
-	behinstProto.tick = function ()
-	{
-		if (!this.enabled || !this.isMoving)
-			return;
-		if (this.rotateEnabled && this.inst.angle !== this.lastKnownAngle)
-			this.a = this.inst.angle;
-		var dt = this.runtime.getDt(this.inst);
-		var targetAngle, da, dist, nextX, nextY, t, r, curveDist, curMaxSpeed;
-		var inst = this.inst;
-		var rabbitAheadDist = Math.min(this.maxSpeed * 0.4, Math.abs(this.inst.width) * 2);
-		var rabbitSpeed = Math.max(this.s * 1.5, 30);
-		if (this.moveNode < this.myPath.length)
-		{
-			nextX = this.myPath[this.moveNode].x;
-			nextY = this.myPath[this.moveNode].y;
-			dist = cr.distanceTo(this.rabbitX, this.rabbitY, nextX, nextY);
-			if (dist < 3 * rabbitSpeed * dt) // within 3 ticks of movement at the max speed
-			{
-				this.moveNode++;
-				this.rabbitX = nextX;
-				this.rabbitY = nextY;
-				if (this.moveNode < this.myPath.length)
-				{
-					nextX = this.myPath[this.moveNode].x;
-					nextY = this.myPath[this.moveNode].y;
-				}
-			}
-		}
-		else
-		{
-			nextX = this.myPath[this.myPath.length - 1].x;
-			nextY = this.myPath[this.myPath.length - 1].y;
-		}
-		this.rabbitA = cr.angleTo(this.rabbitX, this.rabbitY, nextX, nextY);
-		var distToRabbit = cr.distanceTo(inst.x, inst.y, this.rabbitX, this.rabbitY);
-		if (distToRabbit < rabbitAheadDist && this.moveNode < this.myPath.length)
-		{
-			var moveDist;
-			if (this.firstTickMovingWhileMoving)
-			{
-				moveDist = rabbitAheadDist;
-				this.firstTickMovingWhileMoving = false;
-			}
-			else
-				moveDist = rabbitSpeed * dt;
-			this.rabbitX += Math.cos(this.rabbitA) * moveDist;
-			this.rabbitY += Math.sin(this.rabbitA) * moveDist;
-		}
-		targetAngle = cr.angleTo(inst.x, inst.y, this.rabbitX, this.rabbitY);
-		da = cr.angleDiff(this.a, targetAngle);
-		var distToFinish = cr.distanceTo(inst.x, inst.y, this.myPath[this.myPath.length - 1].x, this.myPath[this.myPath.length - 1].y);
-		var decelDist = (this.maxSpeed * this.maxSpeed) / (2 * this.dec);
-		if (distToRabbit > 1)
-		{
-			this.a = cr.angleRotate(this.a, targetAngle, this.av * dt);
-			if (cr.to_degrees(da) <= 0.5)
-			{
-				curMaxSpeed = this.maxSpeed;
-			}
-			else if (cr.to_degrees(da) >= 120 || (this.movingFromStopped && this.moveNode === 0))
-			{
-				curMaxSpeed = 0;
-				this.movingFromStopped = true;	// we're way off, so make sure it rotates all the way round
-			}
-			else
-			{
-				t = da / this.av;
-				dist = cr.distanceTo(inst.x, inst.y, this.rabbitX, this.rabbitY);
-				r = dist / (2 * Math.sin(da));
-				curveDist = r * da;
-				curMaxSpeed = curveDist / t;
-				if (curMaxSpeed < 0)
-					curMaxSpeed = 0;
-				if (curMaxSpeed > this.maxSpeed)
-					curMaxSpeed = this.maxSpeed;
-			}
-			if (distToFinish < decelDist)
-				curMaxSpeed = Math.min(curMaxSpeed, (distToFinish / decelDist) * this.maxSpeed + (this.maxSpeed / 40));
-			this.s += this.acc * dt;
-			if (this.s > curMaxSpeed)
-				this.s = curMaxSpeed;
-		}
-		/*
-		targetAngle = cr.angleTo(inst.x, inst.y, nextX, nextY);
-		da = cr.angleDiff(this.a, targetAngle);
-		if (this.moveNode === 0)
-		{
-			this.nextMaxSpeed = this.maxSpeed;
-			if (cr.to_degrees(da) <= 0.5)
-			{
-				this.s += this.acc * dt;
-				if (this.s > this.maxSpeed)
-					this.s = this.maxSpeed;
-			}
-			else
-			{
-				this.a = cr.angleRotate(this.a, targetAngle, this.av * dt);
-				this.s = 0;
-			}
-		}
-		else
-		{
-			if (cr.to_degrees(da) <= 0.5)
-				this.nextMaxSpeed = this.maxSpeed;
-			this.s += this.acc * dt;
-			if (this.s > Math.min(this.maxSpeed, this.nextMaxSpeed))
-				this.s = Math.min(this.maxSpeed, this.nextMaxSpeed);
-			this.a = cr.angleRotate(this.a, targetAngle, this.av * dt);
-			if (cr.to_degrees(da) > 50)
-				this.s = 0;
-		}
-		*/
-		inst.x += Math.cos(this.a) * this.s * dt;
-		inst.y += Math.sin(this.a) * this.s * dt;
-		if (this.rotateEnabled)
-		{
-			inst.angle = this.a;
-			this.lastKnownAngle = this.a;
-		}
-		inst.set_bbox_changed();
-		if (this.moveNode === this.myPath.length && cr.distanceTo(inst.x, inst.y, nextX, nextY) < Math.max(3 * this.s * dt, 10))
-		{
-			this.isMoving = false;
-			this.hasPath = false;
-			this.moveNode = 0;
-			this.s = 0;
-			this.runtime.trigger(cr.behaviors.Pathfinding.prototype.cnds.OnArrived, inst);
-			return;
-		}
-	};
-	behinstProto.tick2 = function ()
-	{
-		if (!this.enabled)
-			return;
-		this.generateMap();			// not actually done every tick, just checks for regenerate flag
-		this.doDelayFindPath();
-	};
-	behinstProto.doDelayFindPath = function()
-	{
-		if (this.delayFindPath && !this.is_destroyed)
-		{
-			this.delayFindPath = false;
-			this.doFindPath(this.inst.x, this.inst.y, this.delayPathX, this.delayPathY);
-		}
-	};
-	behinstProto.getMyInfo = function ()
-	{
-		var cellkey = "" + this.cellSize + "," + this.cellBorder;
-		if (!cellData.hasOwnProperty(cellkey))
-		{
-			cellData[cellkey] = {
-				pathfinder: new window["Pathfinder"](),
-				cells: null,
-				regenerate: false,
-				regenerateRegions: []
-			};
-		}
-		return cellData[cellkey];
-	};
-	behinstProto.generateMap = function ()
-	{
-		var myinfo = this.getMyInfo();
-		if (myinfo.pathfinder["isReady"]() && !myinfo.regenerate && !myinfo.regenerateRegions.length)
-			return;		// already got a map and not marked to regenerate
-		var arr, x, y, lenx, leny, i, len, r, cx1, cy1, cx2, cy2, q;
-		if (!myinfo.pathfinder["isReady"]() || myinfo.regenerate)
-		{
-			arr = [];
-			arr.length = this.myHcells;
-			lenx = this.myHcells;
-			leny = this.myVcells;
-			for (x = 0; x < lenx; ++x)
-			{
-				arr[x] = [];
-				arr[x].length = leny;
-				for (y = 0; y < leny; ++y)
-					arr[x][y] = this.queryCellCollision(x, y);
-			}
-			myinfo.cells = arr;
-			myinfo.pathfinder["init"](this.myHcells, this.myVcells, arr, this.diagonalsEnabled);
-			myinfo.regenerate = false;
-			myinfo.regenerateRegions.length = 0;
-		}
-		else if (myinfo.regenerateRegions.length)
-		{
-			for (i = 0, len = myinfo.regenerateRegions.length; i < len; ++i)
-			{
-				r = myinfo.regenerateRegions[i];
-				cx1 = r[0];
-				cy1 = r[1];
-				cx2 = r[2];
-				cy2 = r[3];
-				arr = [];
-				lenx = cx2 - cx1;
-				leny = cy2 - cy1;
-				arr.length = lenx;
-				for (x = 0; x < lenx; ++x)
-				{
-					arr[x] = [];
-					arr[x].length = leny;
-					for (y = 0; y < leny; ++y)
-					{
-						q = this.queryCellCollision(cx1 + x, cy1 + y);
-						arr[x][y] = q;
-						myinfo.cells[cx1 + x][cy1 + y] = q;
-					}
-				}
-				myinfo.pathfinder["updateRegion"](cx1, cy1, lenx, leny, arr);
-			}
-			myinfo.regenerateRegions.length = 0;
-		}
-	};
-	behinstProto.clearResultPath = function ()
-	{
-		var i, len;
-		for (i = 0, len = this.myPath.length; i < len; i++)
-			window["freeResultNode"](this.myPath[i]);
-		this.myPath.length = 0;
-	};
-	behinstProto.copyResultPath = function ()
-	{
-		var pathfinder = this.getMyInfo().pathfinder;
-		var pathList = pathfinder["pathList"];
-		this.clearResultPath();
-		var i, len, n, m;
-		for (i = 0, len = pathList.length; i < len; i++)
-		{
-			n = pathList[i];
-			m = window["allocResultNode"]();
-			m.x = (n.x + 0.5) * this.cellSize;
-			m.y = (n.y + 0.5) * this.cellSize;
-			this.myPath.push(m);
-		}
-	};
-	var candidates = [];
-	var tmpRect = new cr.rect();
-	behinstProto.queryCellCollision = function (x_, y_)
-	{
-		var i, len, t, j, lenj, cost, ret = 0;
-		tmpRect.left = x_ * this.cellSize - this.cellBorder;
-		tmpRect.top = y_ * this.cellSize - this.cellBorder;
-		tmpRect.right = (x_ + 1) * this.cellSize + this.cellBorder;
-		tmpRect.bottom = (y_ + 1) * this.cellSize + this.cellBorder;
-		if (this.obstacles === 0)	// solids
-		{
-			if (this.runtime.testRectOverlapSolid(tmpRect))
-				return window["PF_OBSTACLE"];
-		}
-		else
-		{
-			this.runtime.getTypesCollisionCandidates(this.inst.layer, this.type.obstacleTypes, tmpRect, candidates);
-			for (i = 0, len = candidates.length; i < len; ++i)
-			{
-				if (this.runtime.testRectOverlap(tmpRect, candidates[i]))
-				{
-					candidates.length = 0;
-					return window["PF_OBSTACLE"];
-				}
-			}
-			candidates.length = 0;
-		}
-		for (i = 0, len = this.type.costTypes.length; i < len; i++)
-		{
-			t = this.type.costTypes[i].obj;
-			cost = this.type.costTypes[i].cost;
-			this.runtime.getCollisionCandidates(this.inst.layer, t, tmpRect, candidates);
-			for (j = 0, lenj = candidates.length; j < lenj; ++j)
-			{
-				if (this.runtime.testRectOverlap(tmpRect, candidates[j]))
-					ret += cost;
-			}
-			candidates.length = 0;
-		}
-		return ret;
-	};
-	behinstProto.doFindPath = function (startX, startY, endX, endY)
-	{
-		var pathfinder = this.getMyInfo().pathfinder;
-		if (!pathfinder["isReady"]())
-			return false;		// not yet ready
-		this.isCalculating = true;
-		this.calcPathX = endX;
-		this.calcPathY = endY;
-		var cellX = Math.floor(startX / this.cellSize);
-		var cellY = Math.floor(startY / this.cellSize);
-		var destCellX = Math.floor(endX / this.cellSize);
-		var destCellY = Math.floor(endY / this.cellSize);
-		var bestDist, bestX, bestY, x, y, dx, dy, curDist;
-		if (pathfinder["at"](destCellX, destCellY) === window["PF_OBSTACLE"])
-		{
-			bestDist = 1000000;
-			bestX = 0;
-			bestY = 0;
-			for (x = 0; x < this.myHcells; x++)
-			{
-				for (y = 0; y < this.myVcells; y++)
-				{
-					if (pathfinder["at"](x, y) !== window["PF_OBSTACLE"])
-					{
-						dx = destCellX - x;
-						dy = destCellY - y;
-						curDist = dx*dx + dy*dy;
-						if (curDist < bestDist)
-						{
-							bestDist = curDist;
-							bestX = x;
-							bestY = y;
-						}
-					}
-				}
-			}
-			destCellX = bestX;
-			destCellY = bestY;
-		}
-		var self = this;
-		pathfinder["findPath"](cellX, cellY, destCellX, destCellY, this.pathSuccessFn, this.pathFailFn);
-	};
-	behinstProto.onLayoutChange = function ()
-	{
-		this.getMyInfo().regenerate = true;
-	};
-	function Cnds() {};
-	Cnds.prototype.OnPathFound = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.OnFailedToFindPath = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.IsCellObstacle = function (x_, y_)
-	{
-		return (this.getMyInfo().pathfinder["at"](x_, y_) === window["PF_OBSTACLE"]);
-	};
-	Cnds.prototype.IsCalculatingPath = function ()
-	{
-		return this.isCalculating;
-	};
-	Cnds.prototype.IsMoving = function ()
-	{
-		return this.isMoving;
-	};
-	Cnds.prototype.OnArrived = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.CompareSpeed = function (cmp, x)
-	{
-		return cr.do_cmp(this.s, cmp, x);
-	};
-	Cnds.prototype.DiagonalsEnabled = function (cmp, x)
-	{
-		return this.diagonalsEnabled;
-	};
-	behaviorProto.cnds = new Cnds();
-	function Acts() {};
-	Acts.prototype.FindPath = function (x_, y_)
-	{
-		if (!this.enabled)
-			return;
-		if (this.isCalculating || !this.getMyInfo().pathfinder["isReady"]())
-		{
-			this.delayFindPath = true;
-			this.delayPathX = x_;
-			this.delayPathY = y_;
-		}
-		else
-			this.doFindPath(this.inst.x, this.inst.y, x_, y_);
-	};
-	Acts.prototype.StartMoving = function ()
-	{
-		if (this.hasPath)
-		{
-			if (this.isMoving)
-				this.firstTickMovingWhileMoving = true;
-			this.movingFromStopped = !this.isMoving;
-			this.isMoving = true;
-			this.rabbitX = this.inst.x;
-			this.rabbitY = this.inst.y;
-			this.rabbitA = this.inst.angle;
-		}
-	};
-	Acts.prototype.Stop = function ()
-	{
-		this.isMoving = false;
-	};
-	Acts.prototype.SetEnabled = function (e)
-	{
-		this.enabled = (e !== 0);
-	};
-	Acts.prototype.RegenerateMap = function ()
-	{
-		this.getMyInfo().regenerate = true;
-	};
-	Acts.prototype.AddObstacle = function (obj_)
-	{
-		var obstacleTypes = this.type.obstacleTypes;
-		if (obstacleTypes.indexOf(obj_) !== -1)
-			return;
-		var i, len, t;
-		for (i = 0, len = obstacleTypes.length; i < len; i++)
-		{
-			t = obstacleTypes[i];
-			if (t.is_family && t.members.indexOf(obj_) !== -1)
-				return;
-		}
-		obstacleTypes.push(obj_);
-	};
-	Acts.prototype.ClearObstacles = function ()
-	{
-		this.type.obstacleTypes.length = 0;
-	};
-	Acts.prototype.AddCost = function (obj_, cost_)
-	{
-		var costTypes = this.type.costTypes;
-		var i, len, t;
-		for (i = 0, len = costTypes.length; i < len; i++)
-		{
-			t = costTypes[i].obj;
-			if (t === obj_)
-				return;			// already added this one
-			if (t.is_family && t.members.indexOf(obj_) !== -1)
-				return;			// already added via family
-		}
-		costTypes.push({ obj: obj_, cost: cost_ });
-	};
-	Acts.prototype.ClearCost = function ()
-	{
-		this.type.costTypes.length = 0;
-	};
-	Acts.prototype.SetMaxSpeed = function (x_)
-	{
-		this.maxSpeed = x_;
-	};
-	Acts.prototype.SetSpeed = function (x_)
-	{
-		if (x_ < 0)
-			x_ = 0;
-		if (x_ > this.maxSpeed)
-			x_ = this.maxSpeed;
-		this.s = x_;
-	};
-	Acts.prototype.SetAcc = function (x_)
-	{
-		this.acc = x_;
-	};
-	Acts.prototype.SetDec = function (x_)
-	{
-		this.dec = x_;
-	};
-	Acts.prototype.SetRotateSpeed = function (x_)
-	{
-		this.av = cr.to_radians(x_);
-	};
-	Acts.prototype.SetDiagonalsEnabled = function (e)
-	{
-		this.diagonalsEnabled = (e !== 0);
-		this.getMyInfo().pathfinder["setDiagonals"](this.diagonalsEnabled);
-	};
-	Acts.prototype.RegenerateRegion = function (startx, starty, endx, endy)
-	{
-		this.doRegenerateRegion(startx, starty, endx, endy);
-	};
-	Acts.prototype.RegenerateObjectRegion = function (obj)
-	{
-		if (!obj)
-			return;
-		var instances = obj.getCurrentSol().getObjects();
-		var i, len, inst;
-		for (i = 0, len = instances.length; i < len; ++i)
-		{
-			inst = instances[i];
-			if (!inst.update_bbox)
-				continue;
-			inst.update_bbox();
-			this.doRegenerateRegion(inst.bbox.left, inst.bbox.top, inst.bbox.right, inst.bbox.bottom);
-		}
-	};
-	behinstProto.doRegenerateRegion = function (startx, starty, endx, endy)
-	{
-		var x1 = Math.min(startx, endx) - this.cellBorder;
-		var y1 = Math.min(starty, endy) - this.cellBorder;
-		var x2 = Math.max(startx, endx) + this.cellBorder;
-		var y2 = Math.max(starty, endy) + this.cellBorder;
-		var cellX1 = Math.max(Math.floor(x1 / this.cellSize), 0);
-		var cellY1 = Math.max(Math.floor(y1 / this.cellSize), 0);
-		var cellX2 = Math.min(Math.ceil(x2 / this.cellSize), this.myHcells);
-		var cellY2 = Math.min(Math.ceil(y2 / this.cellSize), this.myVcells);
-		if (cellX1 >= cellX2 || cellY1 >= cellY2)
-			return;		// empty area to regenerate
-		this.getMyInfo().regenerateRegions.push([cellX1, cellY1, cellX2, cellY2]);
-	};
-	behaviorProto.acts = new Acts();
-	function Exps() {};
-	Exps.prototype.NodeCount = function (ret)
-	{
-		ret.set_int(this.myPath.length);
-	};
-	Exps.prototype.NodeXAt = function (ret, i)
-	{
-		i = Math.floor(i);
-		if (i < 0 || i >= this.myPath.length)
-			ret.set_float(0);
-		else
-			ret.set_float(this.myPath[i].x);
-	};
-	Exps.prototype.NodeYAt = function (ret, i)
-	{
-		i = Math.floor(i);
-		if (i < 0 || i >= this.myPath.length)
-			ret.set_float(0);
-		else
-			ret.set_float(this.myPath[i].y);
-	};
-	Exps.prototype.CellSize = function (ret)
-	{
-		ret.set_int(this.cellSize);
-	};
-	Exps.prototype.RabbitX = function (ret)
-	{
-		ret.set_float(this.rabbitX);
-	};
-	Exps.prototype.RabbitY = function (ret)
-	{
-		ret.set_float(this.rabbitY);
-	};
-	Exps.prototype.MaxSpeed = function (ret)
-	{
-		ret.set_float(this.maxSpeed);
-	};
-	Exps.prototype.Acceleration = function (ret)
-	{
-		ret.set_float(this.acc);
-	};
-	Exps.prototype.Deceleration = function (ret)
-	{
-		ret.set_float(this.dec);
-	};
-	Exps.prototype.RotateSpeed = function (ret)
-	{
-		ret.set_float(cr.to_degrees(this.av));
-	};
-	Exps.prototype.MovingAngle = function (ret)
-	{
-		ret.set_float(cr.to_degrees(this.a));
-	};
-	Exps.prototype.CurrentNode = function (ret)
-	{
-		ret.set_int(this.moveNode);
-	};
-	Exps.prototype.Speed = function (ret)
-	{
-		ret.set_float(this.isMoving ? this.s : 0);
-	};
-	behaviorProto.exps = new Exps();
 }());
 ;
 ;
@@ -22253,23 +22009,39 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Button,
 	cr.plugins_.gamepad,
 	cr.plugins_.Keyboard,
+	cr.plugins_.Mouse,
 	cr.plugins_.chromeconsole,
 	cr.plugins_.Sprite,
 	cr.plugins_.Text,
 	cr.plugins_.TextBox,
 	cr.plugins_.TiledBg,
 	cr.plugins_.Tilemap,
+	cr.plugins_.WebStorage,
 	cr.behaviors.solid,
 	cr.behaviors.Platform,
 	cr.behaviors.scrollto,
-	cr.behaviors.Pathfinding,
 	cr.system_object.prototype.cnds.OnLayoutStart,
+	cr.plugins_.WebStorage.prototype.cnds.LocalStorageExists,
 	cr.plugins_.Function.prototype.acts.CallFunction,
+	cr.system_object.prototype.cnds.Else,
 	cr.plugins_.Sprite.prototype.acts.SetPos,
 	cr.plugins_.Sprite.prototype.cnds.OnCollision,
+	cr.system_object.prototype.cnds.CompareVar,
+	cr.system_object.prototype.acts.SetVar,
+	cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
+	cr.plugins_.Sprite.prototype.cnds.IsAnimPlaying,
+	cr.plugins_.Sprite.prototype.cnds.IsMirrored,
+	cr.plugins_.Tilemap.prototype.acts.EraseTile,
+	cr.plugins_.Tilemap.prototype.exps.PositionToTileX,
+	cr.plugins_.Sprite.prototype.exps.ImagePointX,
+	cr.plugins_.Tilemap.prototype.exps.PositionToTileY,
+	cr.plugins_.Sprite.prototype.exps.ImagePointY,
 	cr.system_object.prototype.acts.GoToLayoutByName,
 	cr.plugins_.Keyboard.prototype.cnds.OnKey,
 	cr.system_object.prototype.acts.ScrollToObject,
+	cr.plugins_.Sprite.prototype.acts.SetSize,
+	cr.plugins_.Sprite.prototype.acts.SetAnim,
+	cr.system_object.prototype.cnds.EveryTick,
 	cr.plugins_.gamepad.prototype.cnds.OnButtonDown,
 	cr.plugins_.Keyboard.prototype.cnds.IsKeyDown,
 	cr.plugins_.gamepad.prototype.cnds.CompareAxis,
@@ -22277,19 +22049,17 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.gamepad.prototype.cnds.IsButtonDown,
 	cr.plugins_.Keyboard.prototype.cnds.OnKeyReleased,
 	cr.plugins_.gamepad.prototype.cnds.OnButtonUp,
-	cr.plugins_.Sprite.prototype.cnds.CompareY,
-	cr.system_object.prototype.exps.layoutheight,
-	cr.system_object.prototype.acts.RestartLayout,
+	cr.plugins_.Mouse.prototype.cnds.OnClick,
 	cr.behaviors.Platform.prototype.cnds.IsByWall,
 	cr.behaviors.Platform.prototype.cnds.IsOnFloor,
-	cr.system_object.prototype.acts.SetVar,
 	cr.plugins_.Function.prototype.cnds.OnFunction,
 	cr.behaviors.Platform.prototype.acts.SimulateControl,
 	cr.plugins_.Sprite.prototype.acts.SetMirrored,
-	cr.system_object.prototype.cnds.CompareVar,
 	cr.behaviors.Platform.prototype.acts.SetVectorY,
 	cr.behaviors.Platform.prototype.exps.JumpStrength,
 	cr.behaviors.Platform.prototype.acts.SetVectorX,
+	cr.system_object.prototype.acts.RestartLayout,
+	cr.plugins_.Sprite.prototype.cnds.OnAnimFinished,
 	cr.plugins_.TextBox.prototype.acts.SetText,
 	cr.system_object.prototype.exps.str,
 	cr.plugins_.Button.prototype.cnds.OnClicked,
@@ -22298,8 +22068,11 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.exps["float"],
 	cr.plugins_.Tilemap.prototype.acts.EraseTileRange,
 	cr.system_object.prototype.cnds.For,
+	cr.plugins_.WebStorage.prototype.exps.LocalValue,
 	cr.system_object.prototype.exps.floor,
 	cr.system_object.prototype.exps.random,
+	cr.system_object.prototype.acts.CreateObject,
+	cr.plugins_.TiledBg.prototype.acts.SetSize,
 	cr.plugins_.Arr.prototype.acts.SetSize,
 	cr.plugins_.Arr.prototype.cnds.ArrForEach,
 	cr.plugins_.Function.prototype.exps.Call,
@@ -22307,7 +22080,6 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr.prototype.exps.CurY,
 	cr.system_object.prototype.cnds.Compare,
 	cr.plugins_.Arr.prototype.acts.SetXY,
-	cr.system_object.prototype.cnds.Else,
 	cr.plugins_.Arr.prototype.acts.Clear,
 	cr.plugins_.Arr.prototype.cnds.CompareCurrent,
 	cr.plugins_.Arr.prototype.exps.CurValue,
@@ -22316,5 +22088,11 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Arr.prototype.cnds.CompareXY,
 	cr.plugins_.Function.prototype.acts.SetReturnValue,
 	cr.plugins_.Tilemap.prototype.acts.SetTile,
-	cr.plugins_.Text.prototype.acts.SetText
+	cr.plugins_.WebStorage.prototype.acts.StoreLocal,
+	cr.plugins_.Arr.prototype.exps.AsJSON,
+	cr.plugins_.Arr.prototype.acts.JSONLoad,
+	cr.plugins_.Text.prototype.acts.SetText,
+	cr.plugins_.Sprite.prototype.cnds.CompareY,
+	cr.system_object.prototype.exps.layoutheight,
+	cr.plugins_.WebStorage.prototype.acts.RemoveLocal
 ];};
