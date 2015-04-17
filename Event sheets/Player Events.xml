@@ -17,244 +17,228 @@
                 <action id="-8" name="Scroll to object" sid="8034267101730061" type="System">
                     <param id="0" name="Object">Player</param>
                 </action>
-                <action id="-7" name="Set size" sid="8317068425383006" type="Sprite_Pickaxe">
-                    <param id="0" name="Width">40</param>
-                    <param id="1" name="Height">35</param>
-                </action>
-                <action id="4" name="Set animation" sid="7915711926723316" type="Sprite_Pickaxe">
-                    <param id="0" name="Animation">&quot;Default&quot;</param>
-                    <param id="1" name="From">1</param>
+                <action id="0" name="Call function" sid="8650381190719636" type="Function">
+                    <param id="0" name="Name">&quot;LoadPlayerEquipment&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
         </event-block>
-        <event-block sid="2269334366087451">
-            <conditions>
-                <condition id="-1" name="Every tick" sid="9147582535713624" type="System" />
-            </conditions>
-            <actions />
+        <event-group description="" sid="1407352123007143" title="Input Events">
             <sub-events>
-                <event-block sid="8679616913446976">
-                    <conditions />
-                    <actions />
-                </event-block>
-                <event-block sid="1185245709934167">
+                <event-block any="1" sid="3619358569854467">
                     <conditions>
-                        <condition id="2" name="Is playing" sid="4965135387920547" type="Sprite_Pickaxe">
-                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                        <condition id="0" name="On key pressed" sid="5417348248493299" type="Keyboard">
+                            <param id="0" name="Key">38 (Up arrow)</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="8113766621903006" type="Keyboard">
+                            <param id="0" name="Key">87 (W)</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="2861155750816062" type="Keyboard">
+                            <param id="0" name="Key">32 (Space)</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="2845335202103415" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">0</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="6243665055892744" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">12</param>
                         </condition>
                     </conditions>
-                    <actions />
-                    <sub-events>
-                        <event-block sid="7531369786795993">
-                            <conditions>
-                                <condition id="7" name="Is mirrored" sid="4041150191590809" type="Player" />
-                            </conditions>
-                            <actions>
-                                <action id="-3" name="Set position" sid="7414352320683484" type="Sprite_Pickaxe">
-                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) - 20</param>
-                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
-                                </action>
-                            </actions>
-                        </event-block>
-                        <event-block sid="883538511361323">
-                            <conditions>
-                                <condition id="-22" name="Else" sid="6825020074035882" type="System" />
-                            </conditions>
-                            <actions>
-                                <action id="-3" name="Set position" sid="1876743901060609" type="Sprite_Pickaxe">
-                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) + 20</param>
-                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
-                                </action>
-                            </actions>
-                        </event-block>
-                    </sub-events>
+                    <actions>
+                        <action id="0" name="Call function" sid="2161726199899432" type="Function">
+                            <param id="0" name="Name">&quot;Jump&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
                 </event-block>
-                <event-block sid="2408201377914458">
+                <event-block any="1" sid="9779131706208371">
                     <conditions>
-                        <condition id="-22" name="Else" sid="4272781697432557" type="System" />
+                        <condition id="2" name="Key is down" sid="5569023531865443" type="Keyboard">
+                            <param id="0" name="Key">83 (S)</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="8222765054560856" type="Keyboard">
+                            <param id="0" name="Key">40 (Down arrow)</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="2290543538590374" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">13</param>
+                        </condition>
+                        <condition id="5" name="Compare axis" sid="1022772002775316" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Axis">1</param>
+                            <param id="2" name="Comparison">4</param>
+                            <param id="3" name="Value">GamepadAxisDeadZone</param>
+                        </condition>
                     </conditions>
                     <actions>
-                        <action id="-3" name="Set position" sid="167517826655405" type="Sprite_Pickaxe">
-                            <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
-                            <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                        <action behavior="Platform" id="12" name="Fall through" sid="6738652569182033" type="Player" />
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="6442404344304775">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="1729310376732552" type="Keyboard">
+                            <param id="0" name="Key">65 (A)</param>
+                        </condition>
+                        <condition id="5" name="Compare axis" sid="2423123186303189" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Axis">0</param>
+                            <param id="2" name="Comparison">2</param>
+                            <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                        </condition>
+                        <condition id="3" name="Is button down" sid="4589459433608372" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">14</param>
+                        </condition>
+                        <condition id="2" name="Key is down" sid="1825510280376965" type="Keyboard">
+                            <param id="0" name="Key">37 (Left arrow)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="2556735084461276" type="Function">
+                            <param id="0" name="Name">&quot;Move Left&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="3169550927499687">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="8714282612350055" type="Keyboard">
+                            <param id="0" name="Key">68 (D)</param>
+                        </condition>
+                        <condition id="5" name="Compare axis" sid="3217930781027713" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Axis">0</param>
+                            <param id="2" name="Comparison">4</param>
+                            <param id="3" name="Value">GamepadAxisDeadZone</param>
+                        </condition>
+                        <condition id="3" name="Is button down" sid="1679025172476253" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">15</param>
+                        </condition>
+                        <condition id="2" name="Key is down" sid="1975538164602279" type="Keyboard">
+                            <param id="0" name="Key">39 (Right arrow)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="9902888533538171" type="Function">
+                            <param id="0" name="Name">&quot;Move Right&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="1354675865560191">
+                    <conditions>
+                        <condition id="3" name="On key released" sid="6814152187031038" type="Keyboard">
+                            <param id="0" name="Key">65 (A)</param>
+                        </condition>
+                        <condition id="3" name="On key released" sid="2305384368965386" type="Keyboard">
+                            <param id="0" name="Key">37 (Left arrow)</param>
+                        </condition>
+                        <condition id="5" name="Compare axis" sid="8888248510829317" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Axis">0</param>
+                            <param id="2" name="Comparison">4</param>
+                            <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                        </condition>
+                        <condition id="7" name="On button released" sid="1666726995904502" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">14</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="1394444853960089" type="Function">
+                            <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="3481884723335076">
+                    <conditions>
+                        <condition id="3" name="On key released" sid="1595941915746794" type="Keyboard">
+                            <param id="0" name="Key">68 (D)</param>
+                        </condition>
+                        <condition id="3" name="On key released" sid="6443014380752479" type="Keyboard">
+                            <param id="0" name="Key">39 (Right arrow)</param>
+                        </condition>
+                        <condition id="7" name="On button released" sid="2899085775297599" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">15</param>
+                        </condition>
+                        <condition id="5" name="Compare axis" sid="600648999549313" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Axis">0</param>
+                            <param id="2" name="Comparison">2</param>
+                            <param id="3" name="Value">GamepadAxisDeadZone</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="8773053041495381" type="Function">
+                            <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="8725030371645102">
+                    <conditions>
+                        <condition id="0" name="On click" sid="9296122849809267" type="Mouse">
+                            <param id="0" name="Mouse button">2</param>
+                            <param id="1" name="Click type">0</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="6265990207247554" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="2712814592981438" type="Function">
+                            <param id="0" name="Name">&quot;UseTool&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="6650477720051205">
+                    <conditions>
+                        <condition id="8" name="On mouse wheel" sid="2522939824640754" type="Mouse">
+                            <param id="0" name="Direction">0</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="8625218622297031" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">5</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="9021031253097723" type="Keyboard">
+                            <param id="0" name="Key">69 (E)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="955158088732494" type="Function">
+                            <param id="0" name="Name">&quot;SelectNextTool&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="4052170386250291">
+                    <conditions>
+                        <condition id="8" name="On mouse wheel" sid="3380969140186197" type="Mouse">
+                            <param id="0" name="Direction">1</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="289683012204129" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">4</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="8861799116794909" type="Keyboard">
+                            <param id="0" name="Key">81 (Q)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="7661127771644769" type="Function">
+                            <param id="0" name="Name">&quot;SelectPreviousTool&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
                 </event-block>
             </sub-events>
-        </event-block>
-        <comment>Allow alternate controls to arrow keys.</comment>
-        <event-block any="1" sid="3619358569854467">
-            <conditions>
-                <condition id="0" name="On key pressed" sid="5417348248493299" type="Keyboard">
-                    <param id="0" name="Key">38 (Up arrow)</param>
-                </condition>
-                <condition id="0" name="On key pressed" sid="8113766621903006" type="Keyboard">
-                    <param id="0" name="Key">87 (W)</param>
-                </condition>
-                <condition id="0" name="On key pressed" sid="2861155750816062" type="Keyboard">
-                    <param id="0" name="Key">32 (Space)</param>
-                </condition>
-                <condition id="6" name="On button pressed" sid="2845335202103415" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">0</param>
-                </condition>
-                <condition id="6" name="On button pressed" sid="6243665055892744" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">12</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="0" name="Call function" sid="2161726199899432" type="Function">
-                    <param id="0" name="Name">&quot;Jump&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block any="1" sid="9779131706208371">
-            <conditions>
-                <condition id="2" name="Key is down" sid="5569023531865443" type="Keyboard">
-                    <param id="0" name="Key">83 (S)</param>
-                </condition>
-                <condition id="0" name="On key pressed" sid="8222765054560856" type="Keyboard">
-                    <param id="0" name="Key">40 (Down arrow)</param>
-                </condition>
-                <condition id="6" name="On button pressed" sid="2290543538590374" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">13</param>
-                </condition>
-                <condition id="5" name="Compare axis" sid="1022772002775316" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Axis">1</param>
-                    <param id="2" name="Comparison">4</param>
-                    <param id="3" name="Value">GamepadAxisDeadZone</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action behavior="Platform" id="12" name="Fall through" sid="6738652569182033" type="Player" />
-            </actions>
-        </event-block>
-        <event-block any="1" sid="6442404344304775">
-            <conditions>
-                <condition id="2" name="Key is down" sid="1729310376732552" type="Keyboard">
-                    <param id="0" name="Key">65 (A)</param>
-                </condition>
-                <condition id="5" name="Compare axis" sid="2423123186303189" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Axis">0</param>
-                    <param id="2" name="Comparison">2</param>
-                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
-                </condition>
-                <condition id="3" name="Is button down" sid="4589459433608372" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">14</param>
-                </condition>
-                <condition id="2" name="Key is down" sid="1825510280376965" type="Keyboard">
-                    <param id="0" name="Key">37 (Left arrow)</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="0" name="Call function" sid="2556735084461276" type="Function">
-                    <param id="0" name="Name">&quot;Move Left&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block any="1" sid="3169550927499687">
-            <conditions>
-                <condition id="2" name="Key is down" sid="8714282612350055" type="Keyboard">
-                    <param id="0" name="Key">68 (D)</param>
-                </condition>
-                <condition id="5" name="Compare axis" sid="3217930781027713" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Axis">0</param>
-                    <param id="2" name="Comparison">4</param>
-                    <param id="3" name="Value">GamepadAxisDeadZone</param>
-                </condition>
-                <condition id="3" name="Is button down" sid="1679025172476253" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">15</param>
-                </condition>
-                <condition id="2" name="Key is down" sid="1975538164602279" type="Keyboard">
-                    <param id="0" name="Key">39 (Right arrow)</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="0" name="Call function" sid="9902888533538171" type="Function">
-                    <param id="0" name="Name">&quot;Move Right&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block any="1" sid="1354675865560191">
-            <conditions>
-                <condition id="3" name="On key released" sid="6814152187031038" type="Keyboard">
-                    <param id="0" name="Key">65 (A)</param>
-                </condition>
-                <condition id="3" name="On key released" sid="2305384368965386" type="Keyboard">
-                    <param id="0" name="Key">37 (Left arrow)</param>
-                </condition>
-                <condition id="5" name="Compare axis" sid="8888248510829317" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Axis">0</param>
-                    <param id="2" name="Comparison">4</param>
-                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
-                </condition>
-                <condition id="7" name="On button released" sid="1666726995904502" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">14</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="0" name="Call function" sid="1394444853960089" type="Function">
-                    <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block any="1" sid="3481884723335076">
-            <conditions>
-                <condition id="3" name="On key released" sid="1595941915746794" type="Keyboard">
-                    <param id="0" name="Key">68 (D)</param>
-                </condition>
-                <condition id="3" name="On key released" sid="6443014380752479" type="Keyboard">
-                    <param id="0" name="Key">39 (Right arrow)</param>
-                </condition>
-                <condition id="7" name="On button released" sid="2899085775297599" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">15</param>
-                </condition>
-                <condition id="5" name="Compare axis" sid="600648999549313" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Axis">0</param>
-                    <param id="2" name="Comparison">2</param>
-                    <param id="3" name="Value">GamepadAxisDeadZone</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="0" name="Call function" sid="8773053041495381" type="Function">
-                    <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
-                    <param id="1" name="Parameter {n}"></param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block any="1" sid="8725030371645102">
-            <conditions>
-                <condition id="0" name="On click" sid="9296122849809267" type="Mouse">
-                    <param id="0" name="Mouse button">2</param>
-                    <param id="1" name="Click type">0</param>
-                </condition>
-                <condition id="6" name="On button pressed" sid="6265990207247554" type="Gamepad">
-                    <param id="0" name="Gamepad">0</param>
-                    <param id="1" name="Button">1</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="4" name="Set animation" sid="1930305325364177" type="Sprite_Pickaxe">
-                    <param id="0" name="Animation">&quot;Attack&quot;</param>
-                    <param id="1" name="From">1</param>
-                </action>
-            </actions>
-        </event-block>
+        </event-group>
         <comment>Allow player to hang on walls</comment>
         <event-block sid="3281646647921325">
             <conditions>
@@ -357,9 +341,6 @@
                     <param id="0" name="Variable">MoveRightActionIsTrue</param>
                     <param id="1" name="Value">1</param>
                 </action>
-                <action id="7" name="Set mirrored" sid="149295243631283" type="Sprite_Pickaxe">
-                    <param id="0" name="State">1</param>
-                </action>
             </actions>
         </event-block>
         <event-block sid="102504172225817">
@@ -378,9 +359,6 @@
                 <action id="-9" name="Set value" sid="771136845017243" type="System">
                     <param id="0" name="Variable">MoveLeftActionIsTrue</param>
                     <param id="1" name="Value">1</param>
-                </action>
-                <action id="7" name="Set mirrored" sid="872559396768678" type="Sprite_Pickaxe">
-                    <param id="0" name="State">0</param>
                 </action>
             </actions>
         </event-block>
@@ -468,18 +446,693 @@
                 <action id="-26" name="Restart layout" sid="1199880833663911" type="System" />
             </actions>
         </event-block>
-        <event-block sid="1344521761632292">
-            <conditions>
-                <condition id="4" name="On finished" sid="7276250380287228" type="Sprite_Pickaxe">
-                    <param id="0" name="Animation">&quot;Attack&quot;</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="4" name="Set animation" sid="253721394476349" type="Sprite_Pickaxe">
-                    <param id="0" name="Animation">&quot;Default&quot;</param>
-                    <param id="1" name="From">1</param>
-                </action>
-            </actions>
-        </event-block>
+        <variable constant="0" name="EquippedTool" sid="5425344774732447" static="0" type="number">0</variable>
+        <variable constant="0" name="EquippedWeapon" sid="7611623855320358" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerCurrencyLoaded" sid="2029143594175016" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerConsumablesLoaded" sid="7172285380484682" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerWeaponsLoaded" sid="4490386520237554" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerToolsLoaded" sid="3702550665821345" static="0" type="number">0</variable>
+        <variable constant="0" name="tool_None" sid="1718948441640424" static="0" type="text">none</variable>
+        <variable constant="0" name="tool_Lantern" sid="6287293371803737" static="0" type="text">lantern</variable>
+        <variable constant="0" name="tool_Bow" sid="9184830243764349" static="0" type="text">bow</variable>
+        <variable constant="0" name="tool_Hookshot" sid="3092804526382686" static="0" type="text">hookshot</variable>
+        <variable constant="0" name="tool_BombSatchel" sid="7918960082445232" static="0" type="text">bombsatchel</variable>
+        <variable constant="0" name="tool_Shield" sid="4482553844657673" static="0" type="text">shield</variable>
+        <variable constant="0" name="tool_Bottle" sid="4826428696929124" static="0" type="text">bottle</variable>
+        <variable constant="0" name="tool_Pickaxe" sid="7419419053603316" static="0" type="text">pickaxe</variable>
+        <variable constant="0" name="tool_BlockSatchel" sid="6710668652824611" static="0" type="text">blocksatchel</variable>
+        <event-group description="" sid="5168226075330548" title="Equipment">
+            <sub-events>
+                <event-block sid="2269334366087451">
+                    <conditions>
+                        <condition id="-1" name="Every tick" sid="9147582535713624" type="System" />
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <variable constant="0" name="selectedToolName" sid="5503915926074393" static="0" type="text"></variable>
+                        <event-block sid="8500761188561587">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="8229983885000288" type="System">
+                                    <param id="0" name="Variable">PlayerToolsLoaded</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="8679616913446976">
+                                    <conditions />
+                                    <actions>
+                                        <action disabled="1" id="-9" name="Set value" sid="4808455887763261" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Value">tool_None</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="8152543516232909" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Value">Array_Tools.At(EquippedTool, 0)</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <event-block sid="9860521674068764">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="5497335828062643" type="System">
+                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">tool_Lantern</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="7418654999020527">
+                                                    <conditions>
+                                                        <condition id="7" name="Is mirrored" sid="4939318057780701" type="Player" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="121352158541946" type="Sprite_Lantern">
+                                                            <param id="0" name="State">0</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="5533029583357806">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="7334350297701493" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="1728052487870141" type="Sprite_Lantern">
+                                                            <param id="0" name="State">1</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="7632887079045236">
+                                                    <conditions />
+                                                    <actions>
+                                                        <action id="-3" name="Set position" sid="1590483285596809" type="Sprite_Lantern">
+                                                            <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                                            <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                        <event-block sid="3092358074366023">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="924592942712013" type="System">
+                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">tool_Bow</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="808731611572374">
+                                                    <conditions>
+                                                        <condition id="7" name="Is mirrored" sid="8109962461456553" type="Player" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="8625434619059822" type="Sprite_Bow">
+                                                            <param id="0" name="State">0</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="7760808440620103">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="9346038076345943" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="5675131380884452" type="Sprite_Bow">
+                                                            <param id="0" name="State">1</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="908507888321814">
+                                                    <conditions />
+                                                    <actions>
+                                                        <action id="-3" name="Set position" sid="1709178748124623" type="Sprite_Bow">
+                                                            <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                                            <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                        <event-block sid="51774967303118">
+                                            <conditions>
+                                                <condition id="-14" name="Compare variable" sid="4863152345123445" type="System">
+                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">tool_Pickaxe</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="6186891100034043">
+                                                    <conditions>
+                                                        <condition id="7" name="Is mirrored" sid="6951040113171782" type="Player" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="1813249832264577" type="Sprite_Pickaxe">
+                                                            <param id="0" name="State">0</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="4263325379871241">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="9839420757577335" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="7" name="Set mirrored" sid="550995809172956" type="Sprite_Pickaxe">
+                                                            <param id="0" name="State">1</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="1185245709934167">
+                                                    <conditions>
+                                                        <condition id="2" name="Is playing" sid="4965135387920547" type="Sprite_Pickaxe">
+                                                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block sid="7531369786795993">
+                                                            <conditions>
+                                                                <condition id="7" name="Is mirrored" sid="4041150191590809" type="Player" />
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="-3" name="Set position" sid="7414352320683484" type="Sprite_Pickaxe">
+                                                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) - 20</param>
+                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="883538511361323">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="6825020074035882" type="System" />
+                                                            </conditions>
+                                                            <actions>
+                                                                <action id="-3" name="Set position" sid="1876743901060609" type="Sprite_Pickaxe">
+                                                                    <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) + 20</param>
+                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                    </sub-events>
+                                                </event-block>
+                                                <event-block sid="2408201377914458">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="4272781697432557" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action id="-3" name="Set position" sid="167517826655405" type="Sprite_Pickaxe">
+                                                            <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                                            <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="6134495686534261">
+                    <conditions>
+                        <condition id="0" name="On function" sid="1471911147889657" type="Function">
+                            <param id="0" name="Name">&quot;LoadPlayerEquipment&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="4355571429486336">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="391227755459694" type="System">
+                                    <param id="0" name="Variable">PlayerToolsLoaded</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="2946608741830302">
+                                    <conditions>
+                                        <condition id="3" name="Local key exists" sid="1939197697266411" type="WebStorage">
+                                            <param id="0" name="Key">&quot;PlayerTools&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="8861815639495302">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="9623115868564278" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="1" name="Set size" sid="5814869673085165" type="Array_Tools">
+                                            <param id="0" name="Width">9</param>
+                                            <param id="1" name="Height">2</param>
+                                            <param id="2" name="Depth">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="7506969832252832" type="Array_Tools">
+                                            <param id="0" name="X">0</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_None</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="5439095717711163" type="Array_Tools">
+                                            <param id="0" name="X">0</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="549751402270809" type="Array_Tools">
+                                            <param id="0" name="X">1</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Lantern</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="319624863794802" type="Array_Tools">
+                                            <param id="0" name="X">1</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="4435360368044259" type="Array_Tools">
+                                            <param id="0" name="X">2</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Bow</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="5567989246624219" type="Array_Tools">
+                                            <param id="0" name="X">2</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="550122051334521" type="Array_Tools">
+                                            <param id="0" name="X">3</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Hookshot</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="9305227772425424" type="Array_Tools">
+                                            <param id="0" name="X">3</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="1590550628710488" type="Array_Tools">
+                                            <param id="0" name="X">4</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_BombSatchel</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="9776105224040709" type="Array_Tools">
+                                            <param id="0" name="X">4</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="3954851188869267" type="Array_Tools">
+                                            <param id="0" name="X">5</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Shield</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="5955366927059849" type="Array_Tools">
+                                            <param id="0" name="X">5</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="6371707582206051" type="Array_Tools">
+                                            <param id="0" name="X">6</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Bottle</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="4320415832880819" type="Array_Tools">
+                                            <param id="0" name="X">6</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="8771269880398173" type="Array_Tools">
+                                            <param id="0" name="X">7</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_Pickaxe</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="2593366478534458" type="Array_Tools">
+                                            <param id="0" name="X">7</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="8215934672448478" type="Array_Tools">
+                                            <param id="0" name="X">8</param>
+                                            <param id="1" name="Y">0</param>
+                                            <param id="2" name="Value">tool_BlockSatchel</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="9107892494660741" type="Array_Tools">
+                                            <param id="0" name="X">8</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Value">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="4777009146571246">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="7290663892712064" type="System">
+                                            <param id="0" name="Variable">PlayerToolsLoaded</param>
+                                            <param id="1" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="8327757796550193">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="7140630021983257" type="System">
+                                    <param id="0" name="Variable">PlayerWeaponsLoaded</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="3734287850428265">
+                                    <conditions>
+                                        <condition id="3" name="Local key exists" sid="398004402048539" type="WebStorage">
+                                            <param id="0" name="Key">&quot;PlayerWeapons&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="9914765244342243">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="7888543762422853" type="System" />
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="450920032399594">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="8758185133116167" type="System">
+                                            <param id="0" name="Variable">PlayerWeaponsLoaded</param>
+                                            <param id="1" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="7400457137168956">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="3488380183501848" type="System">
+                                    <param id="0" name="Variable">PlayerConsumablesLoaded</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="7217385181043155">
+                                    <conditions>
+                                        <condition id="3" name="Local key exists" sid="9696274553609186" type="WebStorage">
+                                            <param id="0" name="Key">&quot;PlayerConsumables&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="4425012637600517">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="5933866253578192" type="System" />
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="8471738183685579">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="945033247216778" type="System">
+                                            <param id="0" name="Variable">PlayerConsumablesLoaded</param>
+                                            <param id="1" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="2208592208773329">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="1188040591000043" type="System">
+                                    <param id="0" name="Variable">PlayerCurrencyLoaded</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="687623441711959">
+                                    <conditions>
+                                        <condition id="3" name="Local key exists" sid="5735536392798597" type="WebStorage">
+                                            <param id="0" name="Key">&quot;PlayerCurrency&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="4619938319916186">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="3372360042015653" type="System" />
+                                    </conditions>
+                                    <actions />
+                                </event-block>
+                                <event-block sid="2890071597915816">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="4808936587217247" type="System">
+                                            <param id="0" name="Variable">PlayerCurrencyLoaded</param>
+                                            <param id="1" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="4824980961576625">
+                    <conditions>
+                        <condition id="0" name="On function" sid="4969287992296359" type="Function">
+                            <param id="0" name="Name">&quot;SelectTool&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <variable constant="0" name="selectedToolIndex" sid="6187262616058392" static="0" type="number">0</variable>
+                        <variable constant="0" name="selectedToolName" sid="596343155059231" static="0" type="text"></variable>
+                        <event-block sid="2437058469977777">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="1759745681843658" type="System">
+                                    <param id="0" name="Variable">selectedToolIndex</param>
+                                    <param id="1" name="Value">Function.Param(0)</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="6145761671645661" type="System">
+                                    <param id="0" name="Variable">selectedToolName</param>
+                                    <param id="1" name="Value">Array_Tools.At(selectedToolIndex, 0)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="2386000825533338">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="904408705619629" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">tool_None</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Call function" sid="4569089266051991" type="Function">
+                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                                            <param id="1" name="Parameter {n}"></param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="7488653569234856">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="8997971955514586" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">tool_Lantern</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Call function" sid="1988299726174987" type="Function">
+                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                                            <param id="1" name="Parameter {n}"></param>
+                                        </action>
+                                        <action id="-3" name="Create object" sid="5088587916997241" type="System">
+                                            <param id="0" name="Object to create">Sprite_Lantern</param>
+                                            <param id="1" name="Layer">&quot;Player&quot;</param>
+                                            <param id="2" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                            <param id="3" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="3415720959915324" type="Sprite_Lantern">
+                                            <param id="0" name="Animation">&quot;Default&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="3158123965308382">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="1558906093531138" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">tool_Bow</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Call function" sid="3458480720457781" type="Function">
+                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                                            <param id="1" name="Parameter {n}"></param>
+                                        </action>
+                                        <action id="-3" name="Create object" sid="8656278922458757" type="System">
+                                            <param id="0" name="Object to create">Sprite_Bow</param>
+                                            <param id="1" name="Layer">&quot;Player&quot;</param>
+                                            <param id="2" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                            <param id="3" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="7720451591713769" type="Sprite_Bow">
+                                            <param id="0" name="Animation">&quot;Default&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="430824425468055">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="8392665073980979" type="System">
+                                            <param id="0" name="Variable">selectedToolName</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">tool_Pickaxe</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Call function" sid="3621595106752337" type="Function">
+                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                                            <param id="1" name="Parameter {n}"></param>
+                                        </action>
+                                        <action id="-3" name="Create object" sid="6853129699542231" type="System">
+                                            <param id="0" name="Object to create">Sprite_Pickaxe</param>
+                                            <param id="1" name="Layer">&quot;Player&quot;</param>
+                                            <param id="2" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
+                                            <param id="3" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="8281979032481215" type="Sprite_Pickaxe">
+                                            <param id="0" name="Animation">&quot;Default&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="8059042890055078">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="7250163098612272" type="System">
+                                    <param id="0" name="Variable">EquippedTool</param>
+                                    <param id="1" name="Value">selectedToolIndex</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="8984653647090276">
+                    <conditions>
+                        <condition id="0" name="On function" sid="8249708861568784" type="Function">
+                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="8033141598332061" type="Sprite_BlockSatchel" />
+                        <action id="-9" name="Destroy" sid="5353026888627349" type="Sprite_BombSatchel" />
+                        <action id="-9" name="Destroy" sid="7607021775282347" type="Sprite_Bottle" />
+                        <action id="-9" name="Destroy" sid="6881744614571008" type="Sprite_Bow" />
+                        <action id="-9" name="Destroy" sid="7173902887693569" type="Sprite_Hookshot" />
+                        <action id="-9" name="Destroy" sid="4817988497719225" type="Sprite_Lantern" />
+                        <action id="-9" name="Destroy" sid="6102734113582771" type="Sprite_Pickaxe" />
+                        <action id="-9" name="Destroy" sid="7903347097387717" type="Sprite_Shield" />
+                        <action id="-9" name="Set value" sid="4545438049343234" type="System">
+                            <param id="0" name="Variable">EquippedTool</param>
+                            <param id="1" name="Value">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2928642851368704">
+                    <conditions>
+                        <condition id="0" name="On function" sid="8775990373511186" type="Function">
+                            <param id="0" name="Name">&quot;SelectNextTool&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <variable constant="0" name="nextTool" sid="8324331543268946" static="0" type="number">0</variable>
+                        <event-block sid="145710175169204">
+                            <conditions>
+                                <condition id="-10" name="For" sid="9101375199897355" type="System">
+                                    <param id="0" name="Name">&quot;NextToolLoop&quot;</param>
+                                    <param id="1" name="Start index">EquippedTool + 1</param>
+                                    <param id="2" name="End index">Array_Tools.Width - 1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="3390139197113521">
+                                    <conditions>
+                                        <condition id="1" name="Compare at XY" sid="5131980344568307" type="Array_Tools">
+                                            <param id="0" name="X">loopindex(&quot;NextToolLoop&quot;)</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Comparison">0</param>
+                                            <param id="3" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="3452342010754246" type="System">
+                                            <param id="0" name="Variable">nextTool</param>
+                                            <param id="1" name="Value">loopindex(&quot;NextToolLoop&quot;)</param>
+                                        </action>
+                                        <action id="-24" name="Stop loop" sid="3589885880364027" type="System" />
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="4710314518708001">
+                            <conditions />
+                            <actions>
+                                <action id="0" name="Call function" sid="1145463803218884" type="Function">
+                                    <param id="0" name="Name">&quot;SelectTool&quot;</param>
+                                    <param id="1" name="Parameter {n}">nextTool</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="1159260699808057">
+                    <conditions>
+                        <condition id="0" name="On function" sid="2177829972281318" type="Function">
+                            <param id="0" name="Name">&quot;SelectPreviousTool&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                </event-block>
+                <event-block sid="2175980487270762">
+                    <conditions>
+                        <condition id="0" name="On function" sid="973423021290265" type="Function">
+                            <param id="0" name="Name">&quot;UseTool&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="4" name="Set animation" sid="3012214467260701" type="Sprite_Pickaxe">
+                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="1344521761632292">
+                    <conditions>
+                        <condition id="4" name="On finished" sid="7276250380287228" type="Sprite_Pickaxe">
+                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="4" name="Set animation" sid="253721394476349" type="Sprite_Pickaxe">
+                            <param id="0" name="Animation">&quot;Default&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
     </events>
 </c2eventsheet>

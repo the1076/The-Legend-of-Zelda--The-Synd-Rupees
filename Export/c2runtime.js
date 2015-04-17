@@ -15580,6 +15580,188 @@ cr.plugins_.Button = function(runtime)
 }());
 ;
 ;
+cr.plugins_.Dictionary = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.Dictionary.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	instanceProto.onCreate = function()
+	{
+		this.dictionary = {};
+		this.cur_key = "";		// current key in for-each loop
+		this.key_count = 0;
+	};
+	instanceProto.saveToJSON = function ()
+	{
+		return this.dictionary;
+	};
+	instanceProto.loadFromJSON = function (o)
+	{
+		this.dictionary = o;
+		this.key_count = 0;
+		for (var p in this.dictionary)
+		{
+			if (this.dictionary.hasOwnProperty(p))
+				this.key_count++;
+		}
+	};
+	function Cnds() {};
+	Cnds.prototype.CompareValue = function (key_, cmp_, value_)
+	{
+		return cr.do_cmp(this.dictionary[key_], cmp_, value_);
+	};
+	Cnds.prototype.ForEachKey = function ()
+	{
+		var current_event = this.runtime.getCurrentEventStack().current_event;
+		for (var p in this.dictionary)
+		{
+			if (this.dictionary.hasOwnProperty(p))
+			{
+				this.cur_key = p;
+				this.runtime.pushCopySol(current_event.solModifiers);
+				current_event.retrigger();
+				this.runtime.popSol(current_event.solModifiers);
+			}
+		}
+		this.cur_key = "";
+		return false;
+	};
+	Cnds.prototype.CompareCurrentValue = function (cmp_, value_)
+	{
+		return cr.do_cmp(this.dictionary[this.cur_key], cmp_, value_);
+	};
+	Cnds.prototype.HasKey = function (key_)
+	{
+		return this.dictionary.hasOwnProperty(key_);
+	};
+	Cnds.prototype.IsEmpty = function ()
+	{
+		return this.key_count === 0;
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.AddKey = function (key_, value_)
+	{
+		if (!this.dictionary.hasOwnProperty(key_))
+			this.key_count++;
+		this.dictionary[key_] = value_;
+	};
+	Acts.prototype.SetKey = function (key_, value_)
+	{
+		if (this.dictionary.hasOwnProperty(key_))
+			this.dictionary[key_] = value_;
+	};
+	Acts.prototype.DeleteKey = function (key_)
+	{
+		if (this.dictionary.hasOwnProperty(key_))
+		{
+			delete this.dictionary[key_];
+			this.key_count--;
+		}
+	};
+	Acts.prototype.Clear = function ()
+	{
+		cr.wipe(this.dictionary);		// avoid garbaging
+		this.key_count = 0;
+	};
+	Acts.prototype.JSONLoad = function (json_)
+	{
+		var o;
+		try {
+			o = JSON.parse(json_);
+		}
+		catch(e) { return; }
+		if (!o["c2dictionary"])		// presumably not a c2dictionary object
+			return;
+		this.dictionary = o["data"];
+		this.key_count = 0;
+		for (var p in this.dictionary)
+		{
+			if (this.dictionary.hasOwnProperty(p))
+				this.key_count++;
+		}
+	};
+	Acts.prototype.JSONDownload = function (filename)
+	{
+		var a = document.createElement("a");
+		if (typeof a.download === "undefined")
+		{
+			var str = 'data:text/html,' + encodeURIComponent("<p><a download='data.json' href=\"data:application/json,"
+				+ encodeURIComponent(JSON.stringify({
+						"c2dictionary": true,
+						"data": this.dictionary
+					}))
+				+ "\">Download link</a></p>");
+			window.open(str);
+		}
+		else
+		{
+			var body = document.getElementsByTagName("body")[0];
+			a.textContent = filename;
+			a.href = "data:application/json," + encodeURIComponent(JSON.stringify({
+						"c2dictionary": true,
+						"data": this.dictionary
+					}));
+			a.download = filename;
+			body.appendChild(a);
+			var clickEvent = document.createEvent("MouseEvent");
+			clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			a.dispatchEvent(clickEvent);
+			body.removeChild(a);
+		}
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.Get = function (ret, key_)
+	{
+		if (this.dictionary.hasOwnProperty(key_))
+			ret.set_any(this.dictionary[key_]);
+		else
+			ret.set_int(0);
+	};
+	Exps.prototype.KeyCount = function (ret)
+	{
+		ret.set_int(this.key_count);
+	};
+	Exps.prototype.CurrentKey = function (ret)
+	{
+		ret.set_string(this.cur_key);
+	};
+	Exps.prototype.CurrentValue = function (ret)
+	{
+		if (this.dictionary.hasOwnProperty(this.cur_key))
+			ret.set_any(this.dictionary[this.cur_key]);
+		else
+			ret.set_int(0);
+	};
+	Exps.prototype.AsJSON = function (ret)
+	{
+		ret.set_string(JSON.stringify({
+			"c2dictionary": true,
+			"data": this.dictionary
+		}));
+	};
+	pluginProto.exps = new Exps();
+}());
+;
+;
 cr.plugins_.Function = function(runtime)
 {
 	this.runtime = runtime;
@@ -22098,6 +22280,7 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Function,
 	cr.plugins_.Browser,
 	cr.plugins_.Button,
+	cr.plugins_.Dictionary,
 	cr.plugins_.gamepad,
 	cr.plugins_.Keyboard,
 	cr.plugins_.Mouse,
@@ -22131,9 +22314,7 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.acts.GoToLayoutByName,
 	cr.plugins_.Keyboard.prototype.cnds.OnKey,
 	cr.system_object.prototype.acts.ScrollToObject,
-	cr.plugins_.Sprite.prototype.acts.SetSize,
-	cr.plugins_.Sprite.prototype.acts.SetAnim,
-	cr.system_object.prototype.cnds.EveryTick,
+	cr.system_object.prototype.cnds.IsGroupActive,
 	cr.plugins_.gamepad.prototype.cnds.OnButtonDown,
 	cr.plugins_.Keyboard.prototype.cnds.IsKeyDown,
 	cr.plugins_.gamepad.prototype.cnds.CompareAxis,
@@ -22142,6 +22323,7 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Keyboard.prototype.cnds.OnKeyReleased,
 	cr.plugins_.gamepad.prototype.cnds.OnButtonUp,
 	cr.plugins_.Mouse.prototype.cnds.OnClick,
+	cr.plugins_.Mouse.prototype.cnds.OnWheel,
 	cr.behaviors.Platform.prototype.cnds.IsByWall,
 	cr.behaviors.Platform.prototype.cnds.IsOnFloor,
 	cr.plugins_.Function.prototype.cnds.OnFunction,
@@ -22151,6 +22333,19 @@ cr.getObjectRefTable = function () { return [
 	cr.behaviors.Platform.prototype.exps.JumpStrength,
 	cr.behaviors.Platform.prototype.acts.SetVectorX,
 	cr.system_object.prototype.acts.RestartLayout,
+	cr.system_object.prototype.cnds.EveryTick,
+	cr.plugins_.Arr.prototype.exps.At,
+	cr.plugins_.Arr.prototype.acts.SetSize,
+	cr.plugins_.Arr.prototype.acts.SetXY,
+	cr.plugins_.Function.prototype.exps.Param,
+	cr.system_object.prototype.acts.CreateObject,
+	cr.plugins_.Sprite.prototype.acts.SetAnim,
+	cr.plugins_.Sprite.prototype.acts.Destroy,
+	cr.system_object.prototype.cnds.For,
+	cr.plugins_.Arr.prototype.exps.Width,
+	cr.plugins_.Arr.prototype.cnds.CompareXY,
+	cr.system_object.prototype.exps.loopindex,
+	cr.system_object.prototype.acts.StopLoop,
 	cr.plugins_.Sprite.prototype.cnds.OnAnimFinished,
 	cr.plugins_.TextBox.prototype.acts.SetText,
 	cr.system_object.prototype.exps.str,
@@ -22159,25 +22354,18 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.TextBox.prototype.exps.Text,
 	cr.system_object.prototype.exps["float"],
 	cr.plugins_.Tilemap.prototype.acts.EraseTileRange,
-	cr.system_object.prototype.cnds.For,
 	cr.plugins_.WebStorage.prototype.exps.LocalValue,
 	cr.system_object.prototype.exps.floor,
 	cr.system_object.prototype.exps.random,
-	cr.system_object.prototype.acts.CreateObject,
 	cr.plugins_.TiledBg.prototype.acts.SetSize,
-	cr.plugins_.Arr.prototype.acts.SetSize,
 	cr.plugins_.Arr.prototype.cnds.ArrForEach,
 	cr.plugins_.Function.prototype.exps.Call,
 	cr.plugins_.Arr.prototype.exps.CurX,
 	cr.plugins_.Arr.prototype.exps.CurY,
 	cr.system_object.prototype.cnds.Compare,
-	cr.plugins_.Arr.prototype.acts.SetXY,
 	cr.plugins_.Arr.prototype.acts.Clear,
 	cr.plugins_.Arr.prototype.cnds.CompareCurrent,
 	cr.plugins_.Arr.prototype.exps.CurValue,
-	cr.plugins_.Function.prototype.exps.Param,
-	cr.system_object.prototype.exps.loopindex,
-	cr.plugins_.Arr.prototype.cnds.CompareXY,
 	cr.plugins_.Function.prototype.acts.SetReturnValue,
 	cr.plugins_.Tilemap.prototype.acts.SetTile,
 	cr.plugins_.WebStorage.prototype.acts.StoreLocal,
