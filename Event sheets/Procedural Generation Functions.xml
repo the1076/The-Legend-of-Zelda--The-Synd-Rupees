@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Procedural Generation Functions</name>
     <events>
+        <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
         <variable constant="0" name="MapTileCountX" sid="7818368885881665" static="0" type="number">175</variable>
         <variable constant="0" name="MapTileCountY" sid="1050000233023147" static="0" type="number">125</variable>
         <variable constant="0" name="DeathLimit" sid="4281032945476488" static="0" type="number">4</variable>
@@ -132,27 +133,27 @@
                     <actions>
                         <action id="-9" name="Set value" sid="7848185955023059" type="System">
                             <param id="0" name="Variable">PlayerStartingPoint</param>
-                            <param id="1" name="Value">EntranceTile * 32</param>
+                            <param id="1" name="Value">EntranceTile * MapTileSize</param>
                         </action>
                         <action id="-3" name="Create object" sid="160572469530352" type="System">
                             <param id="0" name="Object to create">TiledBackground_ExitTrigger</param>
                             <param id="1" name="Layer">&quot;Triggers&quot;</param>
-                            <param id="2" name="X">(MapTileCountX - 1) *32</param>
-                            <param id="3" name="Y">(ExitTile - 2) * 32</param>
+                            <param id="2" name="X">(MapTileCountX - 1) * MapTileSize</param>
+                            <param id="3" name="Y">(ExitTile - 2) * MapTileSize</param>
                         </action>
                         <action id="-7" name="Set size" sid="9810774230705928" type="TiledBackground_ExitTrigger">
-                            <param id="0" name="Width">32</param>
-                            <param id="1" name="Height">96</param>
+                            <param id="0" name="Width">MapTileSize</param>
+                            <param id="1" name="Height">MapTileSize * 3</param>
                         </action>
                         <action id="-3" name="Create object" sid="4183699463755446" type="System">
                             <param id="0" name="Object to create">TiledBackground_EntranceTrigger</param>
                             <param id="1" name="Layer">&quot;Triggers&quot;</param>
                             <param id="2" name="X">0</param>
-                            <param id="3" name="Y">(EntranceTile - 2) * 32</param>
+                            <param id="3" name="Y">(EntranceTile - 2) * MapTileSize</param>
                         </action>
                         <action id="-7" name="Set size" sid="349939385357195" type="TiledBackground_EntranceTrigger">
-                            <param id="0" name="Width">32</param>
-                            <param id="1" name="Height">96</param>
+                            <param id="0" name="Width">MapTileSize</param>
+                            <param id="1" name="Height">MapTileSize * 3</param>
                         </action>
                     </actions>
                 </event-block>

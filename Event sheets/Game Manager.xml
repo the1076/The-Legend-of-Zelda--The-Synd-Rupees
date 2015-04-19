@@ -3,7 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Game Manager</name>
     <events>
-        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">18</variable>
+        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">19</variable>
         <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
         <event-block sid="9409173688350814">
             <conditions>
@@ -13,6 +13,7 @@
                 <action id="0" name="Set text" sid="369136169850963" type="Text_DevelopmentVersion">
                     <param id="0" name="Text">&quot;Development Version&quot; &amp; newline &amp; &quot;Build Number: &quot; &amp; BuildNumber</param>
                 </action>
+                <action id="-24" name="Move to top" sid="6443885065985534" type="Text_DevelopmentVersion" />
             </actions>
         </event-block>
         <comment>If the player falls off the bottom of the layout, restart the level.</comment>

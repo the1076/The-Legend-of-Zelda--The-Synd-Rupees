@@ -521,6 +521,7 @@
                                                             <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
                                                             <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
                                                         </action>
+                                                        <action id="-24" name="Move to top" sid="7620029293313998" type="Sprite_Lantern" />
                                                     </actions>
                                                 </event-block>
                                             </sub-events>
@@ -562,6 +563,7 @@
                                                             <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
                                                             <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
                                                         </action>
+                                                        <action id="-24" name="Move to top" sid="3148304922318767" type="Sprite_Bow" />
                                                     </actions>
                                                 </event-block>
                                             </sub-events>
@@ -637,6 +639,12 @@
                                                             <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;)</param>
                                                             <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;)</param>
                                                         </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="3146874860164487">
+                                                    <conditions />
+                                                    <actions>
+                                                        <action id="-24" name="Move to top" sid="5778948249358294" type="Sprite_Pickaxe" />
                                                     </actions>
                                                 </event-block>
                                             </sub-events>
