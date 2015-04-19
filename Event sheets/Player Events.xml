@@ -446,7 +446,8 @@
                 <action id="-26" name="Restart layout" sid="1199880833663911" type="System" />
             </actions>
         </event-block>
-        <variable constant="0" name="EquippedTool" sid="5425344774732447" static="0" type="number">0</variable>
+        <variable constant="0" name="EquippedToolIndex" sid="5425344774732447" static="0" type="number">0</variable>
+        <variable constant="0" name="EquippedToolName" sid="637890403615907" static="0" type="text"></variable>
         <variable constant="0" name="EquippedWeapon" sid="7611623855320358" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerCurrencyLoaded" sid="2029143594175016" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerConsumablesLoaded" sid="7172285380484682" static="0" type="number">0</variable>
@@ -469,7 +470,6 @@
                     </conditions>
                     <actions />
                     <sub-events>
-                        <variable constant="0" name="selectedToolName" sid="5503915926074393" static="0" type="text"></variable>
                         <event-block sid="8500761188561587">
                             <conditions>
                                 <condition id="-14" name="Compare variable" sid="8229983885000288" type="System">
@@ -482,21 +482,12 @@
                             <sub-events>
                                 <event-block sid="8679616913446976">
                                     <conditions />
-                                    <actions>
-                                        <action disabled="1" id="-9" name="Set value" sid="4808455887763261" type="System">
-                                            <param id="0" name="Variable">selectedToolName</param>
-                                            <param id="1" name="Value">tool_None</param>
-                                        </action>
-                                        <action id="-9" name="Set value" sid="8152543516232909" type="System">
-                                            <param id="0" name="Variable">selectedToolName</param>
-                                            <param id="1" name="Value">Array_Tools.At(EquippedTool, 0)</param>
-                                        </action>
-                                    </actions>
+                                    <actions />
                                     <sub-events>
                                         <event-block sid="9860521674068764">
                                             <conditions>
                                                 <condition id="-14" name="Compare variable" sid="5497335828062643" type="System">
-                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="0" name="Variable">EquippedToolName</param>
                                                     <param id="1" name="Comparison">0</param>
                                                     <param id="2" name="Value">tool_Lantern</param>
                                                 </condition>
@@ -537,7 +528,7 @@
                                         <event-block sid="3092358074366023">
                                             <conditions>
                                                 <condition id="-14" name="Compare variable" sid="924592942712013" type="System">
-                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="0" name="Variable">EquippedToolName</param>
                                                     <param id="1" name="Comparison">0</param>
                                                     <param id="2" name="Value">tool_Bow</param>
                                                 </condition>
@@ -578,7 +569,7 @@
                                         <event-block sid="51774967303118">
                                             <conditions>
                                                 <condition id="-14" name="Compare variable" sid="4863152345123445" type="System">
-                                                    <param id="0" name="Variable">selectedToolName</param>
+                                                    <param id="0" name="Variable">EquippedToolName</param>
                                                     <param id="1" name="Comparison">0</param>
                                                     <param id="2" name="Value">tool_Pickaxe</param>
                                                 </condition>
@@ -910,36 +901,25 @@
                     </conditions>
                     <actions />
                     <sub-events>
-                        <variable constant="0" name="selectedToolIndex" sid="6187262616058392" static="0" type="number">0</variable>
-                        <variable constant="0" name="selectedToolName" sid="596343155059231" static="0" type="text"></variable>
+                        <variable constant="0" name="selectedToolIndex" sid="2475689517815595" static="0" type="number">0</variable>
+                        <variable constant="0" name="selectedToolName" sid="5898616453849238" static="0" type="text"></variable>
                         <event-block sid="2437058469977777">
                             <conditions />
                             <actions>
-                                <action id="-9" name="Set value" sid="1759745681843658" type="System">
+                                <action id="-9" name="Set value" sid="9145702257326344" type="System">
                                     <param id="0" name="Variable">selectedToolIndex</param>
                                     <param id="1" name="Value">Function.Param(0)</param>
                                 </action>
-                                <action id="-9" name="Set value" sid="6145761671645661" type="System">
+                                <action id="-9" name="Set value" sid="7093494133405577" type="System">
                                     <param id="0" name="Variable">selectedToolName</param>
                                     <param id="1" name="Value">Array_Tools.At(selectedToolIndex, 0)</param>
                                 </action>
+                                <action id="0" name="Call function" sid="4569089266051991" type="Function">
+                                    <param id="0" name="Name">&quot;UnequipTool&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
                             </actions>
                             <sub-events>
-                                <event-block sid="2386000825533338">
-                                    <conditions>
-                                        <condition id="-14" name="Compare variable" sid="904408705619629" type="System">
-                                            <param id="0" name="Variable">selectedToolName</param>
-                                            <param id="1" name="Comparison">0</param>
-                                            <param id="2" name="Value">tool_None</param>
-                                        </condition>
-                                    </conditions>
-                                    <actions>
-                                        <action id="0" name="Call function" sid="4569089266051991" type="Function">
-                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
-                                            <param id="1" name="Parameter {n}"></param>
-                                        </action>
-                                    </actions>
-                                </event-block>
                                 <event-block sid="7488653569234856">
                                     <conditions>
                                         <condition id="-14" name="Compare variable" sid="8997971955514586" type="System">
@@ -949,10 +929,6 @@
                                         </condition>
                                     </conditions>
                                     <actions>
-                                        <action id="0" name="Call function" sid="1988299726174987" type="Function">
-                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
-                                            <param id="1" name="Parameter {n}"></param>
-                                        </action>
                                         <action id="-3" name="Create object" sid="5088587916997241" type="System">
                                             <param id="0" name="Object to create">Sprite_Lantern</param>
                                             <param id="1" name="Layer">&quot;Player&quot;</param>
@@ -974,10 +950,6 @@
                                         </condition>
                                     </conditions>
                                     <actions>
-                                        <action id="0" name="Call function" sid="3458480720457781" type="Function">
-                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
-                                            <param id="1" name="Parameter {n}"></param>
-                                        </action>
                                         <action id="-3" name="Create object" sid="8656278922458757" type="System">
                                             <param id="0" name="Object to create">Sprite_Bow</param>
                                             <param id="1" name="Layer">&quot;Player&quot;</param>
@@ -999,10 +971,6 @@
                                         </condition>
                                     </conditions>
                                     <actions>
-                                        <action id="0" name="Call function" sid="3621595106752337" type="Function">
-                                            <param id="0" name="Name">&quot;UnequipTool&quot;</param>
-                                            <param id="1" name="Parameter {n}"></param>
-                                        </action>
                                         <action id="-3" name="Create object" sid="6853129699542231" type="System">
                                             <param id="0" name="Object to create">Sprite_Pickaxe</param>
                                             <param id="1" name="Layer">&quot;Player&quot;</param>
@@ -1015,16 +983,20 @@
                                         </action>
                                     </actions>
                                 </event-block>
+                                <event-block sid="7542962174189011">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="1759745681843658" type="System">
+                                            <param id="0" name="Variable">EquippedToolIndex</param>
+                                            <param id="1" name="Value">selectedToolIndex</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="4365332055754147" type="System">
+                                            <param id="0" name="Variable">EquippedToolName</param>
+                                            <param id="1" name="Value">selectedToolName</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
                             </sub-events>
-                        </event-block>
-                        <event-block sid="8059042890055078">
-                            <conditions />
-                            <actions>
-                                <action id="-9" name="Set value" sid="7250163098612272" type="System">
-                                    <param id="0" name="Variable">EquippedTool</param>
-                                    <param id="1" name="Value">selectedToolIndex</param>
-                                </action>
-                            </actions>
                         </event-block>
                     </sub-events>
                 </event-block>
@@ -1044,8 +1016,12 @@
                         <action id="-9" name="Destroy" sid="6102734113582771" type="Sprite_Pickaxe" />
                         <action id="-9" name="Destroy" sid="7903347097387717" type="Sprite_Shield" />
                         <action id="-9" name="Set value" sid="4545438049343234" type="System">
-                            <param id="0" name="Variable">EquippedTool</param>
+                            <param id="0" name="Variable">EquippedToolIndex</param>
                             <param id="1" name="Value">0</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="1133205229520911" type="System">
+                            <param id="0" name="Variable">EquippedToolName</param>
+                            <param id="1" name="Value">tool_None</param>
                         </action>
                     </actions>
                 </event-block>
@@ -1057,12 +1033,12 @@
                     </conditions>
                     <actions />
                     <sub-events>
-                        <variable constant="0" name="nextTool" sid="8324331543268946" static="0" type="number">0</variable>
+                        <variable constant="0" name="nextToolIndex" sid="8324331543268946" static="0" type="number">0</variable>
                         <event-block sid="145710175169204">
                             <conditions>
                                 <condition id="-10" name="For" sid="9101375199897355" type="System">
                                     <param id="0" name="Name">&quot;NextToolLoop&quot;</param>
-                                    <param id="1" name="Start index">EquippedTool + 1</param>
+                                    <param id="1" name="Start index">EquippedToolIndex + 1</param>
                                     <param id="2" name="End index">Array_Tools.Width - 1</param>
                                 </condition>
                             </conditions>
@@ -1079,7 +1055,7 @@
                                     </conditions>
                                     <actions>
                                         <action id="-9" name="Set value" sid="3452342010754246" type="System">
-                                            <param id="0" name="Variable">nextTool</param>
+                                            <param id="0" name="Variable">nextToolIndex</param>
                                             <param id="1" name="Value">loopindex(&quot;NextToolLoop&quot;)</param>
                                         </action>
                                         <action id="-24" name="Stop loop" sid="3589885880364027" type="System" />
@@ -1092,7 +1068,7 @@
                             <actions>
                                 <action id="0" name="Call function" sid="1145463803218884" type="Function">
                                     <param id="0" name="Name">&quot;SelectTool&quot;</param>
-                                    <param id="1" name="Parameter {n}">nextTool</param>
+                                    <param id="1" name="Parameter {n}">nextToolIndex</param>
                                 </action>
                             </actions>
                         </event-block>
@@ -1105,6 +1081,72 @@
                         </condition>
                     </conditions>
                     <actions />
+                    <sub-events>
+                        <variable constant="0" name="previousToolIndex" sid="984476849851095" static="0" type="number">0</variable>
+                        <variable constant="0" name="startingIndex" sid="6915067669736966" static="0" type="number">0</variable>
+                        <event-block sid="4654519350750686">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="2595912796838543" type="System">
+                                    <param id="0" name="Variable">startingIndex</param>
+                                    <param id="1" name="Value">EquippedToolIndex</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="9032417476921829">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="4441925951458459" type="System">
+                                    <param id="0" name="Variable">startingIndex</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="7956550103010887" type="System">
+                                    <param id="0" name="Variable">startingIndex</param>
+                                    <param id="1" name="Value">Array_Tools.Width - 1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="7309177988083023">
+                            <conditions>
+                                <condition id="-10" name="For" sid="5485783840492787" type="System">
+                                    <param id="0" name="Name">&quot;PreviousToolLoop&quot;</param>
+                                    <param id="1" name="Start index">startingIndex - 1</param>
+                                    <param id="2" name="End index">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="2717506293687944">
+                                    <conditions>
+                                        <condition id="1" name="Compare at XY" sid="1854267816192793" type="Array_Tools">
+                                            <param id="0" name="X">loopindex(&quot;PreviousToolLoop&quot;)</param>
+                                            <param id="1" name="Y">1</param>
+                                            <param id="2" name="Comparison">0</param>
+                                            <param id="3" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="3589068295205472" type="System">
+                                            <param id="0" name="Variable">previousToolIndex</param>
+                                            <param id="1" name="Value">loopindex(&quot;PreviousToolLoop&quot;)</param>
+                                        </action>
+                                        <action id="-24" name="Stop loop" sid="1133965374428443" type="System" />
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="3296231290217068">
+                            <conditions />
+                            <actions>
+                                <action id="0" name="Call function" sid="8274952466026966" type="Function">
+                                    <param id="0" name="Name">&quot;SelectTool&quot;</param>
+                                    <param id="1" name="Parameter {n}">previousToolIndex</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
                 <event-block sid="2175980487270762">
                     <conditions>

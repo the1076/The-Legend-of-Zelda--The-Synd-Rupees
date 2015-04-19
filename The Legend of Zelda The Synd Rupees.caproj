@@ -27,6 +27,7 @@
         <plugin author="Scirra" id="gamepad" version="1">Gamepad</plugin>
     </used-plugins>
     <used-behaviors>
+        <behavior author="Scirra" id="Anchor" version="1">Anchor</behavior>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
         <behavior author="Scirra" id="bound" version="1">Bound to layout</behavior>
         <behavior author="Scirra" id="scrollto" version="1">Scroll To</behavior>
@@ -161,9 +162,19 @@
         </object-type>
         <object-type global="1" name="Text_DevelopmentVersion" sid="5887543724515725">
             <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="8295812582753277">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="TiledBackground_DevelopmentVersionBackground" sid="3628688667840641">
             <plugin id="TiledBg" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="2566762833222551">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
             <texture />
         </object-type>
         <object-type name="WebStorage" sid="6848062234253157">
