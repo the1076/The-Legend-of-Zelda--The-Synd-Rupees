@@ -2,7 +2,7 @@
 <c2project>
     <name>The Legend of Zelda The Synd Rupees</name>
     <description></description>
-    <version>1.0.0.0</version>
+    <version>0.0.0.20</version>
     <author>1076</author>
     <author-email>1076@cynicstudios.com</author-email>
     <author-website>http://www.cynicstudios.com</author-website>
@@ -28,6 +28,8 @@
     </used-plugins>
     <used-behaviors>
         <behavior author="Scirra" id="Anchor" version="1">Anchor</behavior>
+        <behavior author="Scirra" id="Bullet" version="1">Bullet</behavior>
+        <behavior author="Scirra" id="LOS" version="1">Line Of Sight</behavior>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
         <behavior author="Scirra" id="bound" version="1">Bound to layout</behavior>
         <behavior author="Scirra" id="scrollto" version="1">Scroll To</behavior>
@@ -80,12 +82,12 @@
         </object-type>
         <object-type name="Player" sid="8108438222979685">
             <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="Health" sid="50492978785043" type="number" />
+            </instance-variables>
             <behaviors>
                 <behavior-type name="Platform" sid="9333199788643339">
                     <behavior id="Platform" />
-                </behavior-type>
-                <behavior-type name="ScrollTo" sid="9449664069896799">
-                    <behavior id="scrollto" />
                 </behavior-type>
                 <behavior-type name="BoundToLayout" sid="8258268987032242">
                     <behavior id="bound" />
@@ -384,12 +386,201 @@
         <object-type global="1" name="Array_Tools" sid="4281157354770268">
             <plugin id="Arr" />
         </object-type>
+        <object-type name="Sprite_Sword" sid="8768843568431702">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5385293025471275" speed="0">
+                    <frame duration="1" hotspotX="0.21085" hotspotY="0.553571" original-source="E:\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\dev\Art\sword_base.png">
+                        <collision-poly>
+                            <point x="0.249744" y="0.348214" />
+                            <point x="0.643807" y="0.383929" />
+                            <point x="1" y="0.0982143" />
+                            <point x="0.960082" y="0.5" />
+                            <point x="0.644831" y="0.785714" />
+                            <point x="0.253838" y="0.758929" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+                <animation framecount="3" loop="0" name="Attack" pingpong="0" repeatcount="1" repeatto="0" sid="4527623116296733" speed="5">
+                    <frame duration="1" hotspotX="0.21085" hotspotY="0.544643">
+                        <collision-poly>
+                            <point x="0.249744" y="0.348214" />
+                            <point x="0.643807" y="0.383929" />
+                            <point x="1" y="0.0982143" />
+                            <point x="0.960082" y="0.5" />
+                            <point x="0.644831" y="0.785714" />
+                            <point x="0.253838" y="0.758929" />
+                        </collision-poly>
+                    </frame>
+                    <frame duration="1" hotspotX="0.553571" hotspotY="0.792221">
+                        <collision-poly>
+                            <point x="0.410458" y="0.388946" />
+                            <point x="0.0634503" y="0" />
+                            <point x="0.517857" y="0.0449901" />
+                            <point x="0.835082" y="0.381269" />
+                            <point x="0.769831" y="0.748867" />
+                            <point x="0.325267" y="0.746646" />
+                        </collision-poly>
+                    </frame>
+                    <frame duration="1" hotspotX="0.21085" hotspotY="0.544643">
+                        <collision-poly>
+                            <point x="0.249744" y="0.348214" />
+                            <point x="0.643807" y="0.383929" />
+                            <point x="1" y="0.0982143" />
+                            <point x="0.960082" y="0.5" />
+                            <point x="0.644831" y="0.785714" />
+                            <point x="0.253838" y="0.758929" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Keese" sid="1960410591923517">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="waitTimer" sid="4229441493243232" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="Solid" sid="8032332939683686">
+                    <behavior id="solid" />
+                </behavior-type>
+                <behavior-type name="LineOfSight" sid="3467430570282022">
+                    <behavior id="LOS" />
+                </behavior-type>
+                <behavior-type name="Bullet" sid="3407682086469203">
+                    <behavior id="Bullet" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="2171595644479303" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.515625" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Moblin" sid="6206408731093324">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="3510030931018912" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Leever" sid="4097294057564108">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5777478147081005" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_LikeLike" sid="2901936996112874">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="3378143964278699" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Octorok" sid="2444094112001413">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="2799694539301194" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Tektite" sid="5106659573821318">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5783957921139454" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Peahat" sid="348323891745369">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="8505712467257333" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Poe" sid="98976993689634">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="6151690173613244" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_WallMaster" sid="9323263690630152">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="1614984290374118" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Bari" sid="5512455735474964">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="2818680001019547" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Gibdo" sid="785750804736487">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="9804532015876771" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Vire" sid="5379918216180148">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="2218961104754023" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Beamos" sid="3238525800800637">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="916776287654934" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Cucco" sid="6514826744786248">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="8197007304621095" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Camera" sid="8778991345010611">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="ScrollTo" sid="9798381018462739">
+                    <behavior id="scrollto" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="6236269947173746" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
     </object-folder>
     <families />
     <layout-folder>
         <layout>Dungeon Level.xml</layout>
         <layout>Merchant Room.xml</layout>
         <layout>Procedural Generation Test.xml</layout>
+        <layout>Mechanic Testing.xml</layout>
     </layout-folder>
     <event-folder>
         <event-sheet>Dungeon Level.xml</event-sheet>
@@ -398,6 +589,8 @@
         <event-sheet>Procedural Generation Test.xml</event-sheet>
         <event-sheet>Procedural Generation Functions.xml</event-sheet>
         <event-sheet>Game Manager.xml</event-sheet>
+        <event-sheet>Mechanic Testing.xml</event-sheet>
+        <event-sheet>Enemies.xml</event-sheet>
     </event-folder>
     <global-instances>
         <global-instance type="Keyboard" uid="3" />

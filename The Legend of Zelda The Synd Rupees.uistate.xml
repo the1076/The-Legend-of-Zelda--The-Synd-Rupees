@@ -11,12 +11,15 @@ you probably do not want to add any .uistate.xml files to the repository.-->
     </configurations>
     <open-tabs>
         <layout order="2">Merchant Room</layout>
-        <layout order="4">Dungeon Level</layout>
+        <layout order="5">Mechanic Testing</layout>
+        <layout order="8">Dungeon Level</layout>
         <event-sheet active="1" order="0">Game Manager</event-sheet>
         <event-sheet order="1">Player Events</event-sheet>
         <event-sheet order="3">Merchant Room</event-sheet>
-        <event-sheet order="5">Dungeon Level</event-sheet>
-        <event-sheet order="6">Procedural Generation Functions</event-sheet>
+        <event-sheet order="4">Procedural Generation Functions</event-sheet>
+        <event-sheet order="6">Mechanic Testing</event-sheet>
+        <event-sheet order="7">Enemies</event-sheet>
+        <event-sheet order="9">Dungeon Level</event-sheet>
     </open-tabs>
     <properties>
         <property expanded="1" name="About" />
@@ -42,5 +45,21 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <folder expanded="1" path="animation-folder/Sprite_BombSatchel/" />
         <folder expanded="1" path="animation-folder/Sprite_Bottle/" />
         <folder expanded="1" path="animation-folder/Sprite_BlockSatchel/" />
+        <folder expanded="1" path="animation-folder/Sprite_Sword/" />
+        <folder expanded="1" path="animation-folder/Sprite_Keese/" />
+        <folder expanded="1" path="animation-folder/Sprite_Moblin/" />
+        <folder expanded="1" path="animation-folder/Sprite_Leever/" />
+        <folder expanded="1" path="animation-folder/Sprite_LikeLike/" />
+        <folder expanded="1" path="animation-folder/Sprite_Octorok/" />
+        <folder expanded="1" path="animation-folder/Sprite_Tektite/" />
+        <folder expanded="1" path="animation-folder/Sprite_Peahat/" />
+        <folder expanded="1" path="animation-folder/Sprite_Poe/" />
+        <folder expanded="1" path="animation-folder/Sprite_WallMaster/" />
+        <folder expanded="1" path="animation-folder/Sprite_Bari/" />
+        <folder expanded="1" path="animation-folder/Sprite_Gibdo/" />
+        <folder expanded="1" path="animation-folder/Sprite_Vire/" />
+        <folder expanded="1" path="animation-folder/Sprite_Beamos/" />
+        <folder expanded="1" path="animation-folder/Sprite_Cucco/" />
+        <folder expanded="1" path="animation-folder/Sprite_Camera/" />
     </folders-expanded>
 </c2uistate>

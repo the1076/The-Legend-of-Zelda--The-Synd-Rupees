@@ -29,5 +29,17 @@
                 </action>
             </actions>
         </event-block>
+        <event-block sid="5055236067847302">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="7274262807996051" type="Keyboard">
+                    <param id="0" name="Key">109 (Num -)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="7666085648102601" type="System">
+                    <param id="0" name="Layout">Mechanic Testing</param>
+                </action>
+            </actions>
+        </event-block>
     </events>
 </c2eventsheet>

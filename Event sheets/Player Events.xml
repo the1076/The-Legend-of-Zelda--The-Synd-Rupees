@@ -40,10 +40,6 @@
                             <param id="0" name="Gamepad">0</param>
                             <param id="1" name="Button">0</param>
                         </condition>
-                        <condition id="6" name="On button pressed" sid="6243665055892744" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">12</param>
-                        </condition>
                     </conditions>
                     <actions>
                         <action id="0" name="Call function" sid="2161726199899432" type="Function">
@@ -175,6 +171,24 @@
                     <actions>
                         <action id="0" name="Call function" sid="8773053041495381" type="Function">
                             <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="2876658160386067">
+                    <conditions>
+                        <condition id="0" name="On click" sid="7544831554189586" type="Mouse">
+                            <param id="0" name="Mouse button">0</param>
+                            <param id="1" name="Click type">0</param>
+                        </condition>
+                        <condition id="6" name="On button pressed" sid="2350960646858731" type="Gamepad">
+                            <param id="0" name="Gamepad">0</param>
+                            <param id="1" name="Button">2</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="2365150556288281" type="Function">
+                            <param id="0" name="Name">&quot;Attack&quot;</param>
                             <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
@@ -439,12 +453,91 @@
         <event-block sid="686829324673796">
             <conditions>
                 <condition id="0" name="On function" sid="9495648046464153" type="Function">
+                    <param id="0" name="Name">&quot;Attack&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set animation" sid="1199880833663911" type="Sprite_Sword">
+                    <param id="0" name="Animation">&quot;Attack&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="4316793154384144">
+            <conditions>
+                <condition id="4" name="On finished" sid="6423778618936657" type="Sprite_Sword">
+                    <param id="0" name="Animation">&quot;Attack&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set animation" sid="9808429752003505" type="Sprite_Sword">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="3790936246765389">
+            <conditions>
+                <condition id="0" name="On function" sid="1695627786406634" type="Function">
                     <param id="0" name="Name">&quot;PlayerDeath&quot;</param>
                 </condition>
             </conditions>
             <actions>
-                <action id="-26" name="Restart layout" sid="1199880833663911" type="System" />
+                <action id="-26" name="Restart layout" sid="1183529478482564" type="System" />
             </actions>
+        </event-block>
+        <event-block sid="2959845758760447">
+            <conditions>
+                <condition id="0" name="On function" sid="642800229967569" type="Function">
+                    <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="fromLeft" sid="73602848486998" static="0" type="number">0</variable>
+                <variable constant="0" name="fromTop" sid="6636892163084714" static="0" type="number">0</variable>
+                <event-block sid="8301569751757836">
+                    <conditions />
+                    <actions>
+                        <action id="-9" name="Set value" sid="6652654175567578" type="System">
+                            <param id="0" name="Variable">fromLeft</param>
+                            <param id="1" name="Value">Function.Param(0)</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="7535216048984401" type="System">
+                            <param id="0" name="Variable">fromTop</param>
+                            <param id="1" name="Value">Function.Param(1)</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="4442748720077513">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="9326642525972533" type="System">
+                                    <param id="0" name="Variable">fromLeft</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-23" name="Move at angle" sid="917051985058681" type="Player">
+                                    <param id="0" name="Angle">345</param>
+                                    <param id="1" name="Distance">50</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="3217069725497953">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="4769214650578998" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-23" name="Move at angle" sid="1751153300903041" type="Player">
+                                    <param id="0" name="Angle">195</param>
+                                    <param id="1" name="Distance">50</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
         </event-block>
         <variable constant="0" name="EquippedToolIndex" sid="5425344774732447" static="0" type="number">0</variable>
         <variable constant="0" name="EquippedToolName" sid="637890403615907" static="0" type="text"></variable>
@@ -470,6 +563,36 @@
                     </conditions>
                     <actions />
                     <sub-events>
+                        <event-block sid="2707672666531517">
+                            <conditions>
+                                <condition id="7" name="Is mirrored" sid="4882758122775189" type="Player" />
+                            </conditions>
+                            <actions>
+                                <action id="7" name="Set mirrored" sid="9945236372254134" type="Sprite_Sword">
+                                    <param id="0" name="State">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="8701322903412157">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="8053460244137533" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="7" name="Set mirrored" sid="6289242695657579" type="Sprite_Sword">
+                                    <param id="0" name="State">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="9979760270612103">
+                            <conditions />
+                            <actions>
+                                <action id="-3" name="Set position" sid="4991030072319433" type="Sprite_Sword">
+                                    <param id="0" name="X">Player.ImagePointX(&quot;LeftHand&quot;)</param>
+                                    <param id="1" name="Y">Player.ImagePointY(&quot;LeftHand&quot;)</param>
+                                </action>
+                                <action id="-25" name="Move to bottom" sid="6301928171033886" type="Sprite_Sword" />
+                            </actions>
+                        </event-block>
                         <event-block sid="8500761188561587">
                             <conditions>
                                 <condition id="-14" name="Compare variable" sid="8229983885000288" type="System">
@@ -613,7 +736,7 @@
                                                             <actions>
                                                                 <action id="-3" name="Set position" sid="7414352320683484" type="Sprite_Pickaxe">
                                                                     <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) - 20</param>
-                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 20</param>
                                                                 </action>
                                                             </actions>
                                                         </event-block>
@@ -624,7 +747,7 @@
                                                             <actions>
                                                                 <action id="-3" name="Set position" sid="1876743901060609" type="Sprite_Pickaxe">
                                                                     <param id="0" name="X">Player.ImagePointX(&quot;RightHand&quot;) + 20</param>
-                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 10</param>
+                                                                    <param id="1" name="Y">Player.ImagePointY(&quot;RightHand&quot;) - 20</param>
                                                                 </action>
                                                             </actions>
                                                         </event-block>
@@ -1184,5 +1307,11 @@
                 </event-block>
             </sub-events>
         </event-group>
+        <event-block sid="1035317806411372">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="3929362135337852" type="System" />
+            </conditions>
+            <actions />
+        </event-block>
     </events>
 </c2eventsheet>

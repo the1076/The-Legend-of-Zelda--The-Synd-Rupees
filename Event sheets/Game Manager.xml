@@ -3,17 +3,27 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Game Manager</name>
     <events>
-        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">19</variable>
+        <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
+        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">20</variable>
+        <variable constant="0" name="VersionNumber" sid="5364803104146566" static="0" type="text"></variable>
         <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
         <event-block sid="9409173688350814">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="85493013777963" type="System" />
             </conditions>
             <actions>
+                <action id="-9" name="Set value" sid="6199969654797219" type="System">
+                    <param id="0" name="Variable">VersionNumber</param>
+                    <param id="1" name="Value">projectversion</param>
+                </action>
                 <action id="0" name="Set text" sid="369136169850963" type="Text_DevelopmentVersion">
-                    <param id="0" name="Text">&quot;Development Version&quot; &amp; newline &amp; &quot;Build Number: &quot; &amp; BuildNumber</param>
+                    <param id="0" name="Text">&quot;Development Version&quot; &amp; newline &amp; &quot;Build Number: &quot; &amp; VersionNumber</param>
                 </action>
                 <action id="-24" name="Move to top" sid="6443885065985534" type="Text_DevelopmentVersion" />
+                <action id="-4" name="Set position to another object" sid="5484658458110399" type="Sprite_Camera">
+                    <param id="0" name="Object">Player</param>
+                    <param id="1" name="Image point (optional)">0</param>
+                </action>
             </actions>
         </event-block>
         <comment>If the player falls off the bottom of the layout, restart the level.</comment>
@@ -271,6 +281,17 @@
                     </sub-events>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="4022312760049052">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="1475840813103216" type="System" />
+            </conditions>
+            <actions>
+                <action id="-3" name="Set position" sid="9260538295474696" type="Sprite_Camera">
+                    <param id="0" name="X">lerp(Self.X, Player.X, 0.1)</param>
+                    <param id="1" name="Y">lerp(Self.Y, Player.Y, 0.1)</param>
+                </action>
+            </actions>
         </event-block>
     </events>
 </c2eventsheet>

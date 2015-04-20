@@ -49,6 +49,10 @@
                             <param id="0" name="X">16</param>
                             <param id="1" name="Y">PlayerStartingPoint</param>
                         </action>
+                        <action id="-4" name="Set position to another object" sid="938261106347032" type="Sprite_Camera">
+                            <param id="0" name="Object">Player</param>
+                            <param id="1" name="Image point (optional)">0</param>
+                        </action>
                     </actions>
                 </event-block>
             </sub-events>

@@ -3,7 +3,6 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Procedural Generation Functions</name>
     <events>
-        <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
         <variable constant="0" name="MapTileCountX" sid="7818368885881665" static="0" type="number">175</variable>
         <variable constant="0" name="MapTileCountY" sid="1050000233023147" static="0" type="number">125</variable>
         <variable constant="0" name="DeathLimit" sid="4281032945476488" static="0" type="number">4</variable>

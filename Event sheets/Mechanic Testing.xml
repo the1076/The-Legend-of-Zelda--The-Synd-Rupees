@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Mechanic Testing</name>
+    <events>
+        <include>Game Manager</include>
+        <include>Player Events</include>
+        <include>Enemies</include>
+        <event-block sid="485271865278892">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="7245054287136206" type="Keyboard">
+                    <param id="0" name="Key">49 (1)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Log Text" sid="4164937695806389" type="ChromeConsole">
+                    <param id="0" name="Data">Sprite_Keese.Count</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="5252750880821378">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="8760262460231697" type="System">
+                            <param id="0" name="First value">Sprite_Keese.Count</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <variable constant="0" name="spawnX" sid="7817659487844795" static="0" type="number">0</variable>
+                        <variable constant="0" name="spawnY" sid="7060904301272133" static="0" type="number">0</variable>
+                        <event-block sid="2487021335003014">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="2877472458456464" type="System">
+                                    <param id="0" name="Variable">spawnX</param>
+                                    <param id="1" name="Value">Tilemap_Bitmask.TileToPositionX(25)</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="9815809557064205" type="System">
+                                    <param id="0" name="Variable">spawnY</param>
+                                    <param id="1" name="Value">Tilemap_Bitmask.TileToPositionY(29)</param>
+                                </action>
+                                <action id="0" name="Call function" sid="709771827427597" type="Function">
+                                    <param id="0" name="Name">&quot;SpawnKeese&quot;</param>
+                                    <param id="1" name="Parameter {n}">spawnX{###}spawnY</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="1173661790627959">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="5322555598651308" type="Keyboard">
+                    <param id="0" name="Key">109 (Num -)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-26" name="Restart layout" sid="5463022271101832" type="System" />
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
