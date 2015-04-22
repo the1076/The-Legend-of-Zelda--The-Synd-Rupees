@@ -2,7 +2,7 @@
 <c2project>
     <name>The Legend of Zelda The Synd Rupees</name>
     <description></description>
-    <version>0.0.0.20</version>
+    <version>0.0.0.21</version>
     <author>1076</author>
     <author-email>1076@cynicstudios.com</author-email>
     <author-website>http://www.cynicstudios.com</author-website>
@@ -83,7 +83,12 @@
         <object-type name="Player" sid="8108438222979685">
             <plugin id="Sprite" />
             <instance-variables>
-                <instance-variable name="Health" sid="50492978785043" type="number" />
+                <instance-variable name="health" sid="50492978785043" type="number" />
+                <instance-variable name="waitTimer" sid="9886541549018702" type="number" />
+                <instance-variable name="dead" sid="3593020030952775" type="boolean" />
+                <instance-variable name="deathTimer" sid="2634127781562049" type="number" />
+                <instance-variable name="startingX" sid="1563082395573144" type="number" />
+                <instance-variable name="startingY" sid="7626492869714385" type="number" />
             </instance-variables>
             <behaviors>
                 <behavior-type name="Platform" sid="9333199788643339">
@@ -388,6 +393,9 @@
         </object-type>
         <object-type name="Sprite_Sword" sid="8768843568431702">
             <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="damage" sid="2244521615787493" type="number" />
+            </instance-variables>
             <animation-folder>
                 <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5385293025471275" speed="0">
                     <frame duration="1" hotspotX="0.21085" hotspotY="0.553571" original-source="E:\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\dev\Art\sword_base.png">
@@ -439,6 +447,12 @@
             <plugin id="Sprite" />
             <instance-variables>
                 <instance-variable name="waitTimer" sid="4229441493243232" type="number" />
+                <instance-variable name="recoiling" sid="1152905280506282" type="boolean" />
+                <instance-variable name="distanceFromPlayer" sid="9116539016761863" type="number" />
+                <instance-variable name="primeSprite" sid="4084470766565863" type="boolean" />
+                <instance-variable name="damageAmount" sid="8450371654741997" type="number" />
+                <instance-variable name="currentSpeed" sid="6558125305035612" type="number" />
+                <instance-variable name="health" sid="3505810650530294" type="number" />
             </instance-variables>
             <behaviors>
                 <behavior-type name="Solid" sid="8032332939683686">
@@ -573,6 +587,25 @@
                     <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
                 </animation>
             </animation-folder>
+        </object-type>
+        <object-type name="Sprite_HealthHeart" sid="8328291861246261">
+            <plugin id="Sprite" />
+            <instance-variables>
+                <instance-variable name="primeSprite" sid="1108093420899782" type="boolean" />
+            </instance-variables>
+            <animation-folder>
+                <animation framecount="2" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="946343732747381" speed="0">
+                    <frame duration="1" hotspotX="0" hotspotY="0" />
+                    <frame duration="1" hotspotX="0" hotspotY="0" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="TiledBackground_Blackout" sid="2296496106981837">
+            <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="transitioning" sid="9292185265757188" type="boolean" />
+            </instance-variables>
+            <texture />
         </object-type>
     </object-folder>
     <families />

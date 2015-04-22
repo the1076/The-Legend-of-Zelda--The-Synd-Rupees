@@ -216,6 +216,12 @@
                     </properties>
                     <instance-variables>
                         <waitTimer>0</waitTimer>
+                        <recoiling>false</recoiling>
+                        <distanceFromPlayer>0</distanceFromPlayer>
+                        <primeSprite>true</primeSprite>
+                        <damageAmount>1</damageAmount>
+                        <currentSpeed>0</currentSpeed>
+                        <health>2</health>
                     </instance-variables>
                     <behavior-instances>
                         <behavior-instance type="Solid">
@@ -458,6 +464,24 @@
             </instances>
             <effects />
         </layer>
+        <layer name="Blackout" sid="5258283083721539">
+            <initially-visible>1</initially-visible>
+            <background-color>255,255,255</background-color>
+            <transparent>1</transparent>
+            <parallax>
+                <x>1</x>
+                <y>1</y>
+            </parallax>
+            <zoom-rate>1</zoom-rate>
+            <opacity>1</opacity>
+            <force-own-texture>0</force-own-texture>
+            <global>0</global>
+            <use-render-cells>0</use-render-cells>
+            <blend-mode>0</blend-mode>
+            <effect-fallback>0</effect-fallback>
+            <instances />
+            <effects />
+        </layer>
         <layer name="Player" sid="1097590166873564">
             <initially-visible>1</initially-visible>
             <background-color>255,255,255</background-color>
@@ -482,7 +506,12 @@
                         <collisions>Enabled</collisions>
                     </properties>
                     <instance-variables>
-                        <Health>6</Health>
+                        <health>6</health>
+                        <waitTimer>0</waitTimer>
+                        <dead>false</dead>
+                        <deathTimer>0</deathTimer>
+                        <startingX>0</startingX>
+                        <startingY>0</startingY>
                     </instance-variables>
                     <behavior-instances>
                         <behavior-instance type="Platform">
@@ -571,6 +600,9 @@
                         <initial-frame>0</initial-frame>
                         <collisions>Enabled</collisions>
                     </properties>
+                    <instance-variables>
+                        <damage>1</damage>
+                    </instance-variables>
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>

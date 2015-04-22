@@ -130,7 +130,7 @@
                 <event-block sid="4806958925983012">
                     <conditions />
                     <actions>
-                        <action id="-9" name="Set value" sid="7848185955023059" type="System">
+                        <action disabled="1" id="-9" name="Set value" sid="7848185955023059" type="System">
                             <param id="0" name="Variable">PlayerStartingPoint</param>
                             <param id="1" name="Value">EntranceTile * MapTileSize</param>
                         </action>
@@ -155,6 +155,42 @@
                             <param id="1" name="Height">MapTileSize * 3</param>
                         </action>
                     </actions>
+                    <sub-events>
+                        <event-block sid="8726277157138659">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="7470658266285111" type="System">
+                                    <param id="0" name="Variable">StartFromExit</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="1593327064478534" type="System">
+                                    <param id="0" name="Variable">PlayerStartingX</param>
+                                    <param id="1" name="Value">16</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="5555304704198014" type="System">
+                                    <param id="0" name="Variable">PlayerStartingY</param>
+                                    <param id="1" name="Value">EntranceTile * MapTileSize</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="8484153685526004">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="2689821598526384" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="6556504926349914" type="System">
+                                    <param id="0" name="Variable">PlayerStartingX</param>
+                                    <param id="1" name="Value">(MapTileCountX * MapTileSize) + 16</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="6748038758633195" type="System">
+                                    <param id="0" name="Variable">PlayerStartingY</param>
+                                    <param id="1" name="Value">ExitTile * MapTileSize</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
             </sub-events>
         </event-block>

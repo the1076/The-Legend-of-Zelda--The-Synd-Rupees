@@ -6,7 +6,9 @@
         <include>Game Manager</include>
         <include>Player Events</include>
         <include>Procedural Generation Functions</include>
+        <include>Enemies</include>
         <variable constant="0" name="OutOfEntranceTrigger" sid="9276927281522969" static="0" type="number">0</variable>
+        <variable constant="0" name="OutOfExitTrigger" sid="9589244717502155" static="0" type="number">0</variable>
         <event-block sid="4288201190722989">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="8165357099970827" type="System" />
@@ -14,6 +16,10 @@
             <actions>
                 <action id="-9" name="Set value" sid="6007710924473819" type="System">
                     <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="5517865426140512" type="System">
+                    <param id="0" name="Variable">OutOfExitTrigger</param>
                     <param id="1" name="Value">0</param>
                 </action>
             </actions>
@@ -45,15 +51,39 @@
                 <event-block sid="6522916381798447">
                     <conditions />
                     <actions>
-                        <action id="-3" name="Set position" sid="2905671429554293" type="Player">
-                            <param id="0" name="X">16</param>
-                            <param id="1" name="Y">PlayerStartingPoint</param>
+                        <action id="-3" name="Set position" sid="3928713276542474" type="Player">
+                            <param id="0" name="X">PlayerStartingX</param>
+                            <param id="1" name="Y">PlayerStartingY</param>
                         </action>
                         <action id="-4" name="Set position to another object" sid="938261106347032" type="Sprite_Camera">
                             <param id="0" name="Object">Player</param>
                             <param id="1" name="Image point (optional)">0</param>
                         </action>
+                        <action id="0" name="Call function" sid="8060100333596513" type="Function">
+                            <param id="0" name="Name">&quot;SpawnEnemies&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
                     </actions>
+                    <sub-events>
+                        <event-block sid="7383539755136657">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="9955046115297522" type="System">
+                                    <param id="0" name="Variable">StartFromExit</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="7" name="Set mirrored" sid="7964833019433116" type="Player">
+                                    <param id="0" name="State">0</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="828206298709273" type="System">
+                                    <param id="0" name="Variable">StartFromExit</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
             </sub-events>
         </event-block>
@@ -61,6 +91,11 @@
             <conditions>
                 <condition id="0" name="On collision with another object" sid="7692515548716446" type="Player">
                     <param id="0" name="Object">TiledBackground_ExitTrigger</param>
+                </condition>
+                <condition id="-14" name="Compare variable" sid="2552328169117387" type="System">
+                    <param id="0" name="Variable">OutOfExitTrigger</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">1</param>
                 </condition>
             </conditions>
             <actions>
@@ -82,9 +117,9 @@
                 </condition>
             </conditions>
             <actions>
-                <action id="-9" name="Set value" sid="1746246833950458" type="System">
-                    <param id="0" name="Variable">OutOfEntranceTrigger</param>
-                    <param id="1" name="Value">0</param>
+                <action id="-9" name="Set value" sid="3981809433125612" type="System">
+                    <param id="0" name="Variable">StartFromExit</param>
+                    <param id="1" name="Value">1</param>
                 </action>
                 <action id="0" name="Call function" sid="7400368554398128" type="Function">
                     <param id="0" name="Name">&quot;LoadPreviousLevel&quot;</param>
@@ -112,6 +147,30 @@
             <actions>
                 <action id="-9" name="Set value" sid="7005768071721215" type="System">
                     <param id="0" name="Variable">OutOfEntranceTrigger</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="110125679340878">
+            <conditions>
+                <condition id="1" name="Is overlapping another object" sid="1862468724540514" type="Player">
+                    <param id="0" name="Object">TiledBackground_ExitTrigger</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="368322200276325" type="System">
+                    <param id="0" name="Variable">OutOfExitTrigger</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="399565322356056">
+            <conditions>
+                <condition id="-22" name="Else" sid="3530792773173935" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="7433041471155246" type="System">
+                    <param id="0" name="Variable">OutOfExitTrigger</param>
                     <param id="1" name="Value">1</param>
                 </action>
             </actions>
@@ -165,6 +224,27 @@
                     </sub-events>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="9949565779005851">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="7346590301666268" type="Keyboard">
+                    <param id="0" name="Key">109 (Num -)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-10" name="Set value" sid="4950795508907572" type="Player">
+                    <param id="0" name="Instance variable">startingX</param>
+                    <param id="1" name="Value">16</param>
+                </action>
+                <action id="-10" name="Set value" sid="4726952035023421" type="Player">
+                    <param id="0" name="Instance variable">startingY</param>
+                    <param id="1" name="Value">EntranceTile * MapTileSize</param>
+                </action>
+                <action id="0" name="Call function" sid="3490384880219946" type="Function">
+                    <param id="0" name="Name">&quot;LoadNextLevel&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
         </event-block>
     </events>
 </c2eventsheet>

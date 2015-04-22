@@ -27,6 +27,7 @@ you probably do not want to add any .uistate.xml files to the repository.-->
     <layers>
         <layer locked="1" name="Tiles" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Triggers" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Blackout" parallax-in-editor="0" visible="1" />
         <layer locked="0" name="Player" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Foreground" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="UI" parallax-in-editor="0" visible="1" />

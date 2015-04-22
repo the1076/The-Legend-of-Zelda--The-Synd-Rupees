@@ -3,212 +3,524 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Enemies</name>
     <events>
-        <event-group description="" sid="9723944979130087" title="Keese">
+        <event-block sid="8393976073717512">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="6646971190969023" type="System">
+                    <param id="0" name="Variable">IsPaused</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">0</param>
+                </condition>
+            </conditions>
+            <actions />
             <sub-events>
-                <event-block sid="4058022918658444">
+                <event-block sid="4626443985413459">
                     <conditions>
-                        <condition id="0" name="On function" sid="809075166056362" type="Function">
-                            <param id="0" name="Name">&quot;SpawnKeese&quot;</param>
+                        <condition id="0" name="On function" sid="2105330565469729" type="Function">
+                            <param id="0" name="Name">&quot;SpawnEnemies&quot;</param>
                         </condition>
                     </conditions>
                     <actions />
-                    <sub-events>
-                        <variable constant="0" name="spawnX" sid="5797636505132943" static="0" type="number">0</variable>
-                        <variable constant="0" name="spawnY" sid="1649773030595371" static="0" type="number">0</variable>
-                        <event-block sid="7238515533827099">
-                            <conditions />
-                            <actions>
-                                <action id="-9" name="Set value" sid="1114414563006123" type="System">
-                                    <param id="0" name="Variable">spawnX</param>
-                                    <param id="1" name="Value">Function.Param(0)</param>
-                                </action>
-                                <action id="-9" name="Set value" sid="6742646612295969" type="System">
-                                    <param id="0" name="Variable">spawnY</param>
-                                    <param id="1" name="Value">Function.Param(1)</param>
-                                </action>
-                                <action id="-3" name="Create object" sid="9252121733559851" type="System">
-                                    <param id="0" name="Object to create">Sprite_Keese</param>
-                                    <param id="1" name="Layer">&quot;Enemies&quot;</param>
-                                    <param id="2" name="X">spawnX</param>
-                                    <param id="3" name="Y">spawnY</param>
-                                </action>
-                            </actions>
-                        </event-block>
-                    </sub-events>
                 </event-block>
-                <event-block sid="6826285398216859">
-                    <conditions>
-                        <condition id="-1" name="Every tick" sid="717675050321944" type="System" />
-                    </conditions>
-                    <actions />
+                <event-group description="" sid="9723944979130087" title="Keese">
                     <sub-events>
-                        <event-block sid="5020547052794651">
+                        <event-block sid="2241800094519513">
                             <conditions>
-                                <condition disabled="1" id="-7" name="Compare instance variable" sid="2054246473671331" type="Sprite_Keese">
-                                    <param id="0" name="Instance variable">waitTimer</param>
-                                    <param id="1" name="Comparison">0</param>
-                                    <param id="2" name="Value">0</param>
+                                <condition id="0" name="On function" sid="8346301073205215" type="Function">
+                                    <param id="0" name="Name">&quot;FindKeeseSpawnPoints&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                        </event-block>
+                        <event-block sid="9406568335356047">
+                            <conditions>
+                                <condition id="-18" name="On created" sid="3139690245798869" type="Sprite_Keese" />
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="6616076340141446">
+                                    <conditions>
+                                        <condition id="-14" inverted="1" name="Pick by unique ID" sid="4712321449381486" type="Sprite_Keese">
+                                            <param id="0" name="Unique ID">59</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-13" name="Set boolean" sid="5786256100304007" type="Sprite_Keese">
+                                            <param id="0" name="Instance variable">primeSprite</param>
+                                            <param id="1" name="Value">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="4058022918658444">
+                            <conditions>
+                                <condition id="0" name="On function" sid="809075166056362" type="Function">
+                                    <param id="0" name="Name">&quot;SpawnKeese&quot;</param>
                                 </condition>
                             </conditions>
                             <actions />
                             <sub-events>
-                                <event-block sid="4568028360547732">
-                                    <conditions>
-                                        <condition behavior="LineOfSight" id="0" name="Has LOS to object" sid="6955217971843666" type="Sprite_Keese">
-                                            <param id="0" name="Object">Player</param>
-                                        </condition>
-                                    </conditions>
+                                <variable constant="0" name="spawnX" sid="5797636505132943" static="0" type="number">0</variable>
+                                <variable constant="0" name="spawnY" sid="1649773030595371" static="0" type="number">0</variable>
+                                <event-block sid="7238515533827099">
+                                    <conditions />
                                     <actions>
-                                        <action behavior="Bullet" id="3" name="Set angle of motion" sid="3194091778054216" type="Sprite_Keese">
-                                            <param id="0" name="Angle">angle(Self.X, Self.Y, Player.X, Player.Y)</param>
+                                        <action id="-9" name="Set value" sid="1114414563006123" type="System">
+                                            <param id="0" name="Variable">spawnX</param>
+                                            <param id="1" name="Value">Function.Param(0)</param>
                                         </action>
-                                        <action behavior="Bullet" id="0" name="Set speed" sid="1646682354732588" type="Sprite_Keese">
-                                            <param id="0" name="Speed">350</param>
+                                        <action id="-9" name="Set value" sid="6742646612295969" type="System">
+                                            <param id="0" name="Variable">spawnY</param>
+                                            <param id="1" name="Value">Function.Param(1)</param>
                                         </action>
-                                    </actions>
-                                </event-block>
-                                <event-block sid="5178506491706471">
-                                    <conditions>
-                                        <condition id="-22" name="Else" sid="4664012082997291" type="System" />
-                                    </conditions>
-                                    <actions>
-                                        <action behavior="Bullet" id="0" name="Set speed" sid="4448483916074303" type="Sprite_Keese">
-                                            <param id="0" name="Speed">0</param>
+                                        <action id="-3" name="Create object" sid="9252121733559851" type="System">
+                                            <param id="0" name="Object to create">Sprite_Keese</param>
+                                            <param id="1" name="Layer">&quot;Enemies&quot;</param>
+                                            <param id="2" name="X">spawnX</param>
+                                            <param id="3" name="Y">spawnY</param>
                                         </action>
                                     </actions>
                                 </event-block>
                             </sub-events>
                         </event-block>
-                        <event-block disabled="1" sid="1460316000750112">
+                        <event-block sid="6826285398216859">
                             <conditions>
-                                <condition id="-22" name="Else" sid="9260969968755418" type="System" />
+                                <condition id="-1" name="Every tick" sid="717675050321944" type="System" />
                             </conditions>
-                            <actions>
-                                <action id="-12" name="Subtract from" sid="1388923830273483" type="Sprite_Keese">
-                                    <param id="0" name="Instance variable">waitTimer</param>
-                                    <param id="1" name="Value">1</param>
-                                </action>
-                            </actions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="1329276646956438">
+                                    <conditions>
+                                        <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="1150947606462221" type="Sprite_Keese">
+                                            <param id="0" name="Instance variable">primeSprite</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <variable constant="0" name="distanceFromPlayer" sid="9296846557623153" static="0" type="number">0</variable>
+                                        <event-block sid="3599169327131237">
+                                            <conditions />
+                                            <actions>
+                                                <action id="-10" name="Set value" sid="527477450978158" type="Sprite_Keese">
+                                                    <param id="0" name="Instance variable">distanceFromPlayer</param>
+                                                    <param id="1" name="Value">distance(Self.X, Self.Y, Player.X, Player.Y)</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="5020547052794651">
+                                            <conditions>
+                                                <condition id="-7" name="Compare instance variable" sid="2054246473671331" type="Sprite_Keese">
+                                                    <param id="0" name="Instance variable">waitTimer</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="3214708385194928">
+                                                    <conditions>
+                                                        <condition behavior="LineOfSight" id="0" name="Has LOS to object" sid="5301841381386525" type="Sprite_Keese">
+                                                            <param id="0" name="Object">Player</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block sid="552304757532516">
+                                                            <conditions>
+                                                                <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="9256603046105106" type="Sprite_Keese">
+                                                                    <param id="0" name="Instance variable">recoiling</param>
+                                                                </condition>
+                                                            </conditions>
+                                                            <actions>
+                                                                <action behavior="Bullet" id="3" name="Set angle of motion" sid="3194091778054216" type="Sprite_Keese">
+                                                                    <param id="0" name="Angle">angle(Self.X, Self.Y, Player.X, Player.Y)</param>
+                                                                </action>
+                                                                <action behavior="Bullet" id="0" name="Set speed" sid="1646682354732588" type="Sprite_Keese">
+                                                                    <param id="0" name="Speed">350</param>
+                                                                </action>
+                                                                <action id="11" name="Set collisions enabled" sid="6028850003985409" type="Sprite_Keese">
+                                                                    <param id="0" name="Collisions">1</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="8325783026139249">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="8735729921067529" type="System" />
+                                                            </conditions>
+                                                            <actions />
+                                                            <sub-events>
+                                                                <event-block sid="6283614526425997">
+                                                                    <conditions>
+                                                                        <condition id="-7" name="Compare instance variable" sid="7556083348628923" type="Sprite_Keese">
+                                                                            <param id="0" name="Instance variable">distanceFromPlayer</param>
+                                                                            <param id="1" name="Comparison">4</param>
+                                                                            <param id="2" name="Value">256</param>
+                                                                        </condition>
+                                                                    </conditions>
+                                                                    <actions>
+                                                                        <action behavior="Bullet" id="0" name="Set speed" sid="4947937716207529" type="Sprite_Keese">
+                                                                            <param id="0" name="Speed">0</param>
+                                                                        </action>
+                                                                        <action id="-13" name="Set boolean" sid="4265414584557417" type="Sprite_Keese">
+                                                                            <param id="0" name="Instance variable">recoiling</param>
+                                                                            <param id="1" name="Value">0</param>
+                                                                        </action>
+                                                                        <action id="-10" name="Set value" sid="8338792797571774" type="Sprite_Keese">
+                                                                            <param id="0" name="Instance variable">waitTimer</param>
+                                                                            <param id="1" name="Value">30</param>
+                                                                        </action>
+                                                                    </actions>
+                                                                </event-block>
+                                                            </sub-events>
+                                                        </event-block>
+                                                    </sub-events>
+                                                </event-block>
+                                                <event-block sid="3619121708616293">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="4602796833649713" type="System" />
+                                                    </conditions>
+                                                    <actions />
+                                                    <sub-events>
+                                                        <event-block sid="1991559640563881">
+                                                            <conditions>
+                                                                <condition id="1" inverted="1" name="Is overlapping another object" sid="4976455198215068" type="Sprite_Keese">
+                                                                    <param id="0" name="Object">Tilemap_Bitmask</param>
+                                                                </condition>
+                                                            </conditions>
+                                                            <actions>
+                                                                <action behavior="Bullet" id="3" name="Set angle of motion" sid="9729161201953208" type="Sprite_Keese">
+                                                                    <param id="0" name="Angle">270</param>
+                                                                </action>
+                                                                <action behavior="Bullet" id="0" name="Set speed" sid="1594935021826251" type="Sprite_Keese">
+                                                                    <param id="0" name="Speed">1400</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                        <event-block sid="5573983559419066">
+                                                            <conditions>
+                                                                <condition id="-22" name="Else" sid="6778912570267332" type="System" />
+                                                            </conditions>
+                                                            <actions>
+                                                                <action behavior="Bullet" id="0" name="Set speed" sid="2771860222167284" type="Sprite_Keese">
+                                                                    <param id="0" name="Speed">0</param>
+                                                                </action>
+                                                                <action id="-13" name="Set boolean" sid="6653353536825745" type="Sprite_Keese">
+                                                                    <param id="0" name="Instance variable">recoiling</param>
+                                                                    <param id="1" name="Value">0</param>
+                                                                </action>
+                                                                <action id="-10" name="Set value" sid="1128478012043748" type="Sprite_Keese">
+                                                                    <param id="0" name="Instance variable">waitTimer</param>
+                                                                    <param id="1" name="Value">0</param>
+                                                                </action>
+                                                            </actions>
+                                                        </event-block>
+                                                    </sub-events>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                        <event-block sid="1460316000750112">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="9260969968755418" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="-12" name="Subtract from" sid="1388923830273483" type="Sprite_Keese">
+                                                    <param id="0" name="Instance variable">waitTimer</param>
+                                                    <param id="1" name="Value">1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
                         </event-block>
-                    </sub-events>
-                </event-block>
-                <event-block sid="387132902971237">
-                    <conditions>
-                        <condition id="0" name="On collision with another object" sid="9788123180169244" type="Sprite_Keese">
-                            <param id="0" name="Object">Player</param>
-                        </condition>
-                    </conditions>
-                    <actions />
-                    <sub-events>
-                        <event-block sid="6073518506509732">
+                        <event-block sid="387132902971237">
                             <conditions>
-                                <condition id="-1" name="Compare X" sid="8391842330667301" type="Sprite_Keese">
-                                    <param id="0" name="Comparison">2</param>
-                                    <param id="1" name="X co-ordinate">Player.X</param>
+                                <condition id="0" name="On collision with another object" sid="9788123180169244" type="Sprite_Keese">
+                                    <param id="0" name="Object">Player</param>
                                 </condition>
                             </conditions>
                             <actions />
                             <sub-events>
-                                <event-block sid="8123962929438628">
+                                <event-block sid="6073518506509732">
                                     <conditions>
-                                        <condition id="-2" name="Compare Y" sid="7324771365733113" type="Sprite_Keese">
+                                        <condition id="-1" name="Compare X" sid="8391842330667301" type="Sprite_Keese">
                                             <param id="0" name="Comparison">2</param>
-                                            <param id="1" name="Y co-ordinate">Player.Y</param>
+                                            <param id="1" name="X co-ordinate">Player.X</param>
                                         </condition>
                                     </conditions>
-                                    <actions>
-                                        <action id="-23" name="Move at angle" sid="4700933325204128" type="Sprite_Keese">
-                                            <param id="0" name="Angle">225</param>
-                                            <param id="1" name="Distance">256</param>
-                                        </action>
-                                        <action behavior="Bullet" disabled="1" id="3" name="Set angle of motion" sid="5215059750419071" type="Sprite_Keese">
-                                            <param id="0" name="Angle">225</param>
-                                        </action>
-                                        <action id="0" name="Call function" sid="2635898812393454" type="Function">
-                                            <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
-                                            <param id="1" name="Parameter {n}">1{###}1</param>
-                                        </action>
-                                    </actions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="8123962929438628">
+                                            <conditions>
+                                                <condition id="-2" name="Compare Y" sid="7324771365733113" type="Sprite_Keese">
+                                                    <param id="0" name="Comparison">2</param>
+                                                    <param id="1" name="Y co-ordinate">Player.Y</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="2635898812393454" type="Function">
+                                                    <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Sprite_Keese.damageAmount{###}1{###}1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="5751200621469494">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="4333422601804575" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="2528481104536264" type="Function">
+                                                    <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Sprite_Keese.damageAmount{###}1{###}0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
                                 </event-block>
-                                <event-block sid="5751200621469494">
+                                <event-block sid="4460674622994245">
                                     <conditions>
-                                        <condition id="-22" name="Else" sid="4333422601804575" type="System" />
+                                        <condition id="-22" name="Else" sid="338478767533" type="System" />
                                     </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="4443272475287841">
+                                            <conditions>
+                                                <condition id="-2" name="Compare Y" sid="3990070898754278" type="Sprite_Keese">
+                                                    <param id="0" name="Comparison">2</param>
+                                                    <param id="1" name="Y co-ordinate">Player.Y</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="7634960269342001" type="Function">
+                                                    <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Sprite_Keese.damageAmount{###}0{###}1</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="6371463018159673">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="7557350123770175" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="5438349051029499" type="Function">
+                                                    <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Sprite_Keese.damageAmount{###}0{###}0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <event-block sid="7568923942137563">
+                                    <conditions />
                                     <actions>
-                                        <action id="-23" name="Move at angle" sid="4610806293702378" type="Sprite_Keese">
-                                            <param id="0" name="Angle">135</param>
-                                            <param id="1" name="Distance">256</param>
-                                        </action>
-                                        <action behavior="Bullet" disabled="1" id="3" name="Set angle of motion" sid="2835656198758178" type="Sprite_Keese">
-                                            <param id="0" name="Angle">135</param>
-                                        </action>
-                                        <action id="0" name="Call function" sid="2528481104536264" type="Function">
-                                            <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
-                                            <param id="1" name="Parameter {n}">1{###}0</param>
+                                        <action id="0" name="Call function" sid="7990173907432231" type="Function">
+                                            <param id="0" name="Name">&quot;KeeseRecoil&quot;</param>
+                                            <param id="1" name="Parameter {n}">Sprite_Keese.UID</param>
                                         </action>
                                     </actions>
                                 </event-block>
                             </sub-events>
                         </event-block>
-                        <event-block sid="4460674622994245">
+                        <event-block sid="5674705615975047">
                             <conditions>
-                                <condition id="-22" name="Else" sid="338478767533" type="System" />
+                                <condition id="0" name="On function" sid="1276975456624839" type="Function">
+                                    <param id="0" name="Name">&quot;KeeseRecoil&quot;</param>
+                                </condition>
                             </conditions>
                             <actions />
                             <sub-events>
-                                <event-block sid="4443272475287841">
+                                <event-block sid="4258773174400057">
                                     <conditions>
-                                        <condition id="-2" name="Compare Y" sid="3990070898754278" type="Sprite_Keese">
-                                            <param id="0" name="Comparison">2</param>
-                                            <param id="1" name="Y co-ordinate">Player.Y</param>
+                                        <condition id="-14" name="Pick by unique ID" sid="3758039373038648" type="Sprite_Keese">
+                                            <param id="0" name="Unique ID">Function.Param(0)</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block sid="2289151325148072">
+                                            <conditions>
+                                                <condition id="-1" name="Compare X" sid="4077635775695737" type="Sprite_Keese">
+                                                    <param id="0" name="Comparison">2</param>
+                                                    <param id="1" name="X co-ordinate">Player.X</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="8095462023202266">
+                                                    <conditions>
+                                                        <condition id="-2" name="Compare Y" sid="77116059320645" type="Sprite_Keese">
+                                                            <param id="0" name="Comparison">2</param>
+                                                            <param id="1" name="Y co-ordinate">Player.Y</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="Bullet" id="3" name="Set angle of motion" sid="8192429221415288" type="Sprite_Keese">
+                                                            <param id="0" name="Angle">225</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="2982619250045059">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="415765358913276" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="Bullet" id="3" name="Set angle of motion" sid="8501620813401489" type="Sprite_Keese">
+                                                            <param id="0" name="Angle">135</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                        <event-block sid="1137153754416014">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="840649266495676" type="System" />
+                                            </conditions>
+                                            <actions />
+                                            <sub-events>
+                                                <event-block sid="6409300353609741">
+                                                    <conditions>
+                                                        <condition id="-2" name="Compare Y" sid="5864230062605173" type="Sprite_Keese">
+                                                            <param id="0" name="Comparison">2</param>
+                                                            <param id="1" name="Y co-ordinate">Player.Y</param>
+                                                        </condition>
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="Bullet" id="3" name="Set angle of motion" sid="22534229924164" type="Sprite_Keese">
+                                                            <param id="0" name="Angle">315</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                                <event-block sid="1157122564476274">
+                                                    <conditions>
+                                                        <condition id="-22" name="Else" sid="2490625742958449" type="System" />
+                                                    </conditions>
+                                                    <actions>
+                                                        <action behavior="Bullet" id="3" name="Set angle of motion" sid="6599226607827023" type="Sprite_Keese">
+                                                            <param id="0" name="Angle">45</param>
+                                                        </action>
+                                                    </actions>
+                                                </event-block>
+                                            </sub-events>
+                                        </event-block>
+                                        <event-block sid="4311994822038765">
+                                            <conditions />
+                                            <actions>
+                                                <action behavior="Bullet" id="0" name="Set speed" sid="8590575616827479" type="Sprite_Keese">
+                                                    <param id="0" name="Speed">700</param>
+                                                </action>
+                                                <action id="-13" name="Set boolean" sid="5729537972881288" type="Sprite_Keese">
+                                                    <param id="0" name="Instance variable">recoiling</param>
+                                                    <param id="1" name="Value">1</param>
+                                                </action>
+                                                <action id="11" name="Set collisions enabled" sid="4297399811329569" type="Sprite_Keese">
+                                                    <param id="0" name="Collisions">0</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="2687834101880727">
+                            <conditions>
+                                <condition id="0" name="On collision with another object" sid="411281258806535" type="Sprite_Keese">
+                                    <param id="0" name="Object">Sprite_Sword</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="322576313019639">
+                                    <conditions>
+                                        <condition id="2" name="Is playing" sid="9932255672633931" type="Sprite_Sword">
+                                            <param id="0" name="Animation">&quot;Attack&quot;</param>
+                                        </condition>
+                                        <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="1754359680636783" type="Sprite_Keese">
+                                            <param id="0" name="Instance variable">recoiling</param>
                                         </condition>
                                     </conditions>
                                     <actions>
-                                        <action id="-23" name="Move at angle" sid="6887994477263154" type="Sprite_Keese">
-                                            <param id="0" name="Angle">315</param>
-                                            <param id="1" name="Distance">256</param>
-                                        </action>
-                                        <action behavior="Bullet" disabled="1" id="3" name="Set angle of motion" sid="8127000249874505" type="Sprite_Keese">
-                                            <param id="0" name="Angle">315</param>
-                                        </action>
-                                        <action id="0" name="Call function" sid="7634960269342001" type="Function">
-                                            <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
-                                            <param id="1" name="Parameter {n}">0{###}1</param>
-                                        </action>
-                                    </actions>
-                                </event-block>
-                                <event-block sid="6371463018159673">
-                                    <conditions>
-                                        <condition id="-22" name="Else" sid="7557350123770175" type="System" />
-                                    </conditions>
-                                    <actions>
-                                        <action id="-23" name="Move at angle" sid="8336092157742152" type="Sprite_Keese">
-                                            <param id="0" name="Angle">45</param>
-                                            <param id="1" name="Distance">256</param>
-                                        </action>
-                                        <action behavior="Bullet" disabled="1" id="3" name="Set angle of motion" sid="9269175591316132" type="Sprite_Keese">
-                                            <param id="0" name="Angle">45</param>
-                                        </action>
-                                        <action id="0" name="Call function" sid="5438349051029499" type="Function">
-                                            <param id="0" name="Name">&quot;HurtPlayer&quot;</param>
-                                            <param id="1" name="Parameter {n}">0{###}0</param>
+                                        <action id="0" name="Call function" sid="3294023274492946" type="Function">
+                                            <param id="0" name="Name">&quot;HurtKeese&quot;</param>
+                                            <param id="1" name="Parameter {n}">Sprite_Keese.UID</param>
                                         </action>
                                     </actions>
                                 </event-block>
                             </sub-events>
                         </event-block>
-                        <event-block disabled="1" sid="7568923942137563">
-                            <conditions />
-                            <actions>
-                                <action id="-10" name="Set value" sid="2730224363222052" type="Sprite_Keese">
-                                    <param id="0" name="Instance variable">waitTimer</param>
-                                    <param id="1" name="Value">30</param>
-                                </action>
-                            </actions>
+                        <event-block sid="8190987530204737">
+                            <conditions>
+                                <condition id="0" name="On function" sid="2575997519572675" type="Function">
+                                    <param id="0" name="Name">&quot;HurtKeese&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="2090458207459121">
+                                    <conditions>
+                                        <condition id="-14" name="Pick by unique ID" sid="795841694584055" type="Sprite_Keese">
+                                            <param id="0" name="Unique ID">Function.Param(0)</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-12" name="Subtract from" sid="1762040758605227" type="Sprite_Keese">
+                                            <param id="0" name="Instance variable">health</param>
+                                            <param id="1" name="Value">Sprite_Sword.damage</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <event-block sid="8290809875976239">
+                                            <conditions>
+                                                <condition id="-7" name="Compare instance variable" sid="6087507922245847" type="Sprite_Keese">
+                                                    <param id="0" name="Instance variable">health</param>
+                                                    <param id="1" name="Comparison">0</param>
+                                                    <param id="2" name="Value">0</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="7610502830410903" type="Function">
+                                                    <param id="0" name="Name">&quot;KeeseDeath&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Function.Param(0)</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="5166173085840696">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="5399538880019543" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action id="0" name="Call function" sid="8559298861663735" type="Function">
+                                                    <param id="0" name="Name">&quot;KeeseRecoil&quot;</param>
+                                                    <param id="1" name="Parameter {n}">Function.Param(0)</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="9790197351199251">
+                            <conditions>
+                                <condition id="0" name="On function" sid="4338968770633391" type="Function">
+                                    <param id="0" name="Name">&quot;KeeseDeath&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="6685752025536589">
+                                    <conditions>
+                                        <condition id="-14" name="Pick by unique ID" sid="3862525873447766" type="Sprite_Keese">
+                                            <param id="0" name="Unique ID">Function.Param(0)</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Destroy" sid="5952839721338448" type="Sprite_Keese" />
+                                    </actions>
+                                </event-block>
+                            </sub-events>
                         </event-block>
                     </sub-events>
-                </event-block>
+                </event-group>
             </sub-events>
-        </event-group>
+        </event-block>
     </events>
 </c2eventsheet>

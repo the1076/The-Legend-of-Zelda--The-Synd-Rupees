@@ -7,6 +7,10 @@
         <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">20</variable>
         <variable constant="0" name="VersionNumber" sid="5364803104146566" static="0" type="text"></variable>
         <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
+        <variable constant="0" name="IsPaused" sid="461711076743248" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerStartingX" sid="4222893277144403" static="0" type="number">0</variable>
+        <variable constant="0" name="PlayerStartingY" sid="6688839125347395" static="0" type="number">0</variable>
+        <variable constant="0" name="StartFromExit" sid="5089240645810443" static="0" type="number">0</variable>
         <event-block sid="9409173688350814">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="85493013777963" type="System" />
@@ -292,6 +296,99 @@
                     <param id="1" name="Y">lerp(Self.Y, Player.Y, 0.1)</param>
                 </action>
             </actions>
+        </event-block>
+        <event-block sid="3364366138701851">
+            <conditions>
+                <condition id="0" name="On function" sid="887362351254989" type="Function">
+                    <param id="0" name="Name">&quot;TogglePause&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="5869915601110273">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="933140576203808" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="7080441242152888" type="Function">
+                            <param id="0" name="Name">&quot;PauseGame&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="9750757587997953">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="8419473593440061" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="5516462066229001" type="Function">
+                            <param id="0" name="Name">&quot;UnpauseGame&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="3770512865690483">
+            <conditions>
+                <condition id="0" name="On function" sid="9528362291154237" type="Function">
+                    <param id="0" name="Name">&quot;PauseGame&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="8270066856248765">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="518656920718067" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="8645258018580389" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="-14" name="Set object time scale" sid="1653214010820347" type="System">
+                            <param id="0" name="Object">Sprite_Keese</param>
+                            <param id="1" name="Time scale">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="3697282156658115">
+            <conditions>
+                <condition id="0" name="On function" sid="890719206304813" type="Function">
+                    <param id="0" name="Name">&quot;UnpauseGame&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="938228021581883">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="8021476697167952" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="9199225099725533" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Value">0</param>
+                        </action>
+                        <action id="-15" name="Restore object time scale" sid="397698256103574" type="System">
+                            <param id="0" name="Object">Sprite_Keese</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
     </events>
 </c2eventsheet>

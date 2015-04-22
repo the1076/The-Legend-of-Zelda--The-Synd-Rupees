@@ -21,235 +21,351 @@
                     <param id="0" name="Name">&quot;LoadPlayerEquipment&quot;</param>
                     <param id="1" name="Parameter {n}"></param>
                 </action>
+                <action id="0" name="Call function" sid="9473021684002021" type="Function">
+                    <param id="0" name="Name">&quot;UpdateHealth&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
             </actions>
+        </event-block>
+        <event-block sid="7911892455884614">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="3571825137812775" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="5711964836767828">
+                    <conditions>
+                        <condition id="-7" name="Compare instance variable" sid="9864064341191096" type="Player">
+                            <param id="0" name="Instance variable">waitTimer</param>
+                            <param id="1" name="Comparison">4</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-12" name="Subtract from" sid="8194289969642697" type="Player">
+                            <param id="0" name="Instance variable">waitTimer</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2771123596324707">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="6708398169031584" type="System" />
+                    </conditions>
+                    <actions>
+                        <action behavior="Platform" id="0" name="Set ignoring input" sid="9818950357829738" type="Player">
+                            <param id="0" name="Input">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
         <event-group description="" sid="1407352123007143" title="Input Events">
             <sub-events>
-                <event-block any="1" sid="3619358569854467">
+                <event-block any="1" sid="3440700810185056">
                     <conditions>
-                        <condition id="0" name="On key pressed" sid="5417348248493299" type="Keyboard">
-                            <param id="0" name="Key">38 (Up arrow)</param>
-                        </condition>
-                        <condition id="0" name="On key pressed" sid="8113766621903006" type="Keyboard">
-                            <param id="0" name="Key">87 (W)</param>
-                        </condition>
-                        <condition id="0" name="On key pressed" sid="2861155750816062" type="Keyboard">
-                            <param id="0" name="Key">32 (Space)</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="2845335202103415" type="Gamepad">
+                        <condition id="6" name="On button pressed" sid="5702512780015967" type="Gamepad">
                             <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">0</param>
+                            <param id="1" name="Button">9</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="2152738294450874" type="Keyboard">
+                            <param id="0" name="Key">80 (P)</param>
+                        </condition>
+                        <condition id="0" name="On key pressed" sid="8754522625590833" type="Keyboard">
+                            <param id="0" name="Key">13 (Return)</param>
                         </condition>
                     </conditions>
                     <actions>
-                        <action id="0" name="Call function" sid="2161726199899432" type="Function">
-                            <param id="0" name="Name">&quot;Jump&quot;</param>
+                        <action id="0" name="Call function" sid="2589669747516345" type="Function">
+                            <param id="0" name="Name">&quot;TogglePause&quot;</param>
                             <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
                 </event-block>
-                <event-block any="1" sid="9779131706208371">
+                <event-block any="1" sid="6459600201212017">
                     <conditions>
-                        <condition id="2" name="Key is down" sid="5569023531865443" type="Keyboard">
-                            <param id="0" name="Key">83 (S)</param>
-                        </condition>
-                        <condition id="0" name="On key pressed" sid="8222765054560856" type="Keyboard">
-                            <param id="0" name="Key">40 (Down arrow)</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="2290543538590374" type="Gamepad">
+                        <condition id="1" name="On any key pressed" sid="3051596091773192" type="Keyboard" />
+                        <condition id="1" name="On any click" sid="5861890829922847" type="Mouse" />
+                        <condition id="8" name="On any button pressed" sid="1226369168050875" type="Gamepad">
                             <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">13</param>
-                        </condition>
-                        <condition id="5" name="Compare axis" sid="1022772002775316" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Axis">1</param>
-                            <param id="2" name="Comparison">4</param>
-                            <param id="3" name="Value">GamepadAxisDeadZone</param>
                         </condition>
                     </conditions>
-                    <actions>
-                        <action behavior="Platform" id="12" name="Fall through" sid="6738652569182033" type="Player" />
-                    </actions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="1943910113224241">
+                            <conditions>
+                                <condition id="-8" name="Is boolean instance variable set" sid="7758542125251836" type="Player">
+                                    <param id="0" name="Instance variable">dead</param>
+                                </condition>
+                                <condition id="-10" name="Compare opacity" sid="4010782849286616" type="TiledBackground_Blackout">
+                                    <param id="0" name="Comparison">0</param>
+                                    <param id="1" name="Opacity">100</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="744885097450125" type="Function">
+                                    <param id="0" name="Name">&quot;UnpauseGame&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                                <action id="-26" name="Restart layout" sid="6268721052626393" type="System" />
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
-                <event-block any="1" sid="6442404344304775">
+                <event-block sid="4478502950585586">
                     <conditions>
-                        <condition id="2" name="Key is down" sid="1729310376732552" type="Keyboard">
-                            <param id="0" name="Key">65 (A)</param>
+                        <condition id="-7" name="Compare instance variable" sid="2880682288519571" type="Player">
+                            <param id="0" name="Instance variable">waitTimer</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
                         </condition>
-                        <condition id="5" name="Compare axis" sid="2423123186303189" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Axis">0</param>
-                            <param id="2" name="Comparison">2</param>
-                            <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
-                        </condition>
-                        <condition id="3" name="Is button down" sid="4589459433608372" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">14</param>
-                        </condition>
-                        <condition id="2" name="Key is down" sid="1825510280376965" type="Keyboard">
-                            <param id="0" name="Key">37 (Left arrow)</param>
+                        <condition id="-14" name="Compare variable" sid="6646636957131667" type="System">
+                            <param id="0" name="Variable">IsPaused</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
                         </condition>
                     </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="2556735084461276" type="Function">
-                            <param id="0" name="Name">&quot;Move Left&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="3169550927499687">
-                    <conditions>
-                        <condition id="2" name="Key is down" sid="8714282612350055" type="Keyboard">
-                            <param id="0" name="Key">68 (D)</param>
-                        </condition>
-                        <condition id="5" name="Compare axis" sid="3217930781027713" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Axis">0</param>
-                            <param id="2" name="Comparison">4</param>
-                            <param id="3" name="Value">GamepadAxisDeadZone</param>
-                        </condition>
-                        <condition id="3" name="Is button down" sid="1679025172476253" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">15</param>
-                        </condition>
-                        <condition id="2" name="Key is down" sid="1975538164602279" type="Keyboard">
-                            <param id="0" name="Key">39 (Right arrow)</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="9902888533538171" type="Function">
-                            <param id="0" name="Name">&quot;Move Right&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="1354675865560191">
-                    <conditions>
-                        <condition id="3" name="On key released" sid="6814152187031038" type="Keyboard">
-                            <param id="0" name="Key">65 (A)</param>
-                        </condition>
-                        <condition id="3" name="On key released" sid="2305384368965386" type="Keyboard">
-                            <param id="0" name="Key">37 (Left arrow)</param>
-                        </condition>
-                        <condition id="5" name="Compare axis" sid="8888248510829317" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Axis">0</param>
-                            <param id="2" name="Comparison">4</param>
-                            <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
-                        </condition>
-                        <condition id="7" name="On button released" sid="1666726995904502" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">14</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="1394444853960089" type="Function">
-                            <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="3481884723335076">
-                    <conditions>
-                        <condition id="3" name="On key released" sid="1595941915746794" type="Keyboard">
-                            <param id="0" name="Key">68 (D)</param>
-                        </condition>
-                        <condition id="3" name="On key released" sid="6443014380752479" type="Keyboard">
-                            <param id="0" name="Key">39 (Right arrow)</param>
-                        </condition>
-                        <condition id="7" name="On button released" sid="2899085775297599" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">15</param>
-                        </condition>
-                        <condition id="5" name="Compare axis" sid="600648999549313" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Axis">0</param>
-                            <param id="2" name="Comparison">2</param>
-                            <param id="3" name="Value">GamepadAxisDeadZone</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="8773053041495381" type="Function">
-                            <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="2876658160386067">
-                    <conditions>
-                        <condition id="0" name="On click" sid="7544831554189586" type="Mouse">
-                            <param id="0" name="Mouse button">0</param>
-                            <param id="1" name="Click type">0</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="2350960646858731" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">2</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="2365150556288281" type="Function">
-                            <param id="0" name="Name">&quot;Attack&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="8725030371645102">
-                    <conditions>
-                        <condition id="0" name="On click" sid="9296122849809267" type="Mouse">
-                            <param id="0" name="Mouse button">2</param>
-                            <param id="1" name="Click type">0</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="6265990207247554" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">1</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="2712814592981438" type="Function">
-                            <param id="0" name="Name">&quot;UseTool&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="6650477720051205">
-                    <conditions>
-                        <condition id="8" name="On mouse wheel" sid="2522939824640754" type="Mouse">
-                            <param id="0" name="Direction">0</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="8625218622297031" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">5</param>
-                        </condition>
-                        <condition id="0" name="On key pressed" sid="9021031253097723" type="Keyboard">
-                            <param id="0" name="Key">69 (E)</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="955158088732494" type="Function">
-                            <param id="0" name="Name">&quot;SelectNextTool&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
-                </event-block>
-                <event-block any="1" sid="4052170386250291">
-                    <conditions>
-                        <condition id="8" name="On mouse wheel" sid="3380969140186197" type="Mouse">
-                            <param id="0" name="Direction">1</param>
-                        </condition>
-                        <condition id="6" name="On button pressed" sid="289683012204129" type="Gamepad">
-                            <param id="0" name="Gamepad">0</param>
-                            <param id="1" name="Button">4</param>
-                        </condition>
-                        <condition id="0" name="On key pressed" sid="8861799116794909" type="Keyboard">
-                            <param id="0" name="Key">81 (Q)</param>
-                        </condition>
-                    </conditions>
-                    <actions>
-                        <action id="0" name="Call function" sid="7661127771644769" type="Function">
-                            <param id="0" name="Name">&quot;SelectPreviousTool&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
-                    </actions>
+                    <actions />
+                    <sub-events>
+                        <event-block any="1" sid="3619358569854467">
+                            <conditions>
+                                <condition id="0" name="On key pressed" sid="5417348248493299" type="Keyboard">
+                                    <param id="0" name="Key">38 (Up arrow)</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="8113766621903006" type="Keyboard">
+                                    <param id="0" name="Key">87 (W)</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="2861155750816062" type="Keyboard">
+                                    <param id="0" name="Key">32 (Space)</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="2845335202103415" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="2161726199899432" type="Function">
+                                    <param id="0" name="Name">&quot;Jump&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="9779131706208371">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="5569023531865443" type="Keyboard">
+                                    <param id="0" name="Key">83 (S)</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="8222765054560856" type="Keyboard">
+                                    <param id="0" name="Key">40 (Down arrow)</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="2290543538590374" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">13</param>
+                                </condition>
+                                <condition id="5" name="Compare axis" sid="1022772002775316" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Axis">1</param>
+                                    <param id="2" name="Comparison">4</param>
+                                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action behavior="Platform" id="12" name="Fall through" sid="6738652569182033" type="Player" />
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="6442404344304775">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="1729310376732552" type="Keyboard">
+                                    <param id="0" name="Key">65 (A)</param>
+                                </condition>
+                                <condition id="5" name="Compare axis" sid="2423123186303189" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Axis">0</param>
+                                    <param id="2" name="Comparison">2</param>
+                                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                                </condition>
+                                <condition id="3" name="Is button down" sid="4589459433608372" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">14</param>
+                                </condition>
+                                <condition id="2" name="Key is down" sid="1825510280376965" type="Keyboard">
+                                    <param id="0" name="Key">37 (Left arrow)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="2556735084461276" type="Function">
+                                    <param id="0" name="Name">&quot;Move Left&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="3169550927499687">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="8714282612350055" type="Keyboard">
+                                    <param id="0" name="Key">68 (D)</param>
+                                </condition>
+                                <condition id="5" name="Compare axis" sid="3217930781027713" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Axis">0</param>
+                                    <param id="2" name="Comparison">4</param>
+                                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                                </condition>
+                                <condition id="3" name="Is button down" sid="1679025172476253" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">15</param>
+                                </condition>
+                                <condition id="2" name="Key is down" sid="1975538164602279" type="Keyboard">
+                                    <param id="0" name="Key">39 (Right arrow)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="9902888533538171" type="Function">
+                                    <param id="0" name="Name">&quot;Move Right&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="1354675865560191">
+                            <conditions>
+                                <condition id="3" name="On key released" sid="6814152187031038" type="Keyboard">
+                                    <param id="0" name="Key">65 (A)</param>
+                                </condition>
+                                <condition id="3" name="On key released" sid="2305384368965386" type="Keyboard">
+                                    <param id="0" name="Key">37 (Left arrow)</param>
+                                </condition>
+                                <condition id="5" name="Compare axis" sid="8888248510829317" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Axis">0</param>
+                                    <param id="2" name="Comparison">4</param>
+                                    <param id="3" name="Value">GamepadAxisDeadZone * -1</param>
+                                </condition>
+                                <condition id="7" name="On button released" sid="1666726995904502" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">14</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="1394444853960089" type="Function">
+                                    <param id="0" name="Name">&quot;Stop Left Movement&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="3481884723335076">
+                            <conditions>
+                                <condition id="3" name="On key released" sid="1595941915746794" type="Keyboard">
+                                    <param id="0" name="Key">68 (D)</param>
+                                </condition>
+                                <condition id="3" name="On key released" sid="6443014380752479" type="Keyboard">
+                                    <param id="0" name="Key">39 (Right arrow)</param>
+                                </condition>
+                                <condition id="7" name="On button released" sid="2899085775297599" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">15</param>
+                                </condition>
+                                <condition id="5" name="Compare axis" sid="600648999549313" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Axis">0</param>
+                                    <param id="2" name="Comparison">2</param>
+                                    <param id="3" name="Value">GamepadAxisDeadZone</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="8773053041495381" type="Function">
+                                    <param id="0" name="Name">&quot;Stop Right Movement&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="2876658160386067">
+                            <conditions>
+                                <condition id="0" name="On click" sid="7544831554189586" type="Mouse">
+                                    <param id="0" name="Mouse button">0</param>
+                                    <param id="1" name="Click type">0</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="2350960646858731" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">2</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="2375699409510114" type="Keyboard">
+                                    <param id="0" name="Key">88 (X)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="2365150556288281" type="Function">
+                                    <param id="0" name="Name">&quot;Attack&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="8725030371645102">
+                            <conditions>
+                                <condition id="0" name="On click" sid="9296122849809267" type="Mouse">
+                                    <param id="0" name="Mouse button">2</param>
+                                    <param id="1" name="Click type">0</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="6265990207247554" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">1</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="4562572500158313" type="Keyboard">
+                                    <param id="0" name="Key">67 (C)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="2712814592981438" type="Function">
+                                    <param id="0" name="Name">&quot;UseTool&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="6650477720051205">
+                            <conditions>
+                                <condition id="8" name="On mouse wheel" sid="2522939824640754" type="Mouse">
+                                    <param id="0" name="Direction">0</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="8625218622297031" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">5</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="9021031253097723" type="Keyboard">
+                                    <param id="0" name="Key">69 (E)</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="9522660264845401" type="Keyboard">
+                                    <param id="0" name="Key">86 (V)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="955158088732494" type="Function">
+                                    <param id="0" name="Name">&quot;SelectNextTool&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block any="1" sid="4052170386250291">
+                            <conditions>
+                                <condition id="8" name="On mouse wheel" sid="3380969140186197" type="Mouse">
+                                    <param id="0" name="Direction">1</param>
+                                </condition>
+                                <condition id="6" name="On button pressed" sid="289683012204129" type="Gamepad">
+                                    <param id="0" name="Gamepad">0</param>
+                                    <param id="1" name="Button">4</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="8861799116794909" type="Keyboard">
+                                    <param id="0" name="Key">81 (Q)</param>
+                                </condition>
+                                <condition id="0" name="On key pressed" sid="8376435310580882" type="Keyboard">
+                                    <param id="0" name="Key">90 (Z)</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="7661127771644769" type="Function">
+                                    <param id="0" name="Name">&quot;SelectPreviousTool&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
             </sub-events>
         </event-group>
@@ -483,8 +599,84 @@
                 </condition>
             </conditions>
             <actions>
-                <action id="-26" name="Restart layout" sid="1183529478482564" type="System" />
+                <action id="0" name="Call function" sid="3278381154003844" type="Function">
+                    <param id="0" name="Name">&quot;PauseGame&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+                <action id="-16" name="Set opacity" sid="9762915184508985" type="TiledBackground_Blackout">
+                    <param id="0" name="Opacity">0</param>
+                </action>
+                <action id="-3" name="Set position" sid="8646043025865441" type="TiledBackground_Blackout">
+                    <param id="0" name="X">0</param>
+                    <param id="1" name="Y">0</param>
+                </action>
+                <action id="-7" name="Set size" sid="6205516287198014" type="TiledBackground_Blackout">
+                    <param id="0" name="Width">LayoutWidth</param>
+                    <param id="1" name="Height">LayoutHeight</param>
+                </action>
+                <action id="-13" name="Set boolean" sid="9502604358440687" type="Player">
+                    <param id="0" name="Instance variable">dead</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+                <action id="-10" name="Set value" sid="1265872497877481" type="Player">
+                    <param id="0" name="Instance variable">deathTimer</param>
+                    <param id="1" name="Value">30</param>
+                </action>
             </actions>
+        </event-block>
+        <event-block sid="1042954396798828">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="5151482856520106" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="7490257218547173">
+                    <conditions>
+                        <condition id="-8" name="Is boolean instance variable set" sid="2179273402684099" type="Player">
+                            <param id="0" name="Instance variable">dead</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="3277308140463499">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="2515456215616507" type="Player">
+                                    <param id="0" name="Instance variable">deathTimer</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="9785361505116663">
+                                    <conditions>
+                                        <condition id="-10" name="Compare opacity" sid="355503620279398" type="TiledBackground_Blackout">
+                                            <param id="0" name="Comparison">2</param>
+                                            <param id="1" name="Opacity">100</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="4651351027581507" type="TiledBackground_Blackout">
+                                            <param id="0" name="Opacity">Self.Opacity + 2</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="6615932164633003">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="9026044568691784" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-12" name="Subtract from" sid="5963071148308063" type="Player">
+                                    <param id="0" name="Instance variable">deathTimer</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
         </event-block>
         <event-block sid="2959845758760447">
             <conditions>
@@ -494,48 +686,234 @@
             </conditions>
             <actions />
             <sub-events>
-                <variable constant="0" name="fromLeft" sid="73602848486998" static="0" type="number">0</variable>
+                <variable constant="0" name="damageAmount" sid="73602848486998" static="0" type="number">0</variable>
+                <variable constant="0" name="fromLeft" sid="7521959581178012" static="0" type="number">0</variable>
                 <variable constant="0" name="fromTop" sid="6636892163084714" static="0" type="number">0</variable>
                 <event-block sid="8301569751757836">
                     <conditions />
                     <actions>
+                        <action id="-9" name="Set value" sid="541831246419329" type="System">
+                            <param id="0" name="Variable">damageAmount</param>
+                            <param id="1" name="Value">Function.Param(0)</param>
+                        </action>
                         <action id="-9" name="Set value" sid="6652654175567578" type="System">
                             <param id="0" name="Variable">fromLeft</param>
-                            <param id="1" name="Value">Function.Param(0)</param>
+                            <param id="1" name="Value">Function.Param(1)</param>
                         </action>
                         <action id="-9" name="Set value" sid="7535216048984401" type="System">
                             <param id="0" name="Variable">fromTop</param>
-                            <param id="1" name="Value">Function.Param(1)</param>
+                            <param id="1" name="Value">Function.Param(2)</param>
+                        </action>
+                        <action behavior="Platform" id="0" name="Set ignoring input" sid="2955784940799984" type="Player">
+                            <param id="0" name="Input">1</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="4871478080987041" type="Player">
+                            <param id="0" name="Instance variable">health</param>
+                            <param id="1" name="Value">Self.Health - damageAmount</param>
+                        </action>
+                        <action id="0" name="Call function" sid="1604838388008235" type="Function">
+                            <param id="0" name="Name">&quot;UpdateHealth&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
                     <sub-events>
-                        <event-block sid="4442748720077513">
+                        <event-block sid="1852332960219658">
                             <conditions>
-                                <condition id="-14" name="Compare variable" sid="9326642525972533" type="System">
-                                    <param id="0" name="Variable">fromLeft</param>
+                                <condition id="-7" name="Compare instance variable" sid="6624520009954914" type="Player">
+                                    <param id="0" name="Instance variable">health</param>
                                     <param id="1" name="Comparison">0</param>
-                                    <param id="2" name="Value">1</param>
+                                    <param id="2" name="Value">0</param>
                                 </condition>
                             </conditions>
                             <actions>
-                                <action id="-23" name="Move at angle" sid="917051985058681" type="Player">
-                                    <param id="0" name="Angle">345</param>
-                                    <param id="1" name="Distance">50</param>
+                                <action id="0" name="Call function" sid="1588240567797566" type="Function">
+                                    <param id="0" name="Name">&quot;PlayerDeath&quot;</param>
+                                    <param id="1" name="Parameter {n}"></param>
                                 </action>
                             </actions>
                         </event-block>
-                        <event-block sid="3217069725497953">
+                        <event-block sid="3921571808548635">
                             <conditions>
-                                <condition id="-22" name="Else" sid="4769214650578998" type="System" />
+                                <condition id="-22" name="Else" sid="7581573347585115" type="System" />
                             </conditions>
                             <actions>
-                                <action id="-23" name="Move at angle" sid="1751153300903041" type="Player">
-                                    <param id="0" name="Angle">195</param>
-                                    <param id="1" name="Distance">50</param>
+                                <action id="-10" name="Set value" sid="108445988042954" type="Player">
+                                    <param id="0" name="Instance variable">waitTimer</param>
+                                    <param id="1" name="Value">30</param>
                                 </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="4442748720077513">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="9326642525972533" type="System">
+                                            <param id="0" name="Variable">fromLeft</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="8" name="Set vector X" sid="917051985058681" type="Player">
+                                            <param id="0" name="Vector X">6000</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="3217069725497953">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="4769214650578998" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="8" name="Set vector X" sid="1751153300903041" type="Player">
+                                            <param id="0" name="Vector X">-6000</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="563811819622222">
+                                    <conditions />
+                                    <actions>
+                                        <action behavior="Platform" id="9" name="Set vector Y" sid="7350867288929666" type="Player">
+                                            <param id="0" name="Vector Y">-300</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="6467884247916705">
+            <conditions>
+                <condition id="0" name="On function" sid="4374180080312632" type="Function">
+                    <param id="0" name="Name">&quot;UpdateHealth&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="8752038705958204">
+                    <conditions>
+                        <condition id="-11" name="For Each" sid="1108368891166365" type="System">
+                            <param id="0" name="Object">Sprite_HealthHeart</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="2623147562379709">
+                            <conditions>
+                                <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="7807274422614637" type="Sprite_HealthHeart">
+                                    <param id="0" name="Instance variable">primeSprite</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Destroy" sid="887421386188148" type="Sprite_HealthHeart" />
                             </actions>
                         </event-block>
                     </sub-events>
+                </event-block>
+                <variable constant="0" name="wholeHealth" sid="2376456747657967" static="0" type="number">0</variable>
+                <variable constant="0" name="halfHealth" sid="4022975986710683" static="0" type="number">0</variable>
+                <event-block sid="2903739326505467">
+                    <conditions />
+                    <actions>
+                        <action id="-9" name="Set value" sid="4312825851091796" type="System">
+                            <param id="0" name="Variable">wholeHealth</param>
+                            <param id="1" name="Value">floor(Player.Health/2)</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="9303991153023205" type="System">
+                            <param id="0" name="Variable">halfHealth</param>
+                            <param id="1" name="Value">Player.Health%2</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <variable constant="0" name="heartX" sid="7186432872486769" static="0" type="number">0</variable>
+                        <event-block sid="8662447772747182">
+                            <conditions>
+                                <condition id="-12" name="Repeat" sid="9331649776672076" type="System">
+                                    <param id="0" name="Count">wholeHealth</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="5196737906273014" type="System">
+                                    <param id="0" name="Variable">heartX</param>
+                                    <param id="1" name="Value">20 + (Sprite_HealthHeart.Width *loopindex) + (20 * loopindex)</param>
+                                </action>
+                                <action id="-3" name="Create object" sid="4958137418722265" type="System">
+                                    <param id="0" name="Object to create">Sprite_HealthHeart</param>
+                                    <param id="1" name="Layer">&quot;UI&quot;</param>
+                                    <param id="2" name="X">heartX</param>
+                                    <param id="3" name="Y">40</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="9428192181145052">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="6963414424231955" type="System">
+                                    <param id="0" name="Variable">halfHealth</param>
+                                    <param id="1" name="Comparison">1</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="9797839465745345">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="2748931213545454" type="System">
+                                            <param id="0" name="Variable">wholeHealth</param>
+                                            <param id="1" name="Comparison">4</param>
+                                            <param id="2" name="Value">0</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-3" name="Create object" sid="7722792251177681" type="System">
+                                            <param id="0" name="Object to create">Sprite_HealthHeart</param>
+                                            <param id="1" name="Layer">&quot;UI&quot;</param>
+                                            <param id="2" name="X">heartX + Sprite_HealthHeart.Width + 20</param>
+                                            <param id="3" name="Y">40</param>
+                                        </action>
+                                        <action id="5" name="Set frame" sid="4960604202001809" type="Sprite_HealthHeart">
+                                            <param id="0" name="Frame number">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="6462219735476148">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="4183661195816325" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="-3" name="Create object" sid="329786679657296" type="System">
+                                            <param id="0" name="Object to create">Sprite_HealthHeart</param>
+                                            <param id="1" name="Layer">&quot;UI&quot;</param>
+                                            <param id="2" name="X">20</param>
+                                            <param id="3" name="Y">40</param>
+                                        </action>
+                                        <action id="5" name="Set frame" sid="4598961966412744" type="Sprite_HealthHeart">
+                                            <param id="0" name="Frame number">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="2436360079594266">
+            <conditions>
+                <condition id="-18" name="On created" sid="6461728083481776" type="Sprite_HealthHeart" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="5903165461986354">
+                    <conditions>
+                        <condition id="-14" inverted="1" name="Pick by unique ID" sid="7474278049949872" type="Sprite_HealthHeart">
+                            <param id="0" name="Unique ID">72</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-13" name="Set boolean" sid="8585074066847728" type="Sprite_HealthHeart">
+                            <param id="0" name="Instance variable">primeSprite</param>
+                            <param id="1" name="Value">0</param>
+                        </action>
+                    </actions>
                 </event-block>
             </sub-events>
         </event-block>
@@ -1307,11 +1685,5 @@
                 </event-block>
             </sub-events>
         </event-group>
-        <event-block sid="1035317806411372">
-            <conditions>
-                <condition id="-1" name="Every tick" sid="3929362135337852" type="System" />
-            </conditions>
-            <actions />
-        </event-block>
     </events>
 </c2eventsheet>

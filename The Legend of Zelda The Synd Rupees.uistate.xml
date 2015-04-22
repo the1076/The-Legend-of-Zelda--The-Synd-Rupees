@@ -10,10 +10,10 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <display name="HTML5" />
     </configurations>
     <open-tabs>
-        <layout order="2">Merchant Room</layout>
+        <layout active="1" order="2">Merchant Room</layout>
         <layout order="5">Mechanic Testing</layout>
         <layout order="8">Dungeon Level</layout>
-        <event-sheet active="1" order="0">Game Manager</event-sheet>
+        <event-sheet order="0">Game Manager</event-sheet>
         <event-sheet order="1">Player Events</event-sheet>
         <event-sheet order="3">Merchant Room</event-sheet>
         <event-sheet order="4">Procedural Generation Functions</event-sheet>
@@ -61,5 +61,6 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <folder expanded="1" path="animation-folder/Sprite_Beamos/" />
         <folder expanded="1" path="animation-folder/Sprite_Cucco/" />
         <folder expanded="1" path="animation-folder/Sprite_Camera/" />
+        <folder expanded="1" path="animation-folder/Sprite_HealthHeart/" />
     </folders-expanded>
 </c2uistate>
