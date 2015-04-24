@@ -2,7 +2,7 @@
 <c2project>
     <name>The Legend of Zelda The Synd Rupees</name>
     <description></description>
-    <version>0.0.0.21</version>
+    <version>0.0.0.22</version>
     <author>1076</author>
     <author-email>1076@cynicstudios.com</author-email>
     <author-website>http://www.cynicstudios.com</author-website>
@@ -130,24 +130,59 @@
         </object-type>
         <object-type name="TextBox_BirthLimit" sid="8556614320504136">
             <plugin id="TextBox" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="9379343575121172">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="Text" sid="8152437479697536">
             <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="3964950292261537">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="GenerateButton" sid="3902125913104528">
             <plugin id="Button" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="31392948256792">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="RefineButton" sid="760496287028165">
             <plugin id="Button" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="3382884984817112">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="TextBox_DeathLimit" sid="5892720617281504">
             <plugin id="TextBox" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="3941058664850073">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="TextBox_InitialChance" sid="8594188620113161">
             <plugin id="TextBox" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="5532449371644564">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="TextBox_NumberOfSteps" sid="2529322939278209">
             <plugin id="TextBox" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="8622348696275928">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
         </object-type>
         <object-type name="Browser" sid="5772633864326702">
             <plugin id="Browser" />
@@ -606,6 +641,29 @@
                 <instance-variable name="transitioning" sid="9292185265757188" type="boolean" />
             </instance-variables>
             <texture />
+        </object-type>
+        <object-type global="1" name="Array_OpenTiles" sid="9605677915294356">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type global="1" name="Array_EnemySpawnPoints" sid="1720004538582788">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type name="Button_EnemiesButton" sid="1866427116382127">
+            <plugin id="Button" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="877560343755982">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+        </object-type>
+        <object-type global="1" name="Array_EnemyStartingPositions" sid="5798031097132079">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type global="1" name="Array_SpawnableEnemies" sid="8959759646295731">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type global="1" name="Array_EnemyTypes" sid="6614980513341733">
+            <plugin id="Arr" />
         </object-type>
     </object-folder>
     <families />

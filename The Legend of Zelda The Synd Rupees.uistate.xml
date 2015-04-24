@@ -10,16 +10,16 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <display name="HTML5" />
     </configurations>
     <open-tabs>
-        <layout active="1" order="2">Merchant Room</layout>
-        <layout order="5">Mechanic Testing</layout>
-        <layout order="8">Dungeon Level</layout>
-        <event-sheet order="0">Game Manager</event-sheet>
-        <event-sheet order="1">Player Events</event-sheet>
-        <event-sheet order="3">Merchant Room</event-sheet>
-        <event-sheet order="4">Procedural Generation Functions</event-sheet>
-        <event-sheet order="6">Mechanic Testing</event-sheet>
-        <event-sheet order="7">Enemies</event-sheet>
-        <event-sheet order="9">Dungeon Level</event-sheet>
+        <layout order="3">Mechanic Testing</layout>
+        <layout order="6">Dungeon Level</layout>
+        <layout active="1" order="8">Procedural Generation Test</layout>
+        <event-sheet order="0">Player Events</event-sheet>
+        <event-sheet order="1">Merchant Room</event-sheet>
+        <event-sheet order="2">Procedural Generation Functions</event-sheet>
+        <event-sheet order="4">Mechanic Testing</event-sheet>
+        <event-sheet order="5">Enemies</event-sheet>
+        <event-sheet order="7">Dungeon Level</event-sheet>
+        <event-sheet order="9">Procedural Generation Test</event-sheet>
     </open-tabs>
     <properties>
         <property expanded="1" name="About" />

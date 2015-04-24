@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Procedural Generation Test</name>
     <events>
+        <include>Enemies</include>
         <include>Game Manager</include>
         <include>Player Events</include>
         <include>Procedural Generation Functions</include>
@@ -13,11 +14,11 @@
             <actions>
                 <action id="-9" name="Set value" sid="179925882537326" type="System">
                     <param id="0" name="Variable">MapTileCountX</param>
-                    <param id="1" name="Value">25</param>
+                    <param id="1" name="Value">30</param>
                 </action>
                 <action id="-9" name="Set value" sid="2641858403862546" type="System">
                     <param id="0" name="Variable">MapTileCountY</param>
-                    <param id="1" name="Value">19</param>
+                    <param id="1" name="Value">16</param>
                 </action>
                 <action id="0" name="Set text" sid="9070060467345457" type="TextBox_BirthLimit">
                     <param id="0" name="Text">str(BirthLimit)</param>
@@ -65,6 +66,18 @@
                     <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
+            <sub-events>
+                <event-block any="1" sid="7610357195557084">
+                    <conditions>
+                        <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="1474884588210234" type="Sprite_Keese">
+                            <param id="0" name="Instance variable">primeSprite</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="4478513265909" type="Sprite_Keese" />
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
         <event-block sid="1977738489141783">
             <conditions>
@@ -80,6 +93,33 @@
                     <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
+        </event-block>
+        <event-block sid="5240066274736502">
+            <conditions>
+                <condition id="0" name="On clicked" sid="968991672659928" type="Button_EnemiesButton" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block any="1" sid="8031725783238744">
+                    <conditions>
+                        <condition id="-8" inverted="1" name="Is boolean instance variable set" sid="3053297521835908" type="Sprite_Keese">
+                            <param id="0" name="Instance variable">primeSprite</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="4961578521013827" type="Sprite_Keese" />
+                    </actions>
+                </event-block>
+                <event-block sid="7987257876020683">
+                    <conditions />
+                    <actions>
+                        <action id="0" name="Call function" sid="4217634847711014" type="Function">
+                            <param id="0" name="Name">&quot;SpawnEnemies&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
         </event-block>
     </events>
 </c2eventsheet>

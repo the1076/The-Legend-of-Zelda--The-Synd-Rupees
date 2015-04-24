@@ -3,6 +3,10 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Enemies</name>
     <events>
+        <variable constant="0" name="enemyDensity" sid="970337721577687" static="0" type="number">0.1</variable>
+        <variable constant="0" name="EnemyTypesArrayPopulated" sid="3688563864968426" static="0" type="number">0</variable>
+        <variable constant="0" name="EnemyStartingPositionsPopulated" sid="7206822491369336" static="0" type="number">0</variable>
+        <variable constant="0" name="enemyType_Keese" sid="3286310021160033" static="0" type="text">keese</variable>
         <event-block sid="8393976073717512">
             <conditions>
                 <condition id="-14" name="Compare variable" sid="6646971190969023" type="System">
@@ -13,34 +17,231 @@
             </conditions>
             <actions />
             <sub-events>
+                <event-block sid="1951371163784453">
+                    <conditions>
+                        <condition id="-2" name="On start of layout" sid="7652893352967633" type="System" />
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="1958226090607442">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="9795146073520873" type="System">
+                                    <param id="0" name="Variable">EnemyTypesArrayPopulated</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="1" name="Set size" sid="9062530784967835" type="Array_EnemyTypes">
+                                    <param id="0" name="Width">1</param>
+                                    <param id="1" name="Height">0</param>
+                                    <param id="2" name="Depth">1</param>
+                                </action>
+                                <action id="5" name="Push" sid="9953068373796666" type="Array_EnemyTypes">
+                                    <param id="0" name="Where">0</param>
+                                    <param id="1" name="Value">enemyType_Keese</param>
+                                    <param id="2" name="Axis">0</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="7659366390728187" type="System">
+                                    <param id="0" name="Variable">EnemyTypesArrayPopulated</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>Enemy Starting Positions array: 0 - Enemy Type, 1 - Status, 2 - X, 3 - Y</comment>
                 <event-block sid="4626443985413459">
                     <conditions>
                         <condition id="0" name="On function" sid="2105330565469729" type="Function">
                             <param id="0" name="Name">&quot;SpawnEnemies&quot;</param>
                         </condition>
                     </conditions>
+                    <actions>
+                        <action id="1" name="Set size" sid="967358416086002" type="Array_EnemySpawnPoints">
+                            <param id="0" name="Width">2</param>
+                            <param id="1" name="Height">0</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="0" name="Clear" sid="6671056858634207" type="Array_EnemySpawnPoints" />
+                        <action id="1" name="Set size" sid="8858294871441776" type="Array_EnemyStartingPositions">
+                            <param id="0" name="Width">4</param>
+                            <param id="1" name="Height">0</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="0" name="Clear" sid="42507803734572" type="Array_EnemyStartingPositions" />
+                    </actions>
+                    <sub-events>
+                        <variable constant="0" name="randomNumber" sid="5902461722611445" static="0" type="number">0</variable>
+                        <event-block sid="5700027655376416">
+                            <conditions>
+                                <condition id="-10" name="For" sid="4532861468210657" type="System">
+                                    <param id="0" name="Name">&quot;OpenTilesLoop&quot;</param>
+                                    <param id="1" name="Start index">0</param>
+                                    <param id="2" name="End index">Array_OpenTiles.Height - 1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="3364835226425141" type="System">
+                                    <param id="0" name="Variable">randomNumber</param>
+                                    <param id="1" name="Value">random(0,1)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="7285007646207894">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="1940835065481388" type="System">
+                                            <param id="0" name="Variable">randomNumber</param>
+                                            <param id="1" name="Comparison">3</param>
+                                            <param id="2" name="Value">enemyDensity</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="5" name="Push" sid="1373657600064148" type="Array_EnemySpawnPoints">
+                                            <param id="0" name="Where">0</param>
+                                            <param id="1" name="Value">0</param>
+                                            <param id="2" name="Axis">1</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="7171119372534453" type="Array_EnemySpawnPoints">
+                                            <param id="0" name="X">0</param>
+                                            <param id="1" name="Y">Array_EnemySpawnPoints.Height - 1</param>
+                                            <param id="2" name="Value">Array_OpenTiles.At(0, loopindex(&quot;OpenTilesLoop&quot;))</param>
+                                        </action>
+                                        <action id="3" name="Set at XY" sid="6671982039796877" type="Array_EnemySpawnPoints">
+                                            <param id="0" name="X">1</param>
+                                            <param id="1" name="Y">Array_EnemySpawnPoints.Height - 1</param>
+                                            <param id="2" name="Value">Array_OpenTiles.At(1, loopindex(&quot;OpenTilesLoop&quot;))</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <variable constant="0" name="enemyToSpawnIndex" sid="7642854277594817" static="0" type="number">0</variable>
+                        <variable constant="0" name="enemySpawnTileX" sid="9419853957201376" static="0" type="number">0</variable>
+                        <variable constant="0" name="enemySpawnTileY" sid="2690800307940893" static="0" type="number">0</variable>
+                        <event-block sid="8614305594181174">
+                            <conditions />
+                            <actions />
+                        </event-block>
+                        <event-block sid="9829269741946127">
+                            <conditions>
+                                <condition id="-10" name="For" sid="3085200606190531" type="System">
+                                    <param id="0" name="Name">&quot;EnemySpawnpointsLoop&quot;</param>
+                                    <param id="1" name="Start index">0</param>
+                                    <param id="2" name="End index">Array_EnemySpawnPoints.Height - 1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="8009789855092094" type="System">
+                                    <param id="0" name="Variable">enemySpawnTileX</param>
+                                    <param id="1" name="Value">Array_EnemySpawnPoints.At(0, loopindex(&quot;EnemySpawnpointsLoop&quot;))</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="5478899066681692" type="System">
+                                    <param id="0" name="Variable">enemySpawnTileY</param>
+                                    <param id="1" name="Value">Array_EnemySpawnPoints.At(1, loopindex(&quot;EnemySpawnpointsLoop&quot;))</param>
+                                </action>
+                                <action id="0" name="Clear" sid="9875983899240547" type="Array_SpawnableEnemies" />
+                                <action id="1" name="Set size" sid="9179776282533122" type="Array_SpawnableEnemies">
+                                    <param id="0" name="Width">1</param>
+                                    <param id="1" name="Height">0</param>
+                                    <param id="2" name="Depth">1</param>
+                                </action>
+                                <action id="0" name="Log Text" sid="562602579442678" type="ChromeConsole">
+                                    <param id="0" name="Data">&quot;TileX: &quot; &amp; enemySpawnTileX &amp; &quot;, TileY: &quot; &amp; enemySpawnTileY</param>
+                                </action>
+                                <action id="0" name="Call function" sid="2085241002205025" type="Function">
+                                    <param id="0" name="Name">&quot;GetSpawnableEnemies&quot;</param>
+                                    <param id="1" name="Parameter {n}">enemySpawnTileX{###}enemySpawnTileY</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="8441674265053396" type="System">
+                                    <param id="0" name="Variable">enemyToSpawnIndex</param>
+                                    <param id="1" name="Value">floor(random(0,Array_SpawnableEnemies.Count))</param>
+                                </action>
+                                <action id="0" name="Log Text" sid="4160044938221181" type="ChromeConsole">
+                                    <param id="0" name="Data">&quot;EnemyToSpawn Index: &quot; &amp; enemyToSpawnIndex</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="1088978854806877">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="64549245207484" type="System">
+                                            <param id="0" name="First value">Array_SpawnableEnemies.At(0, enemyToSpawnIndex)</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Second value">enemyType_Keese</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Call function" sid="8716617005429128" type="Function">
+                                            <param id="0" name="Name">&quot;SpawnKeese&quot;</param>
+                                            <param id="1" name="Parameter {n}">Tilemap_Bitmask.TileToPositionX(enemySpawnTileX){###}Tilemap_Bitmask.TileToPositionY(enemySpawnTileY)</param>
+                                        </action>
+                                        <action id="0" name="Log Text" sid="9764944509671023" type="ChromeConsole">
+                                            <param id="0" name="Data">&quot;Spawn Keese&quot;</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="2578171992455386">
+                    <conditions>
+                        <condition id="0" name="On function" sid="9983430625687522" type="Function">
+                            <param id="0" name="Name">&quot;GetSpawnableEnemies&quot;</param>
+                        </condition>
+                    </conditions>
                     <actions />
+                    <sub-events>
+                        <variable constant="0" name="positionX" sid="7979922067136159" static="0" type="number">0</variable>
+                        <variable constant="0" name="positionY" sid="7609405289703957" static="0" type="number">0</variable>
+                        <event-block sid="6800942295938425">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Set value" sid="2286257828927575" type="System">
+                                    <param id="0" name="Variable">positionX</param>
+                                    <param id="1" name="Value">Function.Param(0)</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="8255884572712318" type="System">
+                                    <param id="0" name="Variable">positionY</param>
+                                    <param id="1" name="Value">Function.Param(1)</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="6277204499997893">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="3323986649624036" type="System">
+                                            <param id="0" name="First value">Function.Call(&quot;KeeseCanSpawn&quot;)</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Second value">1</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="5" name="Push" sid="6402610082749621" type="Array_SpawnableEnemies">
+                                            <param id="0" name="Where">0</param>
+                                            <param id="1" name="Value">enemyType_Keese</param>
+                                            <param id="2" name="Axis">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
                 </event-block>
                 <event-group description="" sid="9723944979130087" title="Keese">
                     <sub-events>
-                        <event-block sid="2241800094519513">
-                            <conditions>
-                                <condition id="0" name="On function" sid="8346301073205215" type="Function">
-                                    <param id="0" name="Name">&quot;FindKeeseSpawnPoints&quot;</param>
-                                </condition>
-                            </conditions>
-                            <actions />
-                        </event-block>
                         <event-block sid="9406568335356047">
                             <conditions>
                                 <condition id="-18" name="On created" sid="3139690245798869" type="Sprite_Keese" />
                             </conditions>
                             <actions />
                             <sub-events>
-                                <event-block sid="6616076340141446">
+                                <event-block any="1" sid="6616076340141446">
                                     <conditions>
                                         <condition id="-14" inverted="1" name="Pick by unique ID" sid="4712321449381486" type="Sprite_Keese">
                                             <param id="0" name="Unique ID">59</param>
+                                        </condition>
+                                        <condition id="-14" inverted="1" name="Pick by unique ID" sid="8285190946420401" type="Sprite_Keese">
+                                            <param id="0" name="Unique ID">80</param>
                                         </condition>
                                     </conditions>
                                     <actions>
@@ -78,6 +279,9 @@
                                             <param id="1" name="Layer">&quot;Enemies&quot;</param>
                                             <param id="2" name="X">spawnX</param>
                                             <param id="3" name="Y">spawnY</param>
+                                        </action>
+                                        <action id="0" name="Log Text" sid="402337337594981" type="ChromeConsole">
+                                            <param id="0" name="Data">&quot;Keese Spawned&quot;</param>
                                         </action>
                                     </actions>
                                 </event-block>
@@ -517,6 +721,18 @@
                                     </actions>
                                 </event-block>
                             </sub-events>
+                        </event-block>
+                        <event-block sid="8802038036610777">
+                            <conditions>
+                                <condition id="0" name="On function" sid="6405723875311607" type="Function">
+                                    <param id="0" name="Name">&quot;KeeseCanSpawn&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="1" name="Set return value" sid="2149189090617657" type="Function">
+                                    <param id="0" name="Value">1</param>
+                                </action>
+                            </actions>
                         </event-block>
                     </sub-events>
                 </event-group>

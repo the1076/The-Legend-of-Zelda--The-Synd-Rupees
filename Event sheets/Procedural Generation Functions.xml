@@ -698,6 +698,12 @@
                             <param id="2" name="Depth">1</param>
                         </action>
                         <action id="0" name="Clear" sid="4094553165241943" type="Array_LevelMask" />
+                        <action id="1" name="Set size" sid="4390898762806394" type="Array_OpenTiles">
+                            <param id="0" name="Width">2</param>
+                            <param id="1" name="Height">0</param>
+                            <param id="2" name="Depth">1</param>
+                        </action>
+                        <action id="0" name="Clear" sid="2384246923480162" type="Array_OpenTiles" />
                     </actions>
                 </event-block>
                 <event-block sid="3047040656416727">
@@ -713,6 +719,33 @@
                             <param id="2" name="Value">Array_TemporaryLevelMask.CurValue</param>
                         </action>
                     </actions>
+                    <sub-events>
+                        <event-block sid="9563541510558637">
+                            <conditions>
+                                <condition id="4" name="Compare current value" sid="5857525592905931" type="Array_TemporaryLevelMask">
+                                    <param id="0" name="Comparison">0</param>
+                                    <param id="1" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="5" name="Push" sid="3780406197602774" type="Array_OpenTiles">
+                                    <param id="0" name="Where">0</param>
+                                    <param id="1" name="Value">0</param>
+                                    <param id="2" name="Axis">1</param>
+                                </action>
+                                <action id="3" name="Set at XY" sid="399705065248638" type="Array_OpenTiles">
+                                    <param id="0" name="X">0</param>
+                                    <param id="1" name="Y">Array_OpenTiles.Height - 1</param>
+                                    <param id="2" name="Value">Array_TemporaryLevelMask.CurX</param>
+                                </action>
+                                <action id="3" name="Set at XY" sid="7401403023474828" type="Array_OpenTiles">
+                                    <param id="0" name="X">1</param>
+                                    <param id="1" name="Y">Array_OpenTiles.Height - 1</param>
+                                    <param id="2" name="Value">Array_TemporaryLevelMask.CurY</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
                 </event-block>
                 <event-block sid="156998057424619">
                     <conditions />

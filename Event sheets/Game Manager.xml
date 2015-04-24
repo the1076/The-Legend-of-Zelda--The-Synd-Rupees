@@ -3,9 +3,10 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Game Manager</name>
     <events>
-        <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
-        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">20</variable>
         <variable constant="0" name="VersionNumber" sid="5364803104146566" static="0" type="text"></variable>
+        <variable constant="0" name="SaveFile" sid="1381543041660545" static="0" type="number">0</variable>
+        <variable constant="0" name="BuildNumber" sid="9077461214891291" static="0" type="number">20</variable>
+        <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
         <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
         <variable constant="0" name="IsPaused" sid="461711076743248" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerStartingX" sid="4222893277144403" static="0" type="number">0</variable>
