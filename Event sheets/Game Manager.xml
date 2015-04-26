@@ -9,9 +9,11 @@
         <variable constant="0" name="MapTileSize" sid="7515470714356558" static="0" type="number">64</variable>
         <variable constant="0" name="CurrentLevelNumber" sid="776102941089116" static="0" type="number">0</variable>
         <variable constant="0" name="IsPaused" sid="461711076743248" static="0" type="number">0</variable>
+        <variable constant="0" name="InDialog" sid="4537495414104223" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerStartingX" sid="4222893277144403" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerStartingY" sid="6688839125347395" static="0" type="number">0</variable>
         <variable constant="0" name="StartFromExit" sid="5089240645810443" static="0" type="number">0</variable>
+        <variable constant="0" name="Scene1Viewed" sid="8242816594078674" static="0" type="number">0</variable>
         <event-block sid="9409173688350814">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="85493013777963" type="System" />

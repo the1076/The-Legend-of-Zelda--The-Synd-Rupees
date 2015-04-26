@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Save Select</name>
+    <events>
+        <include>Game Manager</include>
+        <variable constant="0" name="SelectedFile" sid="8783088558070112" static="0" type="number">1</variable>
+        <variable constant="0" name="FileIsSelected" sid="7370426410269461" static="0" type="number">0</variable>
+        <event-block sid="5626413249149849">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="2306730591907846" type="System" />
+            </conditions>
+            <actions>
+                <action disabled="1" id="0" name="Play" sid="8179490805152309" type="Audio">
+                    <param id="0" name="Audio file">11.-select-screen</param>
+                    <param id="2" name="Loop">1</param>
+                    <param id="3" name="Volume">-30</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+                <action id="0" name="Call function" sid="2219095476663019" type="Function">
+                    <param id="0" name="Name">&quot;SetCursor&quot;</param>
+                    <param id="1" name="Parameter {n}">1</param>
+                </action>
+                <action id="0" name="Call function" sid="6739911174954162" type="Function">
+                    <param id="0" name="Name">&quot;LoadSaveFiles&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="4048651556199128">
+            <conditions>
+                <condition id="0" name="On function" sid="5618799002368269" type="Function">
+                    <param id="0" name="Name">&quot;SetCursor&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="fileToSelect" sid="181717126724552" static="0" type="number">1</variable>
+                <event-block sid="9177145655542215">
+                    <conditions />
+                    <actions>
+                        <action id="-9" name="Set value" sid="6892275755132204" type="System">
+                            <param id="0" name="Variable">fileToSelect</param>
+                            <param id="1" name="Value">Function.Param(0)</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="4099208147988321">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="5022550688890032" type="System">
+                                    <param id="0" name="Variable">fileToSelect</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="6099084015100393" type="PlayerCursor">
+                                    <param id="0" name="X">142</param>
+                                    <param id="1" name="Y">320</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="452917439914914">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="6855552332488782" type="System">
+                                    <param id="0" name="Variable">fileToSelect</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">2</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="6734968842083241" type="PlayerCursor">
+                                    <param id="0" name="X">142</param>
+                                    <param id="1" name="Y">615</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="1909180610839863">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="8791358608362207" type="System">
+                                    <param id="0" name="Variable">fileToSelect</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">3</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Set position" sid="5963599983501345" type="PlayerCursor">
+                                    <param id="0" name="X">142</param>
+                                    <param id="1" name="Y">910</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="6193442460509468">
+                    <conditions />
+                    <actions>
+                        <action id="-9" name="Set value" sid="6314293468743981" type="System">
+                            <param id="0" name="Variable">SelectedFile</param>
+                            <param id="1" name="Value">fileToSelect</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="7095732087237661">
+            <conditions>
+                <condition id="7" name="Cursor is over object" sid="2535274704144171" type="Mouse">
+                    <param id="0" name="Object">TiledBackground_FileBackground</param>
+                </condition>
+                <condition id="-8" name="Is boolean instance variable set" sid="829839717757381" type="TiledBackground_FileBackground">
+                    <param id="0" name="Instance variable">isActive</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="0" name="Call function" sid="8571852715438789" type="Function">
+                    <param id="0" name="Name">&quot;SetCursor&quot;</param>
+                    <param id="1" name="Parameter {n}">TiledBackground_FileBackground.fileNumber</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="6971833932131864">
+            <conditions>
+                <condition id="0" name="On function" sid="8144052195886993" type="Function">
+                    <param id="0" name="Name">&quot;LoadSaveFiles&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="disabledOpacity" sid="218870021804774" static="0" type="number">20</variable>
+                <event-block sid="2746377434794098">
+                    <conditions>
+                        <condition id="3" name="Local key exists" sid="8258294033535631" type="WebStorage">
+                            <param id="0" name="Key">&quot;SaveFiles&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="11" name="Load" sid="8983526347462587" type="Array_SaveFiles">
+                            <param id="0" name="JSON">WebStorage.LocalValue(&quot;SaveFiles&quot;)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="4689190457294087">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="8699250682178249" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-4" name="Set layer visible" sid="5663186591306742" type="System">
+                            <param id="0" name="Layer">&quot;File1Data&quot;</param>
+                            <param id="1" name="Visibility">0</param>
+                        </action>
+                        <action id="-4" name="Set layer visible" sid="5392764365299653" type="System">
+                            <param id="0" name="Layer">&quot;File2Data&quot;</param>
+                            <param id="1" name="Visibility">0</param>
+                        </action>
+                        <action id="-4" name="Set layer visible" sid="1609994939130946" type="System">
+                            <param id="0" name="Layer">&quot;File3Data&quot;</param>
+                            <param id="1" name="Visibility">0</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="3936329436593082">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="2820470108203405" type="Text_StartNewGame">
+                                    <param id="0" name="Instance variable">fileNumber</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-15" name="Set visible" sid="496778298805308" type="Text_StartNewGame">
+                                    <param id="0" name="Visibility">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="4762220602924336">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8505626820080646" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Instance variable">fileNumber</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">2</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-16" name="Set opacity" sid="8402834128049032" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Opacity">disabledOpacity</param>
+                                </action>
+                                <action id="-13" name="Set boolean" sid="8790584353460716" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Instance variable">isActive</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="707498090973713" type="System">
+                                    <param id="0" name="Variable">VersionNumber</param>
+                                    <param id="1" name="Value">projectversion</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="73572070239739">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="239611079637598" type="TiledBackground_FileDivider">
+                                            <param id="0" name="Instance variable">fileNumber</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">2</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="7935193551483137" type="TiledBackground_FileDivider">
+                                            <param id="0" name="Opacity">disabledOpacity</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="8846747899423865">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="8943112439017663" type="TiledBackground_DropShadow">
+                                            <param id="0" name="Instance variable">fileNumber</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">2</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="8441481817037942" type="TiledBackground_DropShadow">
+                                            <param id="0" name="Opacity">disabledOpacity</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="5066282608389622">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="8843623876011871" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Instance variable">fileNumber</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">3</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-16" name="Set opacity" sid="1301375452495142" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Opacity">disabledOpacity</param>
+                                </action>
+                                <action id="-13" name="Set boolean" sid="7527060051052742" type="TiledBackground_FileBackground">
+                                    <param id="0" name="Instance variable">isActive</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="5231117967437761">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="8933607275488849" type="TiledBackground_FileDivider">
+                                            <param id="0" name="Instance variable">fileNumber</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">3</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="9929908789373811" type="TiledBackground_FileDivider">
+                                            <param id="0" name="Opacity">disabledOpacity</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="5012220609556183">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="9142956002652913" type="TiledBackground_DropShadow">
+                                            <param id="0" name="Instance variable">fileNumber</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">3</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="6217136367243047" type="TiledBackground_DropShadow">
+                                            <param id="0" name="Opacity">disabledOpacity</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="2701839643259642">
+            <conditions>
+                <condition id="6" name="On object clicked" sid="975150514177369" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                    <param id="2" name="Object clicked">TiledBackground_FileBackground</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="5377985512204533">
+                    <conditions>
+                        <condition id="-8" name="Is boolean instance variable set" sid="3626281894879331" type="TiledBackground_FileBackground">
+                            <param id="0" name="Instance variable">isActive</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Set opacity" sid="5936513550510175" type="TiledBackground_Blackout">
+                            <param id="0" name="Opacity">0</param>
+                        </action>
+                        <action id="-3" name="Set position" sid="3473678215463037" type="TiledBackground_Blackout">
+                            <param id="0" name="X">0</param>
+                            <param id="1" name="Y">0</param>
+                        </action>
+                        <action id="-7" name="Set size" sid="6081785624784116" type="TiledBackground_Blackout">
+                            <param id="0" name="Width">LayoutWidth</param>
+                            <param id="1" name="Height">LayoutHeight</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="3082116505939375" type="System">
+                            <param id="0" name="Variable">FileIsSelected</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="4086650831354083">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="1985595291086528" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="1883766382819853">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="9621115076364861" type="System">
+                            <param id="0" name="Variable">FileIsSelected</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="1469493165585762">
+                            <conditions>
+                                <condition id="-10" name="Compare opacity" sid="2414753385414707" type="TiledBackground_Blackout">
+                                    <param id="0" name="Comparison">2</param>
+                                    <param id="1" name="Opacity">100</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-16" name="Set opacity" sid="5826754475345608" type="TiledBackground_Blackout">
+                                    <param id="0" name="Opacity">Self.Opacity + 2</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="6855593197652098">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="1036176182058306" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-25" name="Go to layout (by name)" sid="7531389996105817" type="System">
+                                    <param id="0" name="Layout">&quot;Merchant Room&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>

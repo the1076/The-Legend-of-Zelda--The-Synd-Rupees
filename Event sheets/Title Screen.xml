@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Title Screen</name>
+    <events>
+        <include>Game Manager</include>
+        <event-block sid="4889063664122855">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="4046931827278701" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="2099141091090784" type="System">
+                    <param id="0" name="Variable">VersionNumber</param>
+                    <param id="1" name="Value">projectversion</param>
+                </action>
+                <action id="0" name="Set text" sid="4830697024045891" type="Text_PressStart">
+                    <param id="0" name="Text">&quot;Press any button or key&quot; &amp; newline &amp; &quot;or tap anywhere to start&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="8282373058600183">
+            <conditions>
+                <condition id="1" name="On any key pressed" sid="8026701209288443" type="Keyboard" />
+                <condition id="8" name="On any button pressed" sid="8408538187039367" type="Gamepad">
+                    <param id="0" name="Gamepad">0</param>
+                </condition>
+                <condition id="1" name="On any click" sid="7137669108817644" type="Mouse" />
+                <condition id="1" name="On any touch end" sid="9973959958420963" type="Touch" />
+            </conditions>
+            <actions>
+                <action id="-25" name="Go to layout (by name)" sid="2506461451783427" type="System">
+                    <param id="0" name="Layout">&quot;Save Select&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

@@ -5,49 +5,61 @@
     <events>
         <include>Game Manager</include>
         <include>Player Events</include>
-        <event-block sid="8450119511087308">
-            <conditions>
-                <condition id="0" name="On collision with another object" sid="3187671351301" type="Player">
-                    <param id="0" name="Object">TiledBackground_ExitTrigger</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="-9" name="Set value" sid="2878317852585887" type="System">
-                    <param id="0" name="Variable">PlayerStartingX</param>
-                    <param id="1" name="Value">16</param>
-                </action>
-                <action id="-25" name="Go to layout (by name)" sid="480462433783571" type="System">
-                    <param id="0" name="Layout">&quot;Dungeon Level&quot;</param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block sid="8356509461960022">
-            <conditions>
-                <condition id="0" name="On key pressed" sid="8556254622534705" type="Keyboard">
-                    <param id="0" name="Key">192 (`)</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="-25" name="Go to layout (by name)" sid="1891850563860584" type="System">
-                    <param id="0" name="Layout">&quot;Procedural Generation Test&quot;</param>
-                </action>
-            </actions>
-        </event-block>
-        <event-block sid="5055236067847302">
-            <conditions>
-                <condition id="0" name="On key pressed" sid="7274262807996051" type="Keyboard">
-                    <param id="0" name="Key">109 (Num -)</param>
-                </condition>
-            </conditions>
-            <actions>
-                <action id="-2" name="Go to layout" sid="7666085648102601" type="System">
-                    <param id="0" name="Layout">Mechanic Testing</param>
-                </action>
-            </actions>
-        </event-block>
         <event-block sid="8353297855255454">
             <conditions>
                 <condition id="-2" name="On start of layout" sid="2822384726402078" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="7465303727523656">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="9879125797838147" type="System">
+                            <param id="0" name="Variable">Scene1Viewed</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="8512185443400617" type="Function">
+                            <param id="0" name="Name">&quot;PlayScene1&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="-9" name="Set value" sid="4840117495171765" type="System">
+                            <param id="0" name="Variable">Scene1Viewed</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="0" name="Call function" sid="2195922485027759" type="Function">
+                            <param id="0" name="Name">&quot;StartLevel_MerchantRoom&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="2065797735046713">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="6970057777636344" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="4553194134937569" type="Function">
+                            <param id="0" name="Name">&quot;StartLevel_MerchantRoom&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="5939646868382347">
+            <conditions>
+                <condition id="0" name="On function" sid="4811395445911687" type="Function">
+                    <param id="0" name="Name">&quot;PlayScene1&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+        </event-block>
+        <event-block sid="7272585163763283">
+            <conditions>
+                <condition id="0" name="On function" sid="6055410085776185" type="Function">
+                    <param id="0" name="Name">&quot;StartLevel_MerchantRoom&quot;</param>
+                </condition>
             </conditions>
             <actions />
             <sub-events>
@@ -106,6 +118,46 @@
                     </actions>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="8450119511087308">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="3187671351301" type="Player">
+                    <param id="0" name="Object">TiledBackground_ExitTrigger</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="2878317852585887" type="System">
+                    <param id="0" name="Variable">PlayerStartingX</param>
+                    <param id="1" name="Value">16</param>
+                </action>
+                <action id="-25" name="Go to layout (by name)" sid="480462433783571" type="System">
+                    <param id="0" name="Layout">&quot;Dungeon Level&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="8356509461960022">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="8556254622534705" type="Keyboard">
+                    <param id="0" name="Key">192 (`)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-25" name="Go to layout (by name)" sid="1891850563860584" type="System">
+                    <param id="0" name="Layout">&quot;Procedural Generation Test&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="5055236067847302">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="7274262807996051" type="Keyboard">
+                    <param id="0" name="Key">109 (Num -)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="7666085648102601" type="System">
+                    <param id="0" name="Layout">Mechanic Testing</param>
+                </action>
+            </actions>
         </event-block>
     </events>
 </c2eventsheet>

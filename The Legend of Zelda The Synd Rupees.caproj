@@ -2,7 +2,7 @@
 <c2project>
     <name>The Legend of Zelda The Synd Rupees</name>
     <description></description>
-    <version>0.0.0.22</version>
+    <version>0.0.0.23</version>
     <author>1076</author>
     <author-email>1076@cynicstudios.com</author-email>
     <author-website>http://www.cynicstudios.com</author-website>
@@ -11,6 +11,7 @@
     <saved-with-version>19500</saved-with-version>
     <used-plugins>
         <plugin author="Scirra" id="Arr" version="1">Array</plugin>
+        <plugin author="Scirra" id="Audio" version="1">Audio</plugin>
         <plugin author="Scirra" id="Browser" version="1">Browser</plugin>
         <plugin author="Scirra" id="Button" version="1">Button</plugin>
         <plugin author="Scirra" id="Dictionary" version="1">Dictionary</plugin>
@@ -22,6 +23,7 @@
         <plugin author="Scirra" id="TextBox" version="1">Text box</plugin>
         <plugin author="Scirra" id="TiledBg" version="1">Tiled Background</plugin>
         <plugin author="Scirra" id="Tilemap" version="1">Tilemap</plugin>
+        <plugin author="Scirra" id="Touch" version="1">Touch</plugin>
         <plugin author="Zack0Wack0/Scirra" id="WebStorage" version="1">WebStorage</plugin>
         <plugin author="Funstorm Ltd" id="chromeconsole" version="0.100000001">Chrome Console</plugin>
         <plugin author="Scirra" id="gamepad" version="1">Gamepad</plugin>
@@ -29,6 +31,7 @@
     <used-behaviors>
         <behavior author="Scirra" id="Anchor" version="1">Anchor</behavior>
         <behavior author="Scirra" id="Bullet" version="1">Bullet</behavior>
+        <behavior author="Scirra" id="Flash" version="1">Flash</behavior>
         <behavior author="Scirra" id="LOS" version="1">Line Of Sight</behavior>
         <behavior author="Scirra" id="Platform" version="1">Platform</behavior>
         <behavior author="Scirra" id="bound" version="1">Bound to layout</behavior>
@@ -45,7 +48,7 @@
     </window-size>
     <pixel-rounding>0</pixel-rounding>
     <preview-effects>1</preview-effects>
-    <first-layout>Merchant Room</first-layout>
+    <first-layout>Title Screen</first-layout>
     <use-loader-layout>1</use-loader-layout>
     <configuration-settings>
         <prop name="Clear background">Yes</prop>
@@ -628,6 +631,11 @@
             <instance-variables>
                 <instance-variable name="primeSprite" sid="1108093420899782" type="boolean" />
             </instance-variables>
+            <behaviors>
+                <behavior-type name="Anchor" sid="3148048013483388">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
             <animation-folder>
                 <animation framecount="2" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="946343732747381" speed="0">
                     <frame duration="1" hotspotX="0" hotspotY="0" />
@@ -665,6 +673,151 @@
         <object-type global="1" name="Array_EnemyTypes" sid="6614980513341733">
             <plugin id="Arr" />
         </object-type>
+        <object-type name="Text_PressStart" sid="3535479536894292">
+            <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="1878904649776988">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+        </object-type>
+        <object-type name="Touch" sid="9463191813060498">
+            <plugin id="Touch" />
+        </object-type>
+        <object-type name="Text_SaveSelectTitle" sid="4601198139676268">
+            <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="8575332375324833">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+        </object-type>
+        <object-type name="TiledBackground_SaveSelectHeaderBackground" sid="5244455927705099">
+            <plugin id="TiledBg" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="6547391214960237">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_DropShadow" sid="9117301486665037">
+            <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="fileNumber" sid="2547010956581344" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="Anchor" sid="3676688405287449">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_SaveSelectBackground" sid="1534129381174096">
+            <plugin id="TiledBg" />
+            <texture original-source="C:\Users\David\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\Textures\saveScreenBackground.jpg" />
+        </object-type>
+        <object-type name="Audio" sid="8829938944275923">
+            <plugin id="Audio" />
+        </object-type>
+        <object-type name="TiledBackground_FileBackground" sid="6943175421360273">
+            <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="fileNumber" sid="6862585819173906" type="number" />
+                <instance-variable name="isActive" sid="8225081613362607" type="boolean" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="Anchor" sid="4074107408461326">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_FileDivider" sid="4303763263758591">
+            <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="fileNumber" sid="2664243015665423" type="number" />
+            </instance-variables>
+            <behaviors>
+                <behavior-type name="Anchor" sid="757425063448835">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <texture />
+        </object-type>
+        <object-type name="Sprite_RupeeCounter" sid="244348983289163">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="1417790522853531">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5014266072124103" speed="5">
+                    <frame duration="1" hotspotX="0" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Text_RupeeCount" sid="7148337952607826">
+            <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="261363543604132">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+        </object-type>
+        <object-type name="Text_SyndRupeeCount" sid="1467917026715436">
+            <plugin id="Text" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="5164774697035683">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+        </object-type>
+        <object-type name="Sprite_SyndRupeeCounter" sid="6971932097592956">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="Anchor" sid="6643832907679462">
+                    <behavior id="Anchor" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="4028901497387825" speed="5">
+                    <frame duration="1" hotspotX="0" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="PlayerCursor" sid="4169225730877894">
+            <plugin id="Sprite" />
+            <behaviors>
+                <behavior-type name="Flash" sid="5627048612082961">
+                    <behavior id="Flash" />
+                </behavior-type>
+            </behaviors>
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="3041328539544626" speed="5">
+                    <frame duration="1" hotspotX="0.53125" hotspotY="0.515625">
+                        <image-point name="LeftHand" x="0.875" y="0.5" />
+                        <image-point name="RightHand" x="0.21875" y="0.609375" />
+                        <collision-poly>
+                            <point x="0.0625" y="0.03125" />
+                            <point x="0.9375" y="0.03125" />
+                            <point x="0.9375" y="1" />
+                            <point x="0.0625" y="1" />
+                        </collision-poly>
+                    </frame>
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type global="1" name="Array_SaveFiles" sid="9766218670003998">
+            <plugin id="Arr" />
+        </object-type>
+        <object-type name="Text_StartNewGame" sid="4216529260738098">
+            <plugin id="Text" />
+            <instance-variables>
+                <instance-variable name="fileNumber" sid="3519450752281572" type="number" />
+            </instance-variables>
+        </object-type>
     </object-folder>
     <families />
     <layout-folder>
@@ -672,6 +825,8 @@
         <layout>Merchant Room.xml</layout>
         <layout>Procedural Generation Test.xml</layout>
         <layout>Mechanic Testing.xml</layout>
+        <layout>Title Screen.xml</layout>
+        <layout>Save Select.xml</layout>
     </layout-folder>
     <event-folder>
         <event-sheet>Dungeon Level.xml</event-sheet>
@@ -682,6 +837,8 @@
         <event-sheet>Game Manager.xml</event-sheet>
         <event-sheet>Mechanic Testing.xml</event-sheet>
         <event-sheet>Enemies.xml</event-sheet>
+        <event-sheet>Title Screen.xml</event-sheet>
+        <event-sheet>Save Select.xml</event-sheet>
     </event-folder>
     <global-instances>
         <global-instance type="Keyboard" uid="3" />
@@ -695,9 +852,33 @@
         </global-instance>
         <global-instance type="WebStorage" uid="30" />
         <global-instance type="Mouse" uid="37" />
+        <global-instance type="Touch" uid="83">
+            <properties>
+                <use-mouse-input>Yes</use-mouse-input>
+            </properties>
+        </global-instance>
+        <global-instance type="Audio" uid="88">
+            <properties>
+                <timescale-audio>Off</timescale-audio>
+                <saveload>All</saveload>
+                <play-in-background>No</play-in-background>
+                <positioned-audio></positioned-audio>
+                <panning-model>HRTF</panning-model>
+                <distance-model>Inverse</distance-model>
+                <listener-z-height>600</listener-z-height>
+                <reference-distance>600</reference-distance>
+                <maximum-distance>10000</maximum-distance>
+                <roll-off-factor>1</roll-off-factor>
+                <speed-of-sound>5000</speed-of-sound>
+                <doppler-factor>1</doppler-factor>
+            </properties>
+        </global-instance>
     </global-instances>
     <sounds-folder />
-    <music-folder />
+    <music-folder>
+        <file name="11.-select-screen.m4a" />
+        <file name="11.-select-screen.ogg" />
+    </music-folder>
     <files-folder>
         <file-folder name="Icons">
             <file name="icon-16.png" />
