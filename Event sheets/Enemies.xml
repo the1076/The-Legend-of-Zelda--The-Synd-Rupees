@@ -3,7 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Enemies</name>
     <events>
-        <variable constant="0" name="enemyDensity" sid="970337721577687" static="0" type="number">0.1</variable>
+        <variable constant="0" name="enemyDensity" sid="970337721577687" static="0" type="number">0.008</variable>
         <variable constant="0" name="EnemyTypesArrayPopulated" sid="3688563864968426" static="0" type="number">0</variable>
         <variable constant="0" name="EnemyStartingPositionsPopulated" sid="7206822491369336" static="0" type="number">0</variable>
         <variable constant="0" name="enemyType_Keese" sid="3286310021160033" static="0" type="text">keese</variable>

@@ -14,7 +14,8 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <layout order="6">Dungeon Level</layout>
         <layout order="8">Procedural Generation Test</layout>
         <layout order="10">Title Screen</layout>
-        <layout active="1" order="12">Save Select</layout>
+        <layout order="12">Save Select</layout>
+        <layout active="1" order="15">Merchant Room</layout>
         <event-sheet order="0">Player Events</event-sheet>
         <event-sheet order="1">Merchant Room</event-sheet>
         <event-sheet order="2">Procedural Generation Functions</event-sheet>
@@ -70,5 +71,7 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <folder expanded="1" path="animation-folder/Sprite_RupeeCounter/" />
         <folder expanded="1" path="animation-folder/Sprite_SyndRupeeCounter/" />
         <folder expanded="1" path="animation-folder/PlayerCursor/" />
+        <folder expanded="1" path="animation-folder/Sprite/" />
+        <folder expanded="1" path="animation-folder/Sprite_Title/" />
     </folders-expanded>
 </c2uistate>

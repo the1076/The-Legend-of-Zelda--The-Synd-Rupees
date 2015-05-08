@@ -11,11 +11,11 @@
                 <condition id="-2" name="On start of layout" sid="2306730591907846" type="System" />
             </conditions>
             <actions>
-                <action disabled="1" id="0" name="Play" sid="8179490805152309" type="Audio">
+                <action id="0" name="Play" sid="8179490805152309" type="Audio">
                     <param id="0" name="Audio file">11.-select-screen</param>
                     <param id="2" name="Loop">1</param>
-                    <param id="3" name="Volume">-30</param>
-                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                    <param id="3" name="Volume">-10</param>
+                    <param id="1" name="Tag (optional)">&quot;SaveSelect&quot;</param>
                 </action>
                 <action id="0" name="Call function" sid="2219095476663019" type="Function">
                     <param id="0" name="Name">&quot;SetCursor&quot;</param>
@@ -349,6 +349,9 @@
                             <actions>
                                 <action id="-25" name="Go to layout (by name)" sid="7531389996105817" type="System">
                                     <param id="0" name="Layout">&quot;Merchant Room&quot;</param>
+                                </action>
+                                <action id="6" name="Stop" sid="1664757077699739" type="Audio">
+                                    <param id="0" name="Tag">&quot;SaveSelect&quot;</param>
                                 </action>
                             </actions>
                         </event-block>

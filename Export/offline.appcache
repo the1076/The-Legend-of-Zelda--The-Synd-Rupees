@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-#1429672357
+#1430357868
 data.js
 c2runtime.js
 jquery-2.1.1.min.js
@@ -37,6 +37,29 @@ images/sprite_camera-sheet0.png
 images/sprite_healthheart-sheet0.png
 images/sprite_healthheart-sheet1.png
 images/tiledbackground_blackout.png
+images/tiledbackground_saveselectheaderbackground.png
+images/tiledbackground_dropshadow.png
+images/tiledbackground_saveselectbackground.png
+images/tiledbackground_filebackground.png
+images/tiledbackground_filedivider.png
+images/sprite_rupeecounter-sheet0.png
+images/sprite_syndrupeecounter-sheet0.png
+images/sprite-sheet0.png
+images/sprite_title-sheet0.png
+media/hero_dying.m4a
+media/hero_hurt.m4a
+media/sword2.m4a
+media/sword3.m4a
+media/hero_dying.ogg
+media/hero_hurt.ogg
+media/sword2.ogg
+media/sword3.ogg
+media/11.-select-screen.m4a
+media/11.-select-screen.ogg
+media/31.%20credits.m4a
+media/31.%20credits.ogg
+media/16.-cave.m4a
+media/16.-cave.ogg
 icon-16.png
 icon-32.png
 icon-114.png

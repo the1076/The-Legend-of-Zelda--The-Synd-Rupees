@@ -582,6 +582,12 @@
                     <param id="0" name="Animation">&quot;Attack&quot;</param>
                     <param id="1" name="From">1</param>
                 </action>
+                <action id="0" name="Play" sid="5719165555657319" type="Audio">
+                    <param id="0" name="Audio file">sword3</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;SwordSwing&quot;</param>
+                </action>
             </actions>
         </event-block>
         <event-block sid="4316793154384144">
@@ -626,6 +632,13 @@
                 <action id="-10" name="Set value" sid="1265872497877481" type="Player">
                     <param id="0" name="Instance variable">deathTimer</param>
                     <param id="1" name="Value">30</param>
+                </action>
+                <action id="33" name="Stop all" sid="4125633055489868" type="Audio" />
+                <action id="0" name="Play" sid="7543605714058354" type="Audio">
+                    <param id="0" name="Audio file">hero_dying</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;Death&quot;</param>
                 </action>
             </actions>
         </event-block>
@@ -719,6 +732,12 @@
                         <action id="0" name="Call function" sid="1604838388008235" type="Function">
                             <param id="0" name="Name">&quot;UpdateHealth&quot;</param>
                             <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Play" sid="8982481540565795" type="Audio">
+                            <param id="0" name="Audio file">hero_hurt</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;Hurt&quot;</param>
                         </action>
                     </actions>
                     <sub-events>
@@ -1672,6 +1691,12 @@
                         <action id="4" name="Set animation" sid="3012214467260701" type="Sprite_Pickaxe">
                             <param id="0" name="Animation">&quot;Attack&quot;</param>
                             <param id="1" name="From">1</param>
+                        </action>
+                        <action id="0" name="Play" sid="9607026021148482" type="Audio">
+                            <param id="0" name="Audio file">sword2</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;ToolSwing&quot;</param>
                         </action>
                     </actions>
                 </event-block>

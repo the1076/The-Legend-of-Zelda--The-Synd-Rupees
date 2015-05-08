@@ -31,6 +31,6 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <layer locked="1" name="Player" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Triggers" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="UI" parallax-in-editor="0" visible="1" />
-        <layer locked="1" name="Debug" parallax-in-editor="0" visible="1" />
+        <layer locked="0" name="Debug" parallax-in-editor="0" visible="1" />
     </layers>
 </c2uistate>

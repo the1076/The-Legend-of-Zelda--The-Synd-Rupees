@@ -2,7 +2,7 @@
 <c2project>
     <name>The Legend of Zelda The Synd Rupees</name>
     <description></description>
-    <version>0.0.0.23</version>
+    <version>0.0.0.26</version>
     <author>1076</author>
     <author-email>1076@cynicstudios.com</author-email>
     <author-website>http://www.cynicstudios.com</author-website>
@@ -52,6 +52,7 @@
     <use-loader-layout>1</use-loader-layout>
     <configuration-settings>
         <prop name="Clear background">Yes</prop>
+        <prop name="Downscaling">Medium quality</prop>
         <prop name="Enable WebGL">On</prop>
         <prop name="Fullscreen in browser">Scale inner</prop>
         <prop name="Fullscreen scaling">High quality</prop>
@@ -631,11 +632,6 @@
             <instance-variables>
                 <instance-variable name="primeSprite" sid="1108093420899782" type="boolean" />
             </instance-variables>
-            <behaviors>
-                <behavior-type name="Anchor" sid="3148048013483388">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <animation-folder>
                 <animation framecount="2" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="946343732747381" speed="0">
                     <frame duration="1" hotspotX="0" hotspotY="0" />
@@ -686,19 +682,9 @@
         </object-type>
         <object-type name="Text_SaveSelectTitle" sid="4601198139676268">
             <plugin id="Text" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="8575332375324833">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
         </object-type>
         <object-type name="TiledBackground_SaveSelectHeaderBackground" sid="5244455927705099">
             <plugin id="TiledBg" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="6547391214960237">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <texture />
         </object-type>
         <object-type name="TiledBackground_DropShadow" sid="9117301486665037">
@@ -726,11 +712,6 @@
                 <instance-variable name="fileNumber" sid="6862585819173906" type="number" />
                 <instance-variable name="isActive" sid="8225081613362607" type="boolean" />
             </instance-variables>
-            <behaviors>
-                <behavior-type name="Anchor" sid="4074107408461326">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <texture />
         </object-type>
         <object-type name="TiledBackground_FileDivider" sid="4303763263758591">
@@ -738,20 +719,10 @@
             <instance-variables>
                 <instance-variable name="fileNumber" sid="2664243015665423" type="number" />
             </instance-variables>
-            <behaviors>
-                <behavior-type name="Anchor" sid="757425063448835">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <texture />
         </object-type>
         <object-type name="Sprite_RupeeCounter" sid="244348983289163">
             <plugin id="Sprite" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="1417790522853531">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <animation-folder>
                 <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="5014266072124103" speed="5">
                     <frame duration="1" hotspotX="0" hotspotY="0.5" />
@@ -760,27 +731,12 @@
         </object-type>
         <object-type name="Text_RupeeCount" sid="7148337952607826">
             <plugin id="Text" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="261363543604132">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
         </object-type>
         <object-type name="Text_SyndRupeeCount" sid="1467917026715436">
             <plugin id="Text" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="5164774697035683">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
         </object-type>
         <object-type name="Sprite_SyndRupeeCounter" sid="6971932097592956">
             <plugin id="Sprite" />
-            <behaviors>
-                <behavior-type name="Anchor" sid="6643832907679462">
-                    <behavior id="Anchor" />
-                </behavior-type>
-            </behaviors>
             <animation-folder>
                 <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="4028901497387825" speed="5">
                     <frame duration="1" hotspotX="0" hotspotY="0.5" />
@@ -817,6 +773,22 @@
             <instance-variables>
                 <instance-variable name="fileNumber" sid="3519450752281572" type="number" />
             </instance-variables>
+        </object-type>
+        <object-type name="Sprite" sid="5288688371049639">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="9052053532827388" speed="5">
+                    <frame duration="1" hotspotX="0.5" hotspotY="0.5" />
+                </animation>
+            </animation-folder>
+        </object-type>
+        <object-type name="Sprite_Title" sid="3332825525491417">
+            <plugin id="Sprite" />
+            <animation-folder>
+                <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="6780105359497393" speed="5">
+                    <frame duration="1" hotspotX="0" hotspotY="0" original-source="E:\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\dev\Art\Title.jpg" />
+                </animation>
+            </animation-folder>
         </object-type>
     </object-folder>
     <families />
@@ -874,10 +846,23 @@
             </properties>
         </global-instance>
     </global-instances>
-    <sounds-folder />
+    <sounds-folder>
+        <file name="hero_dying.m4a" />
+        <file name="hero_hurt.m4a" />
+        <file name="sword2.m4a" />
+        <file name="sword3.m4a" />
+        <file name="hero_dying.ogg" />
+        <file name="hero_hurt.ogg" />
+        <file name="sword2.ogg" />
+        <file name="sword3.ogg" />
+    </sounds-folder>
     <music-folder>
         <file name="11.-select-screen.m4a" />
         <file name="11.-select-screen.ogg" />
+        <file name="31. Credits.m4a" />
+        <file name="31. Credits.ogg" />
+        <file name="16.-cave.m4a" />
+        <file name="16.-cave.ogg" />
     </music-folder>
     <files-folder>
         <file-folder name="Icons">

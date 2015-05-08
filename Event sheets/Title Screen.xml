@@ -14,7 +14,13 @@
                     <param id="1" name="Value">projectversion</param>
                 </action>
                 <action id="0" name="Set text" sid="4830697024045891" type="Text_PressStart">
-                    <param id="0" name="Text">&quot;Press any button or key&quot; &amp; newline &amp; &quot;or tap anywhere to start&quot;</param>
+                    <param id="0" name="Text">&quot;Press any button or key to start&quot;</param>
+                </action>
+                <action id="0" name="Play" sid="1578517330494294" type="Audio">
+                    <param id="0" name="Audio file">31. Credits</param>
+                    <param id="2" name="Loop">1</param>
+                    <param id="3" name="Volume">-10</param>
+                    <param id="1" name="Tag (optional)">&quot;TitleScreen&quot;</param>
                 </action>
             </actions>
         </event-block>
@@ -25,13 +31,103 @@
                     <param id="0" name="Gamepad">0</param>
                 </condition>
                 <condition id="1" name="On any click" sid="7137669108817644" type="Mouse" />
-                <condition id="1" name="On any touch end" sid="9973959958420963" type="Touch" />
+                <condition disabled="1" id="1" name="On any touch end" sid="9973959958420963" type="Touch" />
             </conditions>
             <actions>
                 <action id="-25" name="Go to layout (by name)" sid="2506461451783427" type="System">
                     <param id="0" name="Layout">&quot;Save Select&quot;</param>
                 </action>
+                <action id="6" name="Stop" sid="8997833769471313" type="Audio">
+                    <param id="0" name="Tag">&quot;TitleScreen&quot;</param>
+                </action>
             </actions>
+        </event-block>
+        <variable constant="0" name="fading" sid="3506372611567175" static="0" type="number">0</variable>
+        <event-block sid="2455305417368585">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="1706264081472875" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="3076800699812222">
+                    <conditions />
+                    <actions />
+                    <sub-events>
+                        <event-block sid="1596867049927844">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="7724888259023531" type="System">
+                                    <param id="0" name="Variable">fading</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="6807394481776167">
+                                    <conditions>
+                                        <condition id="-10" name="Compare opacity" sid="2586010757013835" type="Text_PressStart">
+                                            <param id="0" name="Comparison">2</param>
+                                            <param id="1" name="Opacity">100</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="7116635583946091" type="Text_PressStart">
+                                            <param id="0" name="Opacity">self.Opacity + 2</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="2913152925177705">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="2660725262045247" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="1529308346956046" type="System">
+                                            <param id="0" name="Variable">fading</param>
+                                            <param id="1" name="Value">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <event-block sid="704902973825268">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="8821458204658522" type="System">
+                                    <param id="0" name="Variable">fading</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="3551544851160303">
+                                    <conditions>
+                                        <condition id="-10" name="Compare opacity" sid="6334321030878121" type="Text_PressStart">
+                                            <param id="0" name="Comparison">4</param>
+                                            <param id="1" name="Opacity">50</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-16" name="Set opacity" sid="5374358462915436" type="Text_PressStart">
+                                            <param id="0" name="Opacity">self.Opacity - 2</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="8815395418712563">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="3078393267362586" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="7873359346757642" type="System">
+                                            <param id="0" name="Variable">fading</param>
+                                            <param id="1" name="Value">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
         </event-block>
     </events>
 </c2eventsheet>
