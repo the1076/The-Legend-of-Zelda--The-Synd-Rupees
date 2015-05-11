@@ -14,7 +14,7 @@
                     <param id="1" name="Value">projectversion</param>
                 </action>
                 <action id="0" name="Set text" sid="4830697024045891" type="Text_PressStart">
-                    <param id="0" name="Text">&quot;Press any button or key to start&quot;</param>
+                    <param id="0" name="Text">&quot;press any button or key to start&quot;</param>
                 </action>
                 <action id="0" name="Play" sid="1578517330494294" type="Audio">
                     <param id="0" name="Audio file">31. Credits</param>

@@ -29,7 +29,7 @@
             <blend-mode>0</blend-mode>
             <effect-fallback>0</effect-fallback>
             <instances>
-                <instance type="TiledBackground_SaveSelectBackground" uid="86">
+                <instance type="TiledBackground_SaveSelectBackground" uid="118">
                     <properties>
                         <initial-visibility>Visible</initial-visibility>
                         <hotspot>Top-left</hotspot>
@@ -42,6 +42,144 @@
                         <z>0</z>
                         <width>1920</width>
                         <height>1080</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="85">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>80</x>
+                        <y>40</y>
+                        <z>0</z>
+                        <width>1760</width>
+                        <height>2</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="86">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>40</x>
+                        <y>80</y>
+                        <z>0</z>
+                        <width>2</width>
+                        <height>920</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="87">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>80</x>
+                        <y>1040</y>
+                        <z>0</z>
+                        <width>1760</width>
+                        <height>2</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="89">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>1880</x>
+                        <y>80</y>
+                        <z>0</z>
+                        <width>2</width>
+                        <height>920</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="93">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>120</x>
+                        <y>500</y>
+                        <z>0</z>
+                        <width>1680</width>
+                        <height>2</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="TiledBackground_Divider" uid="94">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <hotspot>Top-left</hotspot>
+                    </properties>
+                    <instance-variables>
+                        <fileNumber>2</fileNumber>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>120</x>
+                        <y>770</y>
+                        <z>0</z>
+                        <width>1680</width>
+                        <height>2</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>
@@ -68,65 +206,11 @@
             <blend-mode>0</blend-mode>
             <effect-fallback>0</effect-fallback>
             <instances>
-                <instance type="TiledBackground_DropShadow" uid="87">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>0</fileNumber>
-                    </instance-variables>
-                    <behavior-instances>
-                        <behavior-instance type="Anchor">
-                            <properties>
-                                <left-edge>Window left</left-edge>
-                                <top-edge>Window top</top-edge>
-                                <right-edge>Window right</right-edge>
-                                <bottom-edge>Window bottom</bottom-edge>
-                                <initial-state>Enabled</initial-state>
-                            </properties>
-                        </behavior-instance>
-                    </behavior-instances>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>45</x>
-                        <y>45</y>
-                        <z>0</z>
-                        <width>1840</width>
-                        <height>80</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_SaveSelectHeaderBackground" uid="85">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>40</x>
-                        <y>40</y>
-                        <z>0</z>
-                        <width>1840</width>
-                        <height>80</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
                 <instance type="Text_SaveSelectTitle" uid="84">
                     <properties>
-                        <text>Select a File</text>
+                        <text>select a file</text>
                         <initial-visibility>Visible</initial-visibility>
-                        <font>Calibri,-37,400,0</font>
+                        <font>Triforce,-96,400,0</font>
                         <color>255,255,255</color>
                         <horizontal-alignment>Center</horizontal-alignment>
                         <vertical-alignment>Center</vertical-alignment>
@@ -137,11 +221,11 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>40</x>
+                        <x>0</x>
                         <y>40</y>
                         <z>0</z>
-                        <width>1840</width>
-                        <height>80</height>
+                        <width>1920</width>
+                        <height>190</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>
@@ -168,109 +252,7 @@
             <blend-mode>0</blend-mode>
             <effect-fallback>0</effect-fallback>
             <instances>
-                <instance type="TiledBackground_DropShadow" uid="92">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>1</fileNumber>
-                    </instance-variables>
-                    <behavior-instances>
-                        <behavior-instance type="Anchor">
-                            <properties>
-                                <left-edge>Window left</left-edge>
-                                <top-edge>Window top</top-edge>
-                                <right-edge>Window right</right-edge>
-                                <bottom-edge>Window bottom</bottom-edge>
-                                <initial-state>Enabled</initial-state>
-                            </properties>
-                        </behavior-instance>
-                    </behavior-instances>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>40</x>
-                        <y>205</y>
-                        <z>0</z>
-                        <width>1845</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_DropShadow" uid="93">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>2</fileNumber>
-                    </instance-variables>
-                    <behavior-instances>
-                        <behavior-instance type="Anchor">
-                            <properties>
-                                <left-edge>Window left</left-edge>
-                                <top-edge>Window top</top-edge>
-                                <right-edge>Window right</right-edge>
-                                <bottom-edge>Window bottom</bottom-edge>
-                                <initial-state>Enabled</initial-state>
-                            </properties>
-                        </behavior-instance>
-                    </behavior-instances>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>40</x>
-                        <y>500</y>
-                        <z>0</z>
-                        <width>1845</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_DropShadow" uid="94">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>3</fileNumber>
-                    </instance-variables>
-                    <behavior-instances>
-                        <behavior-instance type="Anchor">
-                            <properties>
-                                <left-edge>Window left</left-edge>
-                                <top-edge>Window top</top-edge>
-                                <right-edge>Window right</right-edge>
-                                <bottom-edge>Window bottom</bottom-edge>
-                                <initial-state>Enabled</initial-state>
-                            </properties>
-                        </behavior-instance>
-                    </behavior-instances>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>40</x>
-                        <y>795</y>
-                        <z>0</z>
-                        <width>1845</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileBackground" uid="89">
+                <instance type="TiledBackground_FileBackground" uid="90">
                     <properties>
                         <initial-visibility>Visible</initial-visibility>
                         <hotspot>Top-left</hotspot>
@@ -282,35 +264,11 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>40</x>
-                        <y>200</y>
+                        <x>120</x>
+                        <y>230</y>
                         <z>0</z>
-                        <width>1840</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileBackground" uid="90">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>2</fileNumber>
-                        <isActive>false</isActive>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>40</x>
-                        <y>495</y>
-                        <z>0</z>
-                        <width>1840</width>
-                        <height>250</height>
+                        <width>1680</width>
+                        <height>270</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>
@@ -324,17 +282,17 @@
                         <hotspot>Top-left</hotspot>
                     </properties>
                     <instance-variables>
-                        <fileNumber>3</fileNumber>
+                        <fileNumber>2</fileNumber>
                         <isActive>false</isActive>
                     </instance-variables>
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>40</x>
-                        <y>790</y>
+                        <x>120</x>
+                        <y>500</y>
                         <z>0</z>
-                        <width>1840</width>
-                        <height>250</height>
+                        <width>1680</width>
+                        <height>270</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>
@@ -342,227 +300,23 @@
                         <opacity>1</opacity>
                     </world>
                 </instance>
-                <instance type="Text_StartNewGame" uid="108">
-                    <properties>
-                        <text>Start a new game</text>
-                        <initial-visibility>Invisible</initial-visibility>
-                        <font>Arial,-48,400,0</font>
-                        <color>165,165,165</color>
-                        <horizontal-alignment>Center</horizontal-alignment>
-                        <vertical-alignment>Center</vertical-alignment>
-                        <hotspot>Top-left</hotspot>
-                        <wrapping>Word</wrapping>
-                        <line-height>0</line-height>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>1</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>200</y>
-                        <z>0</z>
-                        <width>1550</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="Text_StartNewGame" uid="109">
-                    <properties>
-                        <text>Start a new game</text>
-                        <initial-visibility>Invisible</initial-visibility>
-                        <font>Arial,-48,400,0</font>
-                        <color>165,165,165</color>
-                        <horizontal-alignment>Center</horizontal-alignment>
-                        <vertical-alignment>Center</vertical-alignment>
-                        <hotspot>Top-left</hotspot>
-                        <wrapping>Word</wrapping>
-                        <line-height>0</line-height>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>2</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>495</y>
-                        <z>0</z>
-                        <width>1550</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="Text_StartNewGame" uid="110">
-                    <properties>
-                        <text>Start a new game</text>
-                        <initial-visibility>Invisible</initial-visibility>
-                        <font>Arial,-48,400,0</font>
-                        <color>165,165,165</color>
-                        <horizontal-alignment>Center</horizontal-alignment>
-                        <vertical-alignment>Center</vertical-alignment>
-                        <hotspot>Top-left</hotspot>
-                        <wrapping>Word</wrapping>
-                        <line-height>0</line-height>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>3</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>790</y>
-                        <z>0</z>
-                        <width>1550</width>
-                        <height>250</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="95">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>1</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>250</x>
-                        <y>220</y>
-                        <z>0</z>
-                        <width>2</width>
-                        <height>210</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="96">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>1</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>360</y>
-                        <z>0</z>
-                        <width>1590</width>
-                        <height>2</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="111">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>2</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>250</x>
-                        <y>515</y>
-                        <z>0</z>
-                        <width>2</width>
-                        <height>210</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="112">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>2</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>655</y>
-                        <z>0</z>
-                        <width>1590</width>
-                        <height>2</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="113">
+                <instance type="TiledBackground_FileBackground" uid="92">
                     <properties>
                         <initial-visibility>Visible</initial-visibility>
                         <hotspot>Top-left</hotspot>
                     </properties>
                     <instance-variables>
                         <fileNumber>3</fileNumber>
+                        <isActive>true</isActive>
                     </instance-variables>
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>250</x>
-                        <y>810</y>
+                        <x>120</x>
+                        <y>770</y>
                         <z>0</z>
-                        <width>2</width>
-                        <height>210</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="TiledBackground_FileDivider" uid="114">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <hotspot>Top-left</hotspot>
-                    </properties>
-                    <instance-variables>
-                        <fileNumber>3</fileNumber>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>270</x>
-                        <y>950</y>
-                        <z>0</z>
-                        <width>1590</width>
-                        <height>2</height>
+                        <width>1680</width>
+                        <height>270</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>
@@ -589,7 +343,7 @@
             <blend-mode>0</blend-mode>
             <effect-fallback>0</effect-fallback>
             <instances>
-                <instance type="Sprite_RupeeCounter" uid="97">
+                <instance type="Sprite_RupeeCounter" uid="95">
                     <properties>
                         <initial-visibility>Visible</initial-visibility>
                         <initial-animation>Default</initial-animation>
@@ -599,8 +353,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>270</x>
-                        <y>405</y>
+                        <x>400</x>
+                        <y>431</y>
                         <z>0</z>
                         <width>32</width>
                         <height>32</height>
@@ -611,12 +365,12 @@
                         <opacity>1</opacity>
                     </world>
                 </instance>
-                <instance type="Text_RupeeCount" uid="98">
+                <instance type="Text_RupeeCount" uid="96">
                     <properties>
                         <text>0</text>
                         <initial-visibility>Visible</initial-visibility>
                         <font>Calibri Light,-27,300,0</font>
-                        <color>75,75,75</color>
+                        <color>180,180,180</color>
                         <horizontal-alignment>Left</horizontal-alignment>
                         <vertical-alignment>Center</vertical-alignment>
                         <hotspot>Top-left</hotspot>
@@ -626,8 +380,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>322</x>
-                        <y>362</y>
+                        <x>452</x>
+                        <y>388</y>
                         <z>0</z>
                         <width>100</width>
                         <height>88</height>
@@ -638,12 +392,12 @@
                         <opacity>1</opacity>
                     </world>
                 </instance>
-                <instance type="Text_SyndRupeeCount" uid="99">
+                <instance type="Text_SyndRupeeCount" uid="97">
                     <properties>
                         <text>0</text>
                         <initial-visibility>Visible</initial-visibility>
                         <font>Calibri Light,-27,300,0</font>
-                        <color>0,0,0</color>
+                        <color>180,180,180</color>
                         <horizontal-alignment>Left</horizontal-alignment>
                         <vertical-alignment>Center</vertical-alignment>
                         <hotspot>Top-left</hotspot>
@@ -653,8 +407,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>524</x>
-                        <y>362</y>
+                        <x>654</x>
+                        <y>388</y>
                         <z>0</z>
                         <width>100</width>
                         <height>88</height>
@@ -665,7 +419,7 @@
                         <opacity>1</opacity>
                     </world>
                 </instance>
-                <instance type="Sprite_SyndRupeeCounter" uid="100">
+                <instance type="Sprite_SyndRupeeCounter" uid="98">
                     <properties>
                         <initial-visibility>Visible</initial-visibility>
                         <initial-animation>Default</initial-animation>
@@ -675,14 +429,64 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>472</x>
-                        <y>405</y>
+                        <x>602</x>
+                        <y>431</y>
                         <z>0</z>
                         <width>32</width>
                         <height>32</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0.5</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="Sprite_HealthHeart" uid="99">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <initial-animation>Default</initial-animation>
+                        <initial-frame>0</initial-frame>
+                        <collisions>Enabled</collisions>
+                    </properties>
+                    <instance-variables>
+                        <primeSprite>true</primeSprite>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>400</x>
+                        <y>346</y>
+                        <z>0</z>
+                        <width>32</width>
+                        <height>32</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
+                        <angle>0</angle>
+                        <opacity>1</opacity>
+                    </world>
+                </instance>
+                <instance type="Sprite_HealthHeart" uid="100">
+                    <properties>
+                        <initial-visibility>Visible</initial-visibility>
+                        <initial-animation>Default</initial-animation>
+                        <initial-frame>0</initial-frame>
+                        <collisions>Enabled</collisions>
+                    </properties>
+                    <instance-variables>
+                        <primeSprite>true</primeSprite>
+                    </instance-variables>
+                    <blend-mode>0</blend-mode>
+                    <effect-fallback>0</effect-fallback>
+                    <world>
+                        <x>442</x>
+                        <y>346</y>
+                        <z>0</z>
+                        <width>32</width>
+                        <height>32</height>
+                        <depth>0</depth>
+                        <hotspotX>0</hotspotX>
+                        <hotspotY>0</hotspotY>
                         <angle>0</angle>
                         <opacity>1</opacity>
                     </world>
@@ -700,8 +504,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>276</x>
-                        <y>264</y>
+                        <x>484</x>
+                        <y>346</y>
                         <z>0</z>
                         <width>32</width>
                         <height>32</height>
@@ -725,8 +529,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>318</x>
-                        <y>264</y>
+                        <x>526</x>
+                        <y>346</y>
                         <z>0</z>
                         <width>32</width>
                         <height>32</height>
@@ -750,8 +554,8 @@
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>360</x>
-                        <y>264</y>
+                        <x>568</x>
+                        <y>346</y>
                         <z>0</z>
                         <width>32</width>
                         <height>32</height>
@@ -762,49 +566,29 @@
                         <opacity>1</opacity>
                     </world>
                 </instance>
-                <instance type="Sprite_HealthHeart" uid="104">
+                <instance type="Text_CharacterName" uid="104">
                     <properties>
+                        <text>New Game</text>
                         <initial-visibility>Visible</initial-visibility>
-                        <initial-animation>Default</initial-animation>
-                        <initial-frame>0</initial-frame>
-                        <collisions>Enabled</collisions>
+                        <font>Sherwood,-35,400,0</font>
+                        <color>180,180,180</color>
+                        <horizontal-alignment>Left</horizontal-alignment>
+                        <vertical-alignment>Center</vertical-alignment>
+                        <hotspot>Top-left</hotspot>
+                        <wrapping>Word</wrapping>
+                        <line-height>0</line-height>
                     </properties>
                     <instance-variables>
-                        <primeSprite>true</primeSprite>
+                        <fileNumber>2</fileNumber>
                     </instance-variables>
                     <blend-mode>0</blend-mode>
                     <effect-fallback>0</effect-fallback>
                     <world>
-                        <x>402</x>
-                        <y>264</y>
+                        <x>400</x>
+                        <y>270</y>
                         <z>0</z>
-                        <width>32</width>
-                        <height>32</height>
-                        <depth>0</depth>
-                        <hotspotX>0</hotspotX>
-                        <hotspotY>0</hotspotY>
-                        <angle>0</angle>
-                        <opacity>1</opacity>
-                    </world>
-                </instance>
-                <instance type="Sprite_HealthHeart" uid="105">
-                    <properties>
-                        <initial-visibility>Visible</initial-visibility>
-                        <initial-animation>Default</initial-animation>
-                        <initial-frame>0</initial-frame>
-                        <collisions>Enabled</collisions>
-                    </properties>
-                    <instance-variables>
-                        <primeSprite>true</primeSprite>
-                    </instance-variables>
-                    <blend-mode>0</blend-mode>
-                    <effect-fallback>0</effect-fallback>
-                    <world>
-                        <x>444</x>
-                        <y>264</y>
-                        <z>0</z>
-                        <width>32</width>
-                        <height>32</height>
+                        <width>1360</width>
+                        <height>70</height>
                         <depth>0</depth>
                         <hotspotX>0</hotspotX>
                         <hotspotY>0</hotspotY>

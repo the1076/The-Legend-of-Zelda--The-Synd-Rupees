@@ -3,6 +3,7 @@
     <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
     <name>Player Events</name>
     <events>
+        <include>Menu Events</include>
         <variable constant="0" name="MoveRightActionIsTrue" sid="9368015973581356" static="0" type="number">0</variable>
         <variable constant="0" name="MoveLeftActionIsTrue" sid="6550061782465625" static="0" type="number">0</variable>
         <variable constant="0" name="PlayerOnWallRight" sid="9652577872985578" static="0" type="number">0</variable>
@@ -78,6 +79,10 @@
                     <actions>
                         <action id="0" name="Call function" sid="2589669747516345" type="Function">
                             <param id="0" name="Name">&quot;TogglePause&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Call function" sid="8860584168238504" type="Function">
+                            <param id="0" name="Name">&quot;ToggleMenu&quot;</param>
                             <param id="1" name="Parameter {n}"></param>
                         </action>
                     </actions>
@@ -371,6 +376,30 @@
                             </actions>
                         </event-block>
                     </sub-events>
+                </event-block>
+                <event-block sid="9161569237977317">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="6475013937463585" type="Keyboard">
+                            <param id="0" name="Key">96 (Num 0)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-36" name="Save" sid="6360403244841217" type="System">
+                            <param id="0" name="Slot">&quot;1&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="708594506192354">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="1613008490937708" type="Keyboard">
+                            <param id="0" name="Key">97 (Num 1)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-37" name="Load" sid="6546821027680688" type="System">
+                            <param id="0" name="Slot">&quot;1&quot;</param>
+                        </action>
+                    </actions>
                 </event-block>
             </sub-events>
         </event-group>

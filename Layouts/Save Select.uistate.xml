@@ -4,11 +4,11 @@
 It is entirely optional and the project will load without it.  If you are placing the project under source control,
 you probably do not want to add any .uistate.xml files to the repository.-->
     <camera>
-        <position-x>573.969</position-x>
-        <position-y>369.809</position-y>
-        <position-z>133.1</position-z>
-        <lookat-x>573.969</lookat-x>
-        <lookat-y>369.809</lookat-y>
+        <position-x>377.564</position-x>
+        <position-y>522.24</position-y>
+        <position-z>182.217</position-z>
+        <lookat-x>377.564</lookat-x>
+        <lookat-y>522.24</lookat-y>
         <lookat-z>0</lookat-z>
     </camera>
     <snap-to-grid>0</snap-to-grid>
@@ -23,16 +23,16 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <property expanded="0" name="Margins" />
         <property expanded="1" name="Effects" />
     </properties>
-    <active-layer name="Titles" />
+    <active-layer name="Files" />
     <layers>
-        <layer locked="1" name="Background" parallax-in-editor="0" visible="1" />
+        <layer locked="0" name="Background" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Titles" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="Files" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="File1Data" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Files" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="File1Data" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="File2Data" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="File3Data" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="Cursor" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="Fade" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="Debug" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Cursor" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Fade" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Debug" parallax-in-editor="0" visible="1" />
     </layers>
 </c2uistate>

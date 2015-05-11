@@ -10,22 +10,21 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <display name="HTML5" />
     </configurations>
     <open-tabs>
-        <layout order="3">Mechanic Testing</layout>
-        <layout order="6">Dungeon Level</layout>
-        <layout order="8">Procedural Generation Test</layout>
-        <layout order="10">Title Screen</layout>
-        <layout order="12">Save Select</layout>
-        <layout active="1" order="15">Merchant Room</layout>
+        <layout order="1">Mechanic Testing</layout>
+        <layout order="5">Procedural Generation Test</layout>
+        <layout order="7">Title Screen</layout>
+        <layout order="9">Save Select</layout>
+        <layout order="12">Merchant Room</layout>
         <event-sheet order="0">Player Events</event-sheet>
-        <event-sheet order="1">Merchant Room</event-sheet>
-        <event-sheet order="2">Procedural Generation Functions</event-sheet>
-        <event-sheet order="4">Mechanic Testing</event-sheet>
-        <event-sheet order="5">Enemies</event-sheet>
-        <event-sheet order="7">Dungeon Level</event-sheet>
-        <event-sheet order="9">Procedural Generation Test</event-sheet>
-        <event-sheet order="11">Title Screen</event-sheet>
-        <event-sheet order="13">Save Select</event-sheet>
-        <event-sheet order="14">Game Manager</event-sheet>
+        <event-sheet order="2">Mechanic Testing</event-sheet>
+        <event-sheet order="3">Enemies</event-sheet>
+        <event-sheet order="4">Dungeon Level</event-sheet>
+        <event-sheet order="6">Procedural Generation Test</event-sheet>
+        <event-sheet order="8">Title Screen</event-sheet>
+        <event-sheet order="10">Save Select</event-sheet>
+        <event-sheet active="1" order="11">Game Manager</event-sheet>
+        <event-sheet order="13">Menu Events</event-sheet>
+        <event-sheet order="14">Merchant Room</event-sheet>
     </open-tabs>
     <properties>
         <property expanded="1" name="About" />
@@ -38,9 +37,9 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <folder expanded="0" path="object-folder/" />
         <folder expanded="1" path="layout-folder/" />
         <folder expanded="1" path="event-folder/" />
-        <folder expanded="1" path="file-folder/" />
-        <folder expanded="1" path="sound-folder/" />
-        <folder expanded="1" path="music-folder/" />
+        <folder expanded="0" path="file-folder/" />
+        <folder expanded="0" path="sound-folder/" />
+        <folder expanded="0" path="music-folder/" />
         <folder expanded="0" path="file-folder/Icons/" />
         <folder expanded="1" path="animation-folder/Player/" />
         <folder expanded="1" path="animation-folder/Sprite_Pickaxe/" />

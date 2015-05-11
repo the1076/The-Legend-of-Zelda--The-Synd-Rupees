@@ -683,7 +683,7 @@
         <object-type name="Text_SaveSelectTitle" sid="4601198139676268">
             <plugin id="Text" />
         </object-type>
-        <object-type name="TiledBackground_SaveSelectHeaderBackground" sid="5244455927705099">
+        <object-type name="TiledBackground_SaveSelectObjectBackground" sid="5244455927705099">
             <plugin id="TiledBg" />
             <texture />
         </object-type>
@@ -699,10 +699,6 @@
             </behaviors>
             <texture />
         </object-type>
-        <object-type name="TiledBackground_SaveSelectBackground" sid="1534129381174096">
-            <plugin id="TiledBg" />
-            <texture original-source="C:\Users\David\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\Textures\saveScreenBackground.jpg" />
-        </object-type>
         <object-type name="Audio" sid="8829938944275923">
             <plugin id="Audio" />
         </object-type>
@@ -714,7 +710,7 @@
             </instance-variables>
             <texture />
         </object-type>
-        <object-type name="TiledBackground_FileDivider" sid="4303763263758591">
+        <object-type name="TiledBackground_Divider" sid="4303763263758591">
             <plugin id="TiledBg" />
             <instance-variables>
                 <instance-variable name="fileNumber" sid="2664243015665423" type="number" />
@@ -768,7 +764,7 @@
         <object-type global="1" name="Array_SaveFiles" sid="9766218670003998">
             <plugin id="Arr" />
         </object-type>
-        <object-type name="Text_StartNewGame" sid="4216529260738098">
+        <object-type name="Text_CharacterName" sid="4216529260738098">
             <plugin id="Text" />
             <instance-variables>
                 <instance-variable name="fileNumber" sid="3519450752281572" type="number" />
@@ -789,6 +785,32 @@
                     <frame duration="1" hotspotX="0" hotspotY="0" original-source="E:\Projects\Git\The-Legend-of-Zelda--The-Synd-Rupees\dev\Art\Title.jpg" />
                 </animation>
             </animation-folder>
+        </object-type>
+        <object-type name="TiledBackground_SaveSelectHeaderTitleBackground" sid="5473644417011946">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_SaveSelectBackground" sid="315224288482539">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_SaveSelectBackground2" sid="9709256154064746">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_MenuBackground" sid="2156097012306977">
+            <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="name" sid="81856864554975" type="string" />
+            </instance-variables>
+            <texture />
+        </object-type>
+        <object-type name="TiledBackground_MenuButtonBackground" sid="417480015689552">
+            <plugin id="TiledBg" />
+            <texture />
+        </object-type>
+        <object-type name="Text_MenuText" sid="6802065351306377">
+            <plugin id="Text" />
         </object-type>
     </object-folder>
     <families />
@@ -811,6 +833,7 @@
         <event-sheet>Enemies.xml</event-sheet>
         <event-sheet>Title Screen.xml</event-sheet>
         <event-sheet>Save Select.xml</event-sheet>
+        <event-sheet>Menu Events.xml</event-sheet>
     </event-folder>
     <global-instances>
         <global-instance type="Keyboard" uid="3" />
@@ -855,6 +878,16 @@
         <file name="hero_hurt.ogg" />
         <file name="sword2.ogg" />
         <file name="sword3.ogg" />
+        <file name="ok.m4a" />
+        <file name="ok.ogg" />
+        <file name="pause_closed.m4a" />
+        <file name="pause_closed.ogg" />
+        <file name="pause_open.m4a" />
+        <file name="pause_open.ogg" />
+        <file name="picked_item.m4a" />
+        <file name="picked_item.ogg" />
+        <file name="picked_rupee.m4a" />
+        <file name="picked_rupee.ogg" />
     </sounds-folder>
     <music-folder>
         <file name="11.-select-screen.m4a" />

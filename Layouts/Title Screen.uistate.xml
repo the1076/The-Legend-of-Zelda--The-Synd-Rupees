@@ -6,7 +6,7 @@ you probably do not want to add any .uistate.xml files to the repository.-->
     <camera>
         <position-x>936.045</position-x>
         <position-y>540</position-y>
-        <position-z>259.374</position-z>
+        <position-z>273.51</position-z>
         <lookat-x>936.045</lookat-x>
         <lookat-y>540</lookat-y>
         <lookat-z>0</lookat-z>
@@ -28,6 +28,6 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <layer locked="1" name="Background" parallax-in-editor="0" visible="1" />
         <layer locked="0" name="Titles" parallax-in-editor="0" visible="1" />
         <layer locked="0" name="Instructions" parallax-in-editor="0" visible="1" />
-        <layer locked="0" name="Debug" parallax-in-editor="0" visible="1" />
+        <layer locked="1" name="Debug" parallax-in-editor="0" visible="1" />
     </layers>
 </c2uistate>
