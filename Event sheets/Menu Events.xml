@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Menu Events</name>
+    <events>
+        <variable constant="0" name="MenuSpeed" sid="9169953046055418" static="0" type="number">100</variable>
+        <variable constant="0" name="IsMenuOpening" sid="5084296337847108" static="0" type="number">0</variable>
+        <variable constant="0" name="IsMenuClosing" sid="9819642649879427" static="0" type="number">0</variable>
+        <variable constant="0" name="IsMenuOpen" sid="8488394081197696" static="0" type="number">0</variable>
+        <event-block sid="3298083525698599">
+            <conditions>
+                <condition id="0" name="On function" sid="1042492975459482" type="Function">
+                    <param id="0" name="Name">&quot;ToggleMenu&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="2585595766204254">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="6165212089575834" type="System">
+                            <param id="0" name="Variable">IsMenuOpen</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="6322202341806237" type="System">
+                            <param id="0" name="Variable">IsMenuOpening</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="5072956527625715" type="Function">
+                            <param id="0" name="Name">&quot;OpenMenu&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Play" sid="1407852288140818" type="Audio">
+                            <param id="0" name="Audio file">pause_closed</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;pauseOpen&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="5467192095181376">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="3607678986135525" type="System">
+                            <param id="0" name="Variable">IsMenuOpen</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="3574795965279911" type="System">
+                            <param id="0" name="Variable">IsMenuClosing</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Call function" sid="2950601041581274" type="Function">
+                            <param id="0" name="Name">&quot;CloseMenu&quot;</param>
+                            <param id="1" name="Parameter {n}"></param>
+                        </action>
+                        <action id="0" name="Play" sid="1581351530211651" type="Audio">
+                            <param id="0" name="Audio file">pause_open</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;pauseClose&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="9794010663732107">
+            <conditions>
+                <condition id="0" name="On function" sid="7759052711333071" type="Function">
+                    <param id="0" name="Name">&quot;OpenMenu&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="625724088594997" type="System">
+                    <param id="0" name="Variable">IsMenuOpening</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="9526835918456208">
+            <conditions>
+                <condition id="0" name="On function" sid="1131918149232906" type="Function">
+                    <param id="0" name="Name">&quot;CloseMenu&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="6957786773875722" type="System">
+                    <param id="0" name="Variable">IsMenuClosing</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="7852981501487613">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="200856177273135" type="System" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <variable constant="0" name="movementAmount" sid="4266254674912326" static="0" type="number">0</variable>
+                <event-block sid="9596643512869494">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="9271582029455523" type="System">
+                            <param id="0" name="Variable">IsMenuOpening</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Set value" sid="4658151445174225" type="System">
+                            <param id="0" name="Variable">movementAmount</param>
+                            <param id="1" name="Value">MenuSpeed</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="4069741217789752">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="7135073159625418" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Instance variable">name</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">&quot;titles&quot;</param>
+                                </condition>
+                                <condition id="-8" name="Compare two values" sid="2219860524190614" type="System">
+                                    <param id="0" name="First value">TiledBackground_MenuBackground.y + MenuSpeed</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Second value">40</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="6444601960652461" type="System">
+                                    <param id="0" name="Variable">movementAmount</param>
+                                    <param id="1" name="Value">40 - TiledBackground_MenuBackground.y</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="5019904103763159">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="9350641165152591" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="6471679849355279" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Y">Self.Y + movementAmount</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="8443740342779725">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="1522156505067564" type="Text_MenuText">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="2409378756437958" type="Text_MenuText">
+                                    <param id="0" name="Y">Self.Y + movementAmount</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="1640511701531044">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="9159794455655327" type="TiledBackground_Divider">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="3529983992399857" type="TiledBackground_Divider">
+                                    <param id="0" name="Y">Self.Y + movementAmount</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="9071853567016803">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="6144794024711211" type="TiledBackground_MenuButtonBackground">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="1104708567876801" type="TiledBackground_MenuButtonBackground">
+                                    <param id="0" name="Y">Self.Y + movementAmount</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="8512766602767795">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="8381808240982348" type="PlayerCursor">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="7472365704013534" type="PlayerCursor">
+                                    <param id="0" name="Y">Self.Y + movementAmount</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="9736695547546396">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="9845441392598625" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Instance variable">name</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">&quot;titles&quot;</param>
+                                </condition>
+                                <condition id="-8" name="Compare two values" sid="6583806811032769" type="System">
+                                    <param id="0" name="First value">TiledBackground_MenuBackground.y</param>
+                                    <param id="1" name="Comparison">5</param>
+                                    <param id="2" name="Second value">40</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="4911958497165197" type="System">
+                                    <param id="0" name="Variable">IsMenuOpening</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="1653106752170373" type="System">
+                                    <param id="0" name="Variable">IsMenuOpen</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="500644231209362">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="8120638837238273" type="System">
+                            <param id="0" name="Variable">IsMenuClosing</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="2262360244448676">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="7848914705865968" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="9597076946859897" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Y">Self.Y - MenuSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="5719615438612604">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="7803836476714929" type="Text_MenuText">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="2132560655451515" type="Text_MenuText">
+                                    <param id="0" name="Y">Self.Y - MenuSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="1376997481989916">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="9016472825589829" type="TiledBackground_Divider">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="598203488247508" type="TiledBackground_Divider">
+                                    <param id="0" name="Y">Self.Y - MenuSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="6842323355476483">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="7830957430830402" type="TiledBackground_MenuButtonBackground">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="302003577112516" type="TiledBackground_MenuButtonBackground">
+                                    <param id="0" name="Y">Self.Y - MenuSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="7679068608438025">
+                            <conditions>
+                                <condition id="-16" name="Is on layer" sid="7762630983799134" type="PlayerCursor">
+                                    <param id="0" name="Layer">&quot;Menu&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-2" name="Set Y" sid="447037001062831" type="PlayerCursor">
+                                    <param id="0" name="Y">Self.Y - MenuSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="8532779384412854">
+                            <conditions>
+                                <condition id="-7" name="Compare instance variable" sid="6222872762587849" type="TiledBackground_MenuBackground">
+                                    <param id="0" name="Instance variable">name</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">&quot;titles&quot;</param>
+                                </condition>
+                                <condition id="-8" name="Compare two values" sid="4216166776086147" type="System">
+                                    <param id="0" name="First value">TiledBackground_MenuBackground.y</param>
+                                    <param id="1" name="Comparison">3</param>
+                                    <param id="2" name="Second value">-1090</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Set value" sid="9431760629669373" type="System">
+                                    <param id="0" name="Variable">IsMenuClosing</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="6679000806978783" type="System">
+                                    <param id="0" name="Variable">IsMenuOpen</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>
