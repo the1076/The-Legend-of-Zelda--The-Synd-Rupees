@@ -503,6 +503,9 @@
                 <behavior-type name="Bullet" sid="3407682086469203">
                     <behavior id="Bullet" />
                 </behavior-type>
+                <behavior-type name="BoundToLayout" sid="5207934167982591">
+                    <behavior id="bound" />
+                </behavior-type>
             </behaviors>
             <animation-folder>
                 <animation framecount="1" loop="0" name="Default" pingpong="0" repeatcount="1" repeatto="0" sid="2171595644479303" speed="5">
@@ -807,6 +810,9 @@
         </object-type>
         <object-type name="TiledBackground_MenuButtonBackground" sid="417480015689552">
             <plugin id="TiledBg" />
+            <instance-variables>
+                <instance-variable name="name" sid="6109465802504407" type="string" />
+            </instance-variables>
             <texture />
         </object-type>
         <object-type name="Text_MenuText" sid="6802065351306377">

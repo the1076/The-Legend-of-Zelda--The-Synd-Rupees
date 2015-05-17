@@ -77,10 +77,6 @@
                         </condition>
                     </conditions>
                     <actions>
-                        <action id="0" name="Call function" sid="2589669747516345" type="Function">
-                            <param id="0" name="Name">&quot;TogglePause&quot;</param>
-                            <param id="1" name="Parameter {n}"></param>
-                        </action>
                         <action id="0" name="Call function" sid="8860584168238504" type="Function">
                             <param id="0" name="Name">&quot;ToggleMenu&quot;</param>
                             <param id="1" name="Parameter {n}"></param>

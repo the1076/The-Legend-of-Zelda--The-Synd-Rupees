@@ -33,6 +33,6 @@ you probably do not want to add any .uistate.xml files to the repository.-->
         <layer locked="1" name="File3Data" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Cursor" parallax-in-editor="0" visible="1" />
         <layer locked="1" name="Fade" parallax-in-editor="0" visible="1" />
-        <layer locked="1" name="Debug" parallax-in-editor="0" visible="1" />
+        <layer locked="0" name="Debug" parallax-in-editor="0" visible="1" />
     </layers>
 </c2uistate>

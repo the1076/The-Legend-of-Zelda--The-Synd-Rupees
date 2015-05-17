@@ -76,6 +76,10 @@
                 </condition>
             </conditions>
             <actions>
+                <action id="0" name="Call function" sid="8513391765404119" type="Function">
+                    <param id="0" name="Name">&quot;PauseGame&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
+                </action>
                 <action id="-9" name="Set value" sid="625724088594997" type="System">
                     <param id="0" name="Variable">IsMenuOpening</param>
                     <param id="1" name="Value">1</param>
@@ -92,6 +96,10 @@
                 <action id="-9" name="Set value" sid="6957786773875722" type="System">
                     <param id="0" name="Variable">IsMenuClosing</param>
                     <param id="1" name="Value">1</param>
+                </action>
+                <action id="0" name="Call function" sid="9378017301997907" type="Function">
+                    <param id="0" name="Name">&quot;UnpauseGame&quot;</param>
+                    <param id="1" name="Parameter {n}"></param>
                 </action>
             </actions>
         </event-block>
@@ -320,6 +328,21 @@
                     </sub-events>
                 </event-block>
             </sub-events>
+        </event-block>
+        <event-block sid="61793363905853">
+            <conditions>
+                <condition id="6" name="On object clicked" sid="8725057805752551" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                    <param id="2" name="Object clicked">TiledBackground_MenuButtonBackground</param>
+                </condition>
+                <condition id="-7" name="Compare instance variable" sid="4060864161161263" type="TiledBackground_MenuButtonBackground">
+                    <param id="0" name="Instance variable">name</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">&quot;saveGame&quot;</param>
+                </condition>
+            </conditions>
+            <actions />
         </event-block>
     </events>
 </c2eventsheet>
