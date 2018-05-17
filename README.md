@@ -7,9 +7,14 @@ It is a dungeon crawler that's based upon procedurally generated levels. The gam
 
 I will add more information about the game here as it becomes available in the build but, for now, I won't make any promises that I'll have to later redact. 
 
+### Plugins
+**The Legend of Zelda: The Synd Rupees** uses the Chrome Console plugin in order to quickly write logs to the Chrome browser's console. In order to open the project in Construct 2, you will need to download and install the Chrome Console plugin.
+Since the creator's link to the plugin is no longer working, I have hosted my downloaded version of it, here:
+http://www.cynicstudios.com/hosting/chromeconsole.zip
+
 ### Play the Development Version
 Obviously you can download the project and run it yourself, if you are familiar with Construct 2, but if you would just like to play the current development version, you can play it in your browser here:
-http://cynicstudios.com/subdomains/games/construct/loztsr
+http://www.cynicstudios.com/subdomains/games/construct/loztsr
 
 I make no promises that you won't get stuck or that the game will actually...work. But, it's a dev build. I'll update this readme with a more production-ready version as soon as there is one available.
 
