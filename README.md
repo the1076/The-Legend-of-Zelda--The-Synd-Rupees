@@ -18,6 +18,20 @@ http://www.cynicstudios.com/subdomains/games/construct/loztsr
 
 I make no promises that you won't get stuck or that the game will actually...work. But, it's a dev build. I'll update this readme with a more production-ready version as soon as there is one available.
 
+#### Controls:
+|Action|Control|
+|---:|:---|
+|**Movement**| WASD/Arrow Keys/Gamepad D-pad/Gamepad Left Joystick|
+|**Jump**| W key/Up Key/Spacebar/Gamepad A (X) Button
+|**Attack**| Left Mouse Button/Gamepad X (Square) Button
+|**Change Tool**| Q/E keys/Mouse Scroll Wheel/Gamepad Bumper (L1/R1) Buttons
+|**Use Tool**| Right Mouse Button/Gamepad B (Circle) Button
+|**Pause**| P key/Enter (Return) key/Gamepad Start Button 
+
+#### Gamplay Notes:
+`Wall-Jump`: While Jumping, move toward a wall, and jump.  
+`Pickaxe`: The pickaxe tool allows you to destroy blocks in the randomly generated levels.
+
 ### Artwork
 ##### Initial Link Design
 ![Image of Link](https://pbs.twimg.com/media/CBpA4h0VEAALer9.jpg:large)
